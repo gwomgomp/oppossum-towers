@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ddee385eedb614994afd25b28737fc, type: 3}
   m_Name: ExampleType
   m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 50
+  <Speed>k__BackingField: 5

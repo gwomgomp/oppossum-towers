@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class LaneCheckpoint : MonoBehaviour
 {
-    [SerializeField]
-    private LaneCheckpoint next;
+    [field: SerializeField]
+    public LaneCheckpoint NextCheckpoint {get; private set;}
 }
