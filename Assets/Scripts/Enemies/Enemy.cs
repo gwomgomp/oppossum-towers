@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -12,6 +11,9 @@ public class Enemy : MonoBehaviour {
     private LaneCheckpoint currentTarget = null;
 
     private Vector3 velocity = Vector3.zero;
+
+    private bool carryingLoot = false;
+    private GameObject loot = null;
 
     public void Initialize(EnemyType type, LaneCheckpoint startingCheckpoint) {
         if (!initialized) {
@@ -47,7 +49,34 @@ public class Enemy : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (initialized && collider.gameObject.TryGetComponent(out LaneCheckpoint next) && next == currentTarget) {
-            currentTarget = next.NextCheckpoint;
+            HandleHoardCheckpoint(next);
+            HandleDropOffCheckpoint(next);
+            HandleLastCheckpoint(next);
+        }
+    }
+
+    private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
+        Hoard hoard = checkpoint as Hoard;
+        if (hoard != null && hoard.TakeLoot()) {
+            carryingLoot = true;
+            var checkpointPrefab = Resources.Load<GameObject>("Prefabs/Loot");
+            loot = Instantiate(checkpointPrefab, transform);
+        }
+    }
+
+    private void HandleDropOffCheckpoint(LaneCheckpoint checkpoint) {
+        if (carryingLoot && checkpoint.IsLootDropOff) {
+            Debug.Log("Extracted loot");
+            Destroy(loot);
+            carryingLoot = false;
+        }
+    }
+
+    private void HandleLastCheckpoint(LaneCheckpoint checkpoint) {
+        if (checkpoint.NextCheckpoint == null) {
+            Destroy(gameObject);
+        } else {
+            currentTarget = checkpoint.NextCheckpoint;
         }
     }
 
