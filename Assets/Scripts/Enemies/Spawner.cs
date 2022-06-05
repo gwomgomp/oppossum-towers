@@ -18,9 +18,9 @@ public class Spawner : MonoBehaviour {
 
     public void Update() {
         if (spawning && amountSpawned < amountToSpawn && timeSinceLastSpawn >= timeBetweenSpawns) {
-            GameObject enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
-            GameObject enemyGameObject = Instantiate(enemyPrefab, transform.position, Quaternion.LookRotation(firstCheckpoint.transform.position, Vector3.up));
-            Enemy enemy = enemyGameObject.GetComponent<Enemy>();
+            var enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
+            var enemyGameObject = Instantiate(enemyPrefab, transform.position, Quaternion.LookRotation(firstCheckpoint.transform.position, Vector3.up));
+            var enemy = enemyGameObject.GetComponent<Enemy>();
             enemy.Initialize(typeToSpawn, firstCheckpoint);
             timeSinceLastSpawn = 0f;
             amountSpawned++;
@@ -35,10 +35,10 @@ public class Spawner : MonoBehaviour {
 
     public LaneCheckpoint GetLastCheckpoint() {
         HashSet<LaneCheckpoint> handledCheckpoints = new();
-        LaneCheckpoint currentCheckPoint = firstCheckpoint;
+        var currentCheckPoint = firstCheckpoint;
         while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
             handledCheckpoints.Add(currentCheckPoint);
-            LaneCheckpoint nextCheckpoint = currentCheckPoint.NextCheckpoint;
+            var nextCheckpoint = currentCheckPoint.NextCheckpoint;
             if (nextCheckpoint == null || handledCheckpoints.Contains(nextCheckpoint)) {
                 return currentCheckPoint;
             } else {
@@ -54,14 +54,14 @@ public class Spawner : MonoBehaviour {
 
     public void OnDrawGizmosSelected() {
         HashSet<LaneCheckpoint> handledCheckpoints = new();
-        LaneCheckpoint currentCheckPoint = firstCheckpoint;
+        var currentCheckPoint = firstCheckpoint;
         if (currentCheckPoint != null) {
             Gizmos.DrawLine(transform.position, currentCheckPoint.transform.position);
         }
 
         while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
             handledCheckpoints.Add(currentCheckPoint);
-            LaneCheckpoint nextCheckpoint = currentCheckPoint.NextCheckpoint;
+            var nextCheckpoint = currentCheckPoint.NextCheckpoint;
             if (nextCheckpoint != null) {
                 Gizmos.DrawLine(currentCheckPoint.transform.position, nextCheckpoint.transform.position);
             }

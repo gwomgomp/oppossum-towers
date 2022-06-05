@@ -18,11 +18,12 @@ public class LaneCheckpointEditor : Editor {
     #if UNITY_EDITOR
     public void OnSceneGUI() {
         if (spawner.transform == Selection.activeTransform) {
-            LaneCheckpoint[] checkpoints = spawner.GetComponentsInChildren<LaneCheckpoint>();
+            var checkpoints = spawner.GetComponentsInChildren<LaneCheckpoint>();
             foreach (var checkpoint in checkpoints) {
                 EditorGUI.BeginChangeCheck();
-                Vector3 newTargetPosition = Handles.PositionHandle(checkpoint.transform.position, checkpoint.transform.rotation);
+                var newTargetPosition = Handles.PositionHandle(checkpoint.transform.position, checkpoint.transform.rotation);
                 if (EditorGUI.EndChangeCheck()) {
+                    Undo.RecordObject(checkpoint.transform, "Move checkpoint");
                     checkpoint.transform.position = newTargetPosition;
                 }
             }
@@ -34,9 +35,9 @@ public class LaneCheckpointEditor : Editor {
 
         if (!EditorApplication.isPlaying) {
             if (GUILayout.Button("Add lane checkpoint")) {
-                LaneCheckpoint lastCheckpoint = spawner.GetLastCheckpoint();
-                GameObject checkpointPrefab = Resources.Load<GameObject>("Prefabs/Checkpoint");
-                GameObject newCheckpoint = Instantiate(checkpointPrefab, spawner.transform);
+                var lastCheckpoint = spawner.GetLastCheckpoint();
+                var checkpointPrefab = Resources.Load<GameObject>("Prefabs/Checkpoint");
+                var newCheckpoint = Instantiate(checkpointPrefab, spawner.transform);
                 Undo.RegisterCreatedObjectUndo(newCheckpoint, "Create new checkpoint");
                 Undo.RecordObject(lastCheckpoint, "Change next checkpoint");
                 lastCheckpoint.NextCheckpoint = newCheckpoint.GetComponent<LaneCheckpoint>();

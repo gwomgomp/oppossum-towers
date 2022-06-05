@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour {
 
     public void Update() {
         if (initialized && currentTarget != null) {
-            Vector3 newPosition =  Vector3.SmoothDamp(
+            var newPosition =  Vector3.SmoothDamp(
                 transform.position,
                 currentTarget.transform.position,
                 ref velocity,
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour {
             );
             transform.position = newPosition;
             
-            Quaternion targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
+            var targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour {
 
     private float calculateExpectedTravelTime() {
         if (currentTarget != null) {
-            float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
+            var distance = Vector3.Distance(transform.position, currentTarget.transform.position);
             return distance / type.Speed / moveDampening;
         } else {
             return 0f;
