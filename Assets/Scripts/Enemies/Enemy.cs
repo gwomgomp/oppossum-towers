@@ -27,18 +27,22 @@ public class Enemy : MonoBehaviour {
 
     public void Update() {
         if (initialized && currentTarget != null) {
-            var newPosition =  Vector3.SmoothDamp(
+            Move();
+        }
+    }
+
+    private void Move() {
+        var newPosition = Vector3.SmoothDamp(
                 transform.position,
                 currentTarget.transform.position,
                 ref velocity,
                 calculateExpectedTravelTime(),
                 type.Speed
             );
-            transform.position = newPosition;
-            
-            var targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+        transform.position = newPosition;
+
+        var targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider collider) {

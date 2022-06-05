@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour {
     private int amountToSpawn;
 
     [field: SerializeField]
-    public LaneCheckpoint FirstCheckpoint {get; set;}
+    public LaneCheckpoint FirstCheckpoint { get; set; }
 
     private float timeSinceLastSpawn = 0f;
     private int amountSpawned = 0;
@@ -50,7 +50,15 @@ public class Spawner : MonoBehaviour {
         spawning = true;
     }
 
+    public void OnDrawGizmos() {
+        Gizmos.DrawWireCube(transform.position, Vector3.one);
+    }
+
     public void OnDrawGizmosSelected() {
+        DrawLaneGizmos();
+    }
+
+    private void DrawLaneGizmos() {
         HashSet<LaneCheckpoint> handledCheckpoints = new();
         var currentCheckPoint = FirstCheckpoint;
         if (currentCheckPoint != null) {
