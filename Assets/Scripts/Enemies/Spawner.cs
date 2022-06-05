@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
@@ -11,8 +11,6 @@ public class Spawner : MonoBehaviour {
 
     [SerializeField]
     private LaneCheckpoint firstCheckpoint;
-    [SerializeField]
-    private GameObject enemyPrefab;
 
     private float timeSinceLastSpawn = 0f;
     private int amountSpawned = 0;
@@ -20,8 +18,9 @@ public class Spawner : MonoBehaviour {
 
     public void Update() {
         if (spawning && amountSpawned < amountToSpawn && timeSinceLastSpawn >= timeBetweenSpawns) {
-            GameObject enemyGO = Instantiate(enemyPrefab, transform.position, Quaternion.LookRotation(firstCheckpoint.transform.position, Vector3.up));
-            Enemy enemy = enemyGO.GetComponent<Enemy>();
+            GameObject enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
+            GameObject enemyGameObject = Instantiate(enemyPrefab, transform.position, Quaternion.LookRotation(firstCheckpoint.transform.position, Vector3.up));
+            Enemy enemy = enemyGameObject.GetComponent<Enemy>();
             enemy.Initialize(typeToSpawn, firstCheckpoint);
             timeSinceLastSpawn = 0f;
             amountSpawned++;
@@ -30,7 +29,43 @@ public class Spawner : MonoBehaviour {
         }
     }
 
+    public LaneCheckpoint GetFirstCheckpoint() {
+        return firstCheckpoint;
+    }
+
+    public LaneCheckpoint GetLastCheckpoint() {
+        HashSet<LaneCheckpoint> handledCheckpoints = new();
+        LaneCheckpoint currentCheckPoint = firstCheckpoint;
+        while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
+            handledCheckpoints.Add(currentCheckPoint);
+            LaneCheckpoint nextCheckpoint = currentCheckPoint.NextCheckpoint;
+            if (nextCheckpoint == null || handledCheckpoints.Contains(nextCheckpoint)) {
+                return currentCheckPoint;
+            } else {
+                currentCheckPoint = nextCheckpoint;
+            }
+        }
+        return null;
+    }
+
     internal void StartSpawning() {
         spawning = true;
+    }
+
+    public void OnDrawGizmosSelected() {
+        HashSet<LaneCheckpoint> handledCheckpoints = new();
+        LaneCheckpoint currentCheckPoint = firstCheckpoint;
+        if (currentCheckPoint != null) {
+            Gizmos.DrawLine(transform.position, currentCheckPoint.transform.position);
+        }
+
+        while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
+            handledCheckpoints.Add(currentCheckPoint);
+            LaneCheckpoint nextCheckpoint = currentCheckPoint.NextCheckpoint;
+            if (nextCheckpoint != null) {
+                Gizmos.DrawLine(currentCheckPoint.transform.position, nextCheckpoint.transform.position);
+            }
+            currentCheckPoint = nextCheckpoint;
+        }
     }
 }
