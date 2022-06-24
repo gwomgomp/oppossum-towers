@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour {
                 transform.position,
                 currentTarget.transform.position,
                 ref velocity,
-                calculateExpectedTravelTime(),
+                CalculateExpectedTravelTime(),
                 type.Speed
             );
         transform.position = newPosition;
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    private float calculateExpectedTravelTime() {
+    private float CalculateExpectedTravelTime() {
         if (currentTarget != null) {
             var distance = Vector3.Distance(transform.position, currentTarget.transform.position);
             return distance / type.Speed / moveDampening;
