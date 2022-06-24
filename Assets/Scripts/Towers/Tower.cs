@@ -1,6 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public class EnemyHitEvent : UnityEvent<GameObject>
+{
+}
+
+public class PositionHitEvent : UnityEvent<Vector3>
+{
+}
 
 public class Tower : MonoBehaviour
 {
@@ -17,10 +26,18 @@ public class Tower : MonoBehaviour
   public float shotCooldown;
   public float range;
   
+  public bool projectileTracksEnemy;
+  public float projectileSpeed;
+  
+  public GameObject projectilePrefab;
+  public GameObject groundEffectPrefab;
+  
   private float currentShotCooldown = 0.0f;
   
   private List<Collider> enemiesInRange;
   private Collider currentTarget = null;
+  
+  private Vector3 launchOrigin;
   
   void Start()
   {
@@ -31,6 +48,17 @@ public class Tower : MonoBehaviour
     
     capsuleCollider.radius = range;
     capsuleCollider.height = range * 4.0f;
+    
+    launchOrigin = transform.position;
+    
+    foreach (Transform child in transform)
+    {
+      if (child.tag == "LaunchOrigin")
+      {
+        launchOrigin = child.position;
+        break;
+      }
+    }
   }
 
   void Update()
@@ -58,14 +86,30 @@ public class Tower : MonoBehaviour
   
   private void ShootAtEnemy()
   {
-    if (currentTarget != null)
+    if (projectilePrefab != null)
     {
-      EnemyStats enemyStats = currentTarget.gameObject.GetComponent<EnemyStats>();
+      GameObject projectileObject = Instantiate(projectilePrefab, launchOrigin, Quaternion.identity);
+      Projectile projectile = projectileObject.GetComponent<Projectile>();
       
-      if (enemyStats != null)
+      if (projectileTracksEnemy)
       {
-        enemyStats.RemoveHealth(damagePerShot);
+        projectile.SetTargetGameObject(currentTarget.gameObject);
       }
+      else
+      {
+        projectile.SetTargetPosition(currentTarget.gameObject.transform.position);
+      }
+      
+      projectile.SetSpeed(projectileSpeed);
+      
+      EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
+      enemyHitEvent.AddListener(OnEnemyHit);
+      
+      PositionHitEvent positionHitEvent = new PositionHitEvent();
+      positionHitEvent.AddListener(OnPositionHit);
+      
+      projectile.SetEnemyHitEvent(enemyHitEvent);
+      projectile.SetPositionHitEvent(positionHitEvent);
     }
   }
   
@@ -284,5 +328,28 @@ public class Tower : MonoBehaviour
     }
     
     SelectNewTarget();
+  }
+  
+  private void OnEnemyHit(GameObject enemy)
+  {
+    if (groundEffectPrefab != null)
+    {
+      Instantiate(groundEffectPrefab, enemy.transform.position, Quaternion.identity);
+    }
+    
+    EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
+      
+    if (enemyStats != null)
+    {
+      enemyStats.RemoveHealth(damagePerShot);
+    }
+  }
+  
+  private void OnPositionHit(Vector3 position)
+  {
+    if (groundEffectPrefab != null)
+    {
+      Instantiate(groundEffectPrefab, position, Quaternion.identity);
+    }
   }
 }
