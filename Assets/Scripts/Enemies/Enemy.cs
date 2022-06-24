@@ -88,4 +88,28 @@ public class Enemy : MonoBehaviour {
             return 0f;
         }
     }
+
+    public bool Damage(float damage) {
+        health -= damage;
+
+        if (health <= 0.0f) {
+            Destroy(gameObject);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int GetPriority() {
+        return type.Priority;
+    }
+
+    // These two methods are purely for visualization purposes (i.e. serve no functional purpose)
+    public void BeTargeted() {
+        GetComponent<Renderer>().material = type.TargetMaterial;
+    }
+
+    public void BeUntargeted() {
+        GetComponent<Renderer>().material = type.DefaultMaterial;
+    }
 }

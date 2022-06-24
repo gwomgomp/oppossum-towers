@@ -6,4 +6,10 @@ public class EnemyType : ScriptableObject {
     public float MaxHealth {get; private set;}
     [field: SerializeField]
     public float Speed {get; private set;}
+    [field: SerializeField]
+    public int Priority {get; private set;}
+    [field: SerializeField]
+    public Material TargetMaterial {get; private set;}
+    [field: SerializeField]
+    public Material DefaultMaterial {get; private set;}
 }
