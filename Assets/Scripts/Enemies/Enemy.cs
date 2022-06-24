@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -13,7 +14,7 @@ public class Enemy : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
 
     private bool carryingLoot = false;
-    private GameObject loot = null;
+    private GameObject currentLoot = null;
 
     public void Initialize(EnemyType type, LaneCheckpoint startingCheckpoint) {
         if (!initialized) {
@@ -52,23 +53,48 @@ public class Enemy : MonoBehaviour {
             HandleHoardCheckpoint(next);
             HandleDropOffCheckpoint(next);
             HandleLastCheckpoint(next);
+            return;
+        }
+
+        if (initialized && !carryingLoot && collider.CompareTag("Loot")) {
+            AttachLootToTransform(collider.gameObject);
+            return;
         }
     }
 
     private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
         Hoard hoard = checkpoint as Hoard;
-        if (hoard != null && hoard.TakeLoot()) {
-            carryingLoot = true;
+        if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
             var checkpointPrefab = Resources.Load<GameObject>("Prefabs/Loot");
-            loot = Instantiate(checkpointPrefab, transform);
+            var loot = Instantiate(checkpointPrefab);
+            AttachLootToTransform(loot);
         }
+    }
+
+    private void AttachLootToTransform(GameObject loot) {
+        currentLoot = loot;
+        carryingLoot = true;
+        loot.TryGetComponent(out Collider collider);
+        collider.enabled = false;
+        loot.transform.SetParent(transform);
+        loot.transform.position = transform.position;
+        loot.transform.Translate(Vector3.up * 2, Space.World);
+    }
+
+    private void DetachLootFromTransform(GameObject loot) {
+        currentLoot = null;
+        carryingLoot = false;
+        loot.TryGetComponent(out Collider collider);
+        collider.enabled = true;
+        loot.transform.SetParent(transform.parent);
+        loot.transform.position = transform.position;
     }
 
     private void HandleDropOffCheckpoint(LaneCheckpoint checkpoint) {
         if (carryingLoot && checkpoint.IsLootDropOff) {
             Debug.Log("Extracted loot");
-            Destroy(loot);
-            carryingLoot = false;
+            DetachLootFromTransform(currentLoot);
+            Destroy(currentLoot);
         }
     }
 
@@ -93,6 +119,9 @@ public class Enemy : MonoBehaviour {
         health -= damage;
 
         if (health <= 0.0f) {
+            if (carryingLoot) {
+                DetachLootFromTransform(currentLoot);
+            }
             Destroy(gameObject);
             return true;
         } else {

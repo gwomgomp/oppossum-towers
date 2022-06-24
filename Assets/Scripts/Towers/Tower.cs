@@ -31,7 +31,7 @@ public class Tower : MonoBehaviour {
     }
 
     void Update() {
-        if (enemiesInRange.Count > 0) {
+        if (currentTarget == null && enemiesInRange.Count > 0) {
             SelectNewTarget();
         }
 
@@ -57,20 +57,12 @@ public class Tower : MonoBehaviour {
     }
 
     private void SelectNewTarget() {
-        switch (targetingMethod) {
-            case TargetingMethod.HighestPriority:
-                currentTarget = FindHighestPriorityEnemy();
-                break;
-            case TargetingMethod.LowestPriority:
-                currentTarget = FindLowestPriorityEnemy();
-                break;
-            case TargetingMethod.Closest:
-                currentTarget = FindClosestEnemy();
-                break;
-            default:
-                currentTarget = null;
-                break;
-        }
+        currentTarget = targetingMethod switch {
+            TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
+            TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
+            TargetingMethod.Closest => FindClosestEnemy(),
+            _ => null
+        };
     }
 
     private Enemy FindHighestPriorityEnemy() {
@@ -143,7 +135,7 @@ public class Tower : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.TryGetComponent<Enemy>(out Enemy enemy)) {
+        if (other.TryGetComponent(out Enemy enemy)) {
             enemiesInRange.Add(enemy);
         }
 
@@ -151,7 +143,7 @@ public class Tower : MonoBehaviour {
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.TryGetComponent<Enemy>(out Enemy enemy)) {
+        if (other.TryGetComponent(out Enemy enemy)) {
             enemiesInRange.Remove(enemy);
         }
 
