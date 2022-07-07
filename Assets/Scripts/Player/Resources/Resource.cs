@@ -7,14 +7,14 @@ public class Resource : MonoBehaviour
     private bool _initialized = false;
     private ResourceType type = null;
     private float _weight = 0;
-    private LaneCheckpoint currentTarget = null;
+    private ResourceLocation position = null;
 
-    public void Initialize(ResourceType type, LaneCheckpoint startingCheckpoint) {
+    public void Initialize(ResourceType type, ResourceLocation startingPosition) {
         if (!_initialized) {
             this.type = type;
             _weight = type.Weight;
-            currentTarget = startingCheckpoint;
-            transform.rotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
+            position = startingPosition;
+            transform.rotation = Quaternion.LookRotation(position.transform.position - transform.position);
             _initialized = true;
         } else {
             Debug.LogError("Do not try to initialize enemy twice");
