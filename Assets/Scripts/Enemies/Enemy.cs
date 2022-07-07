@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour {
 
     private Vector3 velocity = Vector3.zero;
 
+    private bool carryingLoot = false;
+    private GameObject currentLoot = null;
+
     public void Initialize(EnemyType type, LaneCheckpoint startingCheckpoint) {
         if (!initialized) {
             this.type = type;
@@ -36,7 +39,7 @@ public class Enemy : MonoBehaviour {
                 transform.position,
                 currentTarget.transform.position,
                 ref velocity,
-                calculateExpectedTravelTime(),
+                CalculateExpectedTravelTime(),
                 type.Speed
             );
         transform.position = newPosition;
@@ -47,16 +50,95 @@ public class Enemy : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (initialized && collider.gameObject.TryGetComponent(out LaneCheckpoint next) && next == currentTarget) {
-            currentTarget = next.NextCheckpoint;
+            HandleHoardCheckpoint(next);
+            HandleDropOffCheckpoint(next);
+            HandleLastCheckpoint(next);
+            return;
+        }
+
+        if (initialized && !carryingLoot && collider.CompareTag("Loot")) {
+            AttachLootToTransform(collider.gameObject);
+            return;
         }
     }
 
-    private float calculateExpectedTravelTime() {
+    private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
+        Hoard hoard = checkpoint as Hoard;
+        if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
+            var checkpointPrefab = Resources.Load<GameObject>("Prefabs/Loot");
+            var loot = Instantiate(checkpointPrefab);
+            AttachLootToTransform(loot);
+        }
+    }
+
+    private void AttachLootToTransform(GameObject loot) {
+        currentLoot = loot;
+        carryingLoot = true;
+        loot.TryGetComponent(out Collider collider);
+        collider.enabled = false;
+        loot.transform.SetParent(transform);
+        loot.transform.position = transform.position;
+        loot.transform.Translate(Vector3.up * 2, Space.World);
+    }
+
+    private void DetachLootFromTransform(GameObject loot) {
+        currentLoot = null;
+        carryingLoot = false;
+        loot.TryGetComponent(out Collider collider);
+        collider.enabled = true;
+        loot.transform.SetParent(transform.parent);
+        loot.transform.position = transform.position;
+    }
+
+    private void HandleDropOffCheckpoint(LaneCheckpoint checkpoint) {
+        if (carryingLoot && checkpoint.IsLootDropOff) {
+            Debug.Log("Extracted loot");
+            DetachLootFromTransform(currentLoot);
+            Destroy(currentLoot);
+        }
+    }
+
+    private void HandleLastCheckpoint(LaneCheckpoint checkpoint) {
+        if (checkpoint.NextCheckpoint == null) {
+            Destroy(gameObject);
+        } else {
+            currentTarget = checkpoint.NextCheckpoint;
+        }
+    }
+
+    private float CalculateExpectedTravelTime() {
         if (currentTarget != null) {
             var distance = Vector3.Distance(transform.position, currentTarget.transform.position);
             return distance / type.Speed / moveDampening;
         } else {
             return 0f;
         }
+    }
+
+    public bool Damage(float damage) {
+        health -= damage;
+
+        if (health <= 0.0f) {
+            if (carryingLoot) {
+                DetachLootFromTransform(currentLoot);
+            }
+            Destroy(gameObject);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int GetPriority() {
+        return type.Priority;
+    }
+
+    // These two methods are purely for visualization purposes (i.e. serve no functional purpose)
+    public void BeTargeted() {
+        GetComponent<Renderer>().material = type.TargetMaterial;
+    }
+
+    public void BeUntargeted() {
+        GetComponent<Renderer>().material = type.DefaultMaterial;
     }
 }

@@ -41,7 +41,8 @@ public class LaneCheckpointEditor : Editor {
         if (EditorApplication.isPlaying) {
             StartSpawningUI();
         } else {
-            NewCheckpointButton();
+            NewLaneCheckpointButton();
+            NewHoardCheckpointButton();
             CorrectNameAndOrderButton();
         }
     }
@@ -57,10 +58,18 @@ public class LaneCheckpointEditor : Editor {
         }
     }
 
-    private void NewCheckpointButton() {
-        if (GUILayout.Button("Add lane checkpoint")) {
-            var checkpointPrefab = Resources.Load<GameObject>("Prefabs/Checkpoint");
-            (LaneCheckpoint lastCheckpoint, int checkpointCount) = spawner.GetLastCheckpoint();
+    private void NewLaneCheckpointButton() {
+        NewCheckpointButton("Checkpoint");
+    }
+
+    private void NewHoardCheckpointButton() {
+        NewCheckpointButton("Hoard");
+    }
+
+    private void NewCheckpointButton(string type) {
+        if (GUILayout.Button($"Add {type}")) {
+            var checkpointPrefab = Resources.Load<GameObject>($"Prefabs/{type}");
+            (LaneCheckpoint lastCheckpoint, int checkpointCount, int hoardCount) = spawner.GetLastCheckpoint();
             var instantiationTransform = spawner.transform;
             if (lastCheckpoint != null) {
                 instantiationTransform = lastCheckpoint.transform;
@@ -73,7 +82,7 @@ public class LaneCheckpointEditor : Editor {
                 instantiationTransform.rotation,
                 spawner.transform
             );
-            newCheckpointObject.name = "Checkpoint " + (checkpointCount + 1);
+            newCheckpointObject.name = $"{type} {(type == "Hoard" ? hoardCount : checkpointCount) + 1}";
             Undo.RegisterCreatedObjectUndo(newCheckpointObject, "Create new checkpoint");
             var newCheckpoint = newCheckpointObject.GetComponent<LaneCheckpoint>();
             if (lastCheckpoint != null) {
@@ -93,9 +102,15 @@ public class LaneCheckpointEditor : Editor {
             HashSet<LaneCheckpoint> handledCheckpoints = new();
             var currentCheckPoint = spawner.FirstCheckpoint;
             var count = 0;
+            var hoardCount = 0;
             while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
                 count++;
-                currentCheckPoint.gameObject.name = "Checkpoint " + count;
+                if (currentCheckPoint is Hoard) {
+                    hoardCount++;
+                    currentCheckPoint.gameObject.name = $"Hoard {hoardCount}";
+                } else {
+                    currentCheckPoint.gameObject.name = $"Checkpoint {count - hoardCount}";
+                }
                 currentCheckPoint.transform.SetSiblingIndex(count);
                 handledCheckpoints.Add(currentCheckPoint);
                 var nextCheckpoint = currentCheckPoint.NextCheckpoint;

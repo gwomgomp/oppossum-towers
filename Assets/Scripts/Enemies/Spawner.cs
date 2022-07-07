@@ -29,21 +29,25 @@ public class Spawner : MonoBehaviour {
         }
     }
 
-    public (LaneCheckpoint, int) GetLastCheckpoint() {
+    public (LaneCheckpoint, int, int) GetLastCheckpoint() {
         HashSet<LaneCheckpoint> handledCheckpoints = new();
         var currentCheckPoint = FirstCheckpoint;
         var count = 0;
+        var hoardCount = 0;
         while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
             count++;
+            if (currentCheckPoint is Hoard) {
+                hoardCount++;
+            }
             handledCheckpoints.Add(currentCheckPoint);
             var nextCheckpoint = currentCheckPoint.NextCheckpoint;
             if (nextCheckpoint == null || handledCheckpoints.Contains(nextCheckpoint)) {
-                return (currentCheckPoint, count);
+                return (currentCheckPoint, count - hoardCount, hoardCount);
             } else {
                 currentCheckPoint = nextCheckpoint;
             }
         }
-        return (null, 0);
+        return (null, 0, 0);
     }
 
     internal void StartSpawning() {

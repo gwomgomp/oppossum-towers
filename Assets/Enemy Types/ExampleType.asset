@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ddee385eedb614994afd25b28737fc, type: 3}
   m_Name: ExampleType
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 50
-  <Speed>k__BackingField: 5
+  <MaxHealth>k__BackingField: 5
+  <Speed>k__BackingField: 8
+  <Priority>k__BackingField: 1
+  <TargetMaterial>k__BackingField: {fileID: 2100000, guid: a687ec9927e4d89498c869c0c71faa67, type: 2}
+  <DefaultMaterial>k__BackingField: {fileID: 2100000, guid: eb8d14e2000569b42af10c8628485fc1, type: 2}
