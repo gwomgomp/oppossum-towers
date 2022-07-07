@@ -1,38 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceSpawner : MonoBehaviour
 {
     [SerializeField]
-    private ResourceType typeToSpawn;
+    private ResourceType _typeToSpawn;
     [SerializeField]
-    private float timeBetweenSpawns;
+    private float _timeBetweenSpawns;
     [SerializeField]
-    private int amountToSpawn;
+    private int _amountToSpawn;
 
     [field: SerializeField]
-    public ResourceLocation ResourceLocation { get; set; }
+    public List<ResourceSpawnLocation> ResourceLocations { get; set; } = new List<ResourceSpawnLocation>();
 
-    private float timeSinceLastSpawn = 0f;
-    private int amountSpawned = 0;
-    private bool spawning = false;
+    private float _timeSinceLastSpawn = 0f;
+    private int _amountSpawned = 0;
+    private bool _spawning = false;
 
     public void Update() {
-        if (spawning && amountSpawned < amountToSpawn && timeSinceLastSpawn >= timeBetweenSpawns) {
+        if (_spawning && _amountSpawned < _amountToSpawn && _timeSinceLastSpawn >= _timeBetweenSpawns) {
+            var resourceLocation = ResourceLocations[Random.Range(0, ResourceLocations.Count)];
             var resourcePrefab = Resources.Load<GameObject>("Prefabs/Resource");
-            var resourceGameObject = Instantiate(resourcePrefab, transform.position, Quaternion.LookRotation(ResourceLocation.transform.position, Vector3.up));
+            var resourceGameObject = Instantiate(resourcePrefab, resourceLocation.transform.position, Quaternion.LookRotation(transform.position, Vector3.up));
             var resource = resourceGameObject.GetComponent<Resource>();
-            resource.Initialize(typeToSpawn, ResourceLocation);
-            timeSinceLastSpawn = 0f;
-            amountSpawned++;
+            resource.Initialize(_typeToSpawn, resourceLocation);
+
+            _timeSinceLastSpawn = 0f;
+            _amountSpawned++;
         } else {
-            timeSinceLastSpawn += Time.deltaTime;
+            _timeSinceLastSpawn += Time.deltaTime;
         }
     }
 
     internal void StartSpawning() {
-        spawning = true;
+        _spawning = true;
     }
 
     public void OnDrawGizmos() {

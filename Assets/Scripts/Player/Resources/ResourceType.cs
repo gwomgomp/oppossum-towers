@@ -7,4 +7,7 @@ public class ResourceType : ScriptableObject {
 
     [field: SerializeField]
     public float SpawnCap { get; private set; }
+
+    [field: SerializeField]
+    public float SpanwCooldown { get; private set; }
 }

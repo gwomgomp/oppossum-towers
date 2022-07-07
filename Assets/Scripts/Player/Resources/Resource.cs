@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
     private bool _initialized = false;
-    private ResourceType type = null;
+    private ResourceType _type = null;
     private float _weight = 0;
-    private ResourceLocation position = null;
+    private ResourceSpawnLocation _position = null;
 
-    public void Initialize(ResourceType type, ResourceLocation startingPosition) {
+    public void Initialize(ResourceType type, ResourceSpawnLocation startingPosition) {
         if (!_initialized) {
-            this.type = type;
+            _type = type;
             _weight = type.Weight;
-            position = startingPosition;
-            transform.rotation = Quaternion.LookRotation(position.transform.position - transform.position);
+            _position = startingPosition;
+            transform.rotation = Quaternion.LookRotation(_position.transform.position);
             _initialized = true;
         } else {
             Debug.LogError("Do not try to initialize enemy twice");

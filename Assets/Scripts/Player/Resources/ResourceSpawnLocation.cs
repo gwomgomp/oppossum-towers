@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ResourceLocation : MonoBehaviour
+public class ResourceSpawnLocation : MonoBehaviour
 {
     public void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, .5f);
