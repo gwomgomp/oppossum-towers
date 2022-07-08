@@ -10,8 +10,6 @@ public class LaneCheckpointEditor : Editor {
 
     private Spawner spawner;
 
-    private bool spawningStarted = false;
-
     private void OnEnable() {
         spawner = target as Spawner;
     }
@@ -38,23 +36,10 @@ public class LaneCheckpointEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        if (EditorApplication.isPlaying) {
-            StartSpawningUI();
-        } else {
+        if (!EditorApplication.isPlaying) {
             NewLaneCheckpointButton();
             NewHoardCheckpointButton();
             CorrectNameAndOrderButton();
-        }
-    }
-
-    private void StartSpawningUI() {
-        if (!spawningStarted && GUILayout.Button("Start Spawning")) {
-            spawner.StartSpawning();
-            spawningStarted = true;
-        }
-
-        if (spawningStarted) {
-            GUILayout.Label("Spawning started");
         }
     }
 
