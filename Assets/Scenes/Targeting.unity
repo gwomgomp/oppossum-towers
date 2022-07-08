@@ -258,11 +258,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1087732430648818202, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087732430648818202, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
+      propertyPath: maxHealth
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087732430648818202, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
+      propertyPath: damagedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 551fc8d265ef787419b8a1d898a6ed57, type: 2}
+    - target: {fileID: 1087732430648818202, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
+      propertyPath: nearDeathMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a687ec9927e4d89498c869c0c71faa67, type: 2}
     - target: {fileID: 2086901383778983996, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
       propertyPath: m_Name
       value: Enemy 1 (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -4509914174985680751, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
 --- !u!1 &311162316
 GameObject:
@@ -569,6 +586,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: towerType
+      value: 
+      objectReference: {fileID: 11400000, guid: 562144a707391734ab118aea87d5b712, type: 2}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: shotCooldown
       value: 2
       objectReference: {fileID: 0}
@@ -578,12 +599,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: projectileSpeed
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: groundEffectPrefab
       value: 
       objectReference: {fileID: 3758010132418631429, guid: 8f2a23ea477d284439cc37964a722509, type: 3}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: projectileTracksEnemy
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
 --- !u!1001 &1788288020
@@ -636,6 +661,10 @@ PrefabInstance:
     - target: {fileID: 124617250579562094, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087732430648818202, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
+      propertyPath: maxHealth
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2086901383778983996, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
       propertyPath: m_Name

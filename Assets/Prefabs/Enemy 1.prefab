@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8177463815271553169}
   - component: {fileID: 1087732430648818202}
   - component: {fileID: 8228855459173484632}
-  - component: {fileID: -4509914174985680751}
   m_Layer: 0
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -112,10 +111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e295261c0ab07d140b1cf008947c7dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15
+  maxHealth: 15
+  speed: 2
   priority: 1
   defaultMaterial: {fileID: 2100000, guid: eb8d14e2000569b42af10c8628485fc1, type: 2}
-  targetedMaterial: {fileID: 2100000, guid: a687ec9927e4d89498c869c0c71faa67, type: 2}
+  damagedMaterial: {fileID: 2100000, guid: 551fc8d265ef787419b8a1d898a6ed57, type: 2}
+  nearDeathMaterial: {fileID: 2100000, guid: a687ec9927e4d89498c869c0c71faa67, type: 2}
 --- !u!54 &8228855459173484632
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,15 +133,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-4509914174985680751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086901383778983996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 062e3d4bc05944141b661ba9f267153f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

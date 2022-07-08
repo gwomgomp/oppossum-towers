@@ -3,84 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Projectile : MonoBehaviour
-{
-  private bool trackEnemy = true;
+public class Projectile : MonoBehaviour {
+  private bool trackObject = true;
   private Vector3 targetPosition = Vector3.zero;
-  private GameObject targetGameObject = null;
+  private GameObject targetObject = null;
   
   private float speed = 10.0f;
   
   private EnemyHitEvent enemyHitEvent = null;
   private PositionHitEvent positionHitEvent = null;
-  
-  // Start is called before the first frame update
-  void Start()
-  {
-    
-  }
 
-  // Update is called once per frame
-  void Update()
-  {
+  void Update() {
     float step = speed * Time.deltaTime;
     
-    if (trackEnemy)
-    {
-      if (targetGameObject != null)
-      {
-        targetPosition = targetGameObject.transform.position;
-      }
-      else
-      {
-        trackEnemy = false;
+    if (trackObject) {
+      if (targetObject != null) {
+        targetPosition = targetObject.transform.position;
+      } else {
+        trackObject = false;
       }
     }
     
     transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
     
-    if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
-    {
-      if (trackEnemy && enemyHitEvent != null)
-      {
-        enemyHitEvent.Invoke(targetGameObject);
-        Destroy(gameObject);
-      }
-      else if (positionHitEvent != null)
-      {
+    if (Vector3.Distance(transform.position, targetPosition) < 0.5f) {
+      if (trackObject && enemyHitEvent != null) {
+        enemyHitEvent.Invoke(targetObject);
+      } else if (positionHitEvent != null) {
         positionHitEvent.Invoke(targetPosition);
-        Destroy(gameObject);
       }
+      
+      Destroy(gameObject);
     }
     
     Vector3 lookDirection = targetPosition - transform.position;
     transform.rotation = Quaternion.LookRotation(lookDirection);
   }
   
-  public void SetTargetPosition(Vector3 targetPosition)
-  {
+  public void SetTargetPosition(Vector3 targetPosition) {
     this.targetPosition = targetPosition;
-    trackEnemy = false;
+    trackObject = false;
   }
   
-  public void SetTargetGameObject(GameObject targetGameObject)
-  {
-    this.targetGameObject = targetGameObject;
-    trackEnemy = true;
+  public void SetTargetObject(GameObject targetObject) {
+    this.targetObject = targetObject;
+    trackObject = true;
   }
   
-  public void SetSpeed(float speed)
-  {
+  public void SetSpeed(float speed) {
     this.speed = speed;
   }
   
-  public void SetEnemyHitEvent(EnemyHitEvent enemyHitEvent)
-  {
+  public void SetEnemyHitEvent(EnemyHitEvent enemyHitEvent) {
     this.enemyHitEvent = enemyHitEvent;
   }
   
-  public void SetPositionHitEvent(PositionHitEvent positionHitEvent)
-  {
+  public void SetPositionHitEvent(PositionHitEvent positionHitEvent) {
     this.positionHitEvent = positionHitEvent;
   }
 }
