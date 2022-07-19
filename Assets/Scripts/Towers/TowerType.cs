@@ -20,5 +20,6 @@ public class TowerType : ScriptableObject {
   public float projectileSpeed;
   
   public GameObject projectilePrefab;
-  public GameObject areaEffectPrefab;
+  public StatusEffect statusEffect;
+  public AreaEffectType areaEffectType;
 }

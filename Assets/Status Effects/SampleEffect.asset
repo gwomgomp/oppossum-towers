@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SampleEffect
   m_EditorClassIdentifier: 
   slowPercentage: 50
-  damagePerSecond: 7
-  duration: 2
+  damagePerSecond: 5
+  duration: 10

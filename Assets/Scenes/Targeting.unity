@@ -530,6 +530,87 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff40a4ccba1dae141bdaf06d76d7ab33, type: 3}
+--- !u!1001 &732162165
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2145993215406542537, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_Name
+      value: Tower (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: towerType
+      value: 
+      objectReference: {fileID: 11400000, guid: 7366b420c21f0b44cbbd87031653db8c, type: 2}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: shotCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: damagePerShot
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: projectileSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: groundEffectPrefab
+      value: 
+      objectReference: {fileID: 3758010132418631429, guid: 8f2a23ea477d284439cc37964a722509, type: 3}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: projectileTracksEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
 --- !u!1001 &1415359810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -588,7 +669,7 @@ PrefabInstance:
     - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: towerType
       value: 
-      objectReference: {fileID: 11400000, guid: 562144a707391734ab118aea87d5b712, type: 2}
+      objectReference: {fileID: 11400000, guid: 7366b420c21f0b44cbbd87031653db8c, type: 2}
     - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: shotCooldown
       value: 2

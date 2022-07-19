@@ -179,20 +179,28 @@ public class Tower : MonoBehaviour {
   }
   
   private void OnEnemyHit(GameObject enemy) {
-    if (towerType.areaEffectPrefab != null) {
-      Instantiate(towerType.areaEffectPrefab, enemy.transform.position, Quaternion.identity);
+    if (towerType.areaEffectType != null) {
+      GameObject areaEffectObject = Instantiate(towerType.areaEffectType.areaEffectPrefab, enemy.transform.position, Quaternion.identity);
+      areaEffectObject.TryGetComponent(out AreaEffect areaEffect);
+      areaEffect.SetAreaEffectType(towerType.areaEffectType);
     }
     
     EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
       
     if (enemyStats != null) {
       enemyStats.RemoveHealth(towerType.damagePerShot);
+      
+      if (towerType.statusEffect != null) {
+        enemyStats.ApplyTimedStatusEffect(towerType.statusEffect, this);
+      }
     }
   }
   
   private void OnPositionHit(Vector3 position) {
-    if (towerType.areaEffectPrefab != null) {
-      Instantiate(towerType.areaEffectPrefab, position, Quaternion.identity);
+    if (towerType.areaEffectType != null) {
+      GameObject areaEffectObject = Instantiate(towerType.areaEffectType.areaEffectPrefab, position, Quaternion.identity);
+      areaEffectObject.TryGetComponent(out AreaEffect areaEffect);
+      areaEffect.SetAreaEffectType(towerType.areaEffectType);
     }
   }
 }

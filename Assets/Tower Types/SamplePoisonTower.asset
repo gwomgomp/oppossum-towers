@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: SampleCannonTower
+  m_Name: SamplePoisonTower
   m_EditorClassIdentifier: 
   targetingMethod: 0
   damagePerShot: 0
-  shotCooldown: 3
+  shotCooldown: 1
   range: 6
   projectileTracksEnemy: 1
-  projectileSpeed: 5
-  projectilePrefab: {fileID: 4654570622842903390, guid: 33693a547137b394dbd56359b7b863b6, type: 3}
-  areaEffectType: {fileID: 11400000, guid: e77da1b66c8d6724da54bd366cf34511, type: 2}
+  projectileSpeed: 8
+  projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
+  statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
+  areaEffectType: {fileID: 0}

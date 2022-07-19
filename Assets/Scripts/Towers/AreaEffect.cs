@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaEffect : MonoBehaviour {
-  public float duration;
-  public bool snapToGround;
-  
-  public StatusEffect statusEffect;
+  private AreaEffectType areaEffectType = null;
   
   private float timer = 0;
   
@@ -15,7 +12,7 @@ public class AreaEffect : MonoBehaviour {
   void Start() {
     enemiesInArea = new List<EnemyStats>();
     
-    if (snapToGround) {
+    if (areaEffectType.snapToGround) {
       // Ground level should be defined by the level in the future via global variable
       transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
@@ -24,9 +21,9 @@ public class AreaEffect : MonoBehaviour {
   void Update() {
     timer += Time.deltaTime;
     
-    if (timer >= duration) {
+    if (timer >= areaEffectType.duration) {
       foreach (EnemyStats enemy in enemiesInArea) {
-        enemy.RemoveStatusEffect(statusEffect);
+        enemy.RemoveStatusEffect(areaEffectType.statusEffect);
       }
       
       Destroy(gameObject);
@@ -40,7 +37,7 @@ public class AreaEffect : MonoBehaviour {
       if (enemyStats != null) {
         enemiesInArea.Add(enemyStats);
         
-        enemyStats.ApplyStatusEffect(statusEffect);
+        enemyStats.ApplyStatusEffect(areaEffectType.statusEffect);
       }
     }
   }
@@ -52,8 +49,12 @@ public class AreaEffect : MonoBehaviour {
       if (enemyStats != null) {
         enemiesInArea.Remove(enemyStats);
         
-        enemyStats.RemoveStatusEffect(statusEffect);
+        enemyStats.RemoveStatusEffect(areaEffectType.statusEffect);
       }
     }
+  }
+  
+  public void SetAreaEffectType(AreaEffectType areaEffectType) {
+    this.areaEffectType = areaEffectType;
   }
 }
