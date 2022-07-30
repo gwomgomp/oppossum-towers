@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f21bf442013e847886a062bd22002a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeToSpawn: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
-  timeBetweenSpawns: 15
-  amountToSpawn: 3
+  _typeToSpawn: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
+  _timeBetweenSpawns: 0
+  _amountToSpawn: 0
   <ResourceLocations>k__BackingField: []
 --- !u!33 &-7886700242132275171
 MeshFilter:

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -79,10 +78,20 @@ public class ResourceEditor : Editor {
             newResourceLocation.name = $"{type} {_resourceSpawner.ResourceLocations.Count + 1}";
             Undo.RegisterCreatedObjectUndo(newResourceLocation, "Create new spanw location");
             var newSpanwLocation = newResourceLocation.GetComponent<ResourceSpawnLocation>();
+            _resourceSpawner.ResourceLocations.RemoveAll(location => ReferenceEquals(location, null) ? false : (location ? false : true));
             _resourceSpawner.ResourceLocations.Add(newSpanwLocation);
             PrefabUtility.RecordPrefabInstancePropertyModifications(_resourceSpawner);
         }
     }
-    
+
+    private void OnDestroy() {
+        if (!Application.IsPlaying(this)) {
+            // Register Undo, so that when you ctrl-z the delete operation, it is re-added to the list
+            UnityEditor.Undo.RecordObject(_resourceSpawner, "Remove from parent");
+
+        }
+    }
+
+
 #endif
 }
