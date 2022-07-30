@@ -40,7 +40,7 @@ public class ResourceEditor : Editor {
         if (EditorApplication.isPlaying) {
             StartSpawningUI();
         } else {
-            NewLaneCheckpointButton();
+            NewCheckpointButton();
         }
     }
 
@@ -55,7 +55,7 @@ public class ResourceEditor : Editor {
         }
     }
 
-    private void NewLaneCheckpointButton() {
+    private void NewCheckpointButton() {
         NewCheckpointButton("ResourceLocation");
     }
 
