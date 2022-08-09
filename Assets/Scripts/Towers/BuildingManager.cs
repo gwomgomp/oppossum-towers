@@ -1,37 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour {
     public GameObject buildingMenu;
+    public GameObject adjustMenu;
 
+    private GameObject openMenu;
     private BuildingSpot openBuildingSpot;
 
     void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f)) {
-                if (hit.transform != null && hit.transform.gameObject.TryGetComponent(out BuildingSpot buildingSpot)) {
-                    DisplayBuildingOptions(buildingSpot);
-                }
-            }
+        if (
+            Input.GetMouseButtonDown(0)
+            && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 500f)
+            && hit.transform != null
+            && hit.transform.gameObject.TryGetComponent(out BuildingSpot buildingSpot)
+        ) {
+            DisplayMenu(buildingSpot);
+        }
+
+        if (Input.GetMouseButtonDown(1) && openMenu != null) {
+            CloseMenu();
         }
     }
 
-    private void DisplayBuildingOptions(BuildingSpot buildingSpot) {
+    private void DisplayMenu(BuildingSpot buildingSpot) {
         openBuildingSpot = buildingSpot;
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(buildingSpot.transform.position);
-        buildingMenu.SetActive(true);
-        buildingMenu.transform.position = screenPosition;
+        if (buildingSpot.Tower == null) {
+            openMenu = buildingMenu;
+        } else {
+            openMenu = adjustMenu;
+        }
+        openMenu.SetActive(true);
+        openMenu.transform.position = screenPosition;
     }
 
-    public void Build(string type) {
-        Debug.Log($"Building {type} on {openBuildingSpot.Name}");
-        CloseBuildingOptions();
+    public void Build(TowerType type) {
+        openBuildingSpot.Build(type);
+        CloseMenu();
     }
 
-    private void CloseBuildingOptions() {
+    public void Upgrade() {
+        Debug.Log($"Upgrading {openBuildingSpot.Name}");
+        CloseMenu();
+    }
+
+    public void Delete() {
+        openBuildingSpot.Clear();
+        CloseMenu();
+    }
+
+    private void CloseMenu() {
         openBuildingSpot = null;
-        buildingMenu.SetActive(false);
+        openMenu.SetActive(false);
+        openMenu = null;
     }
 }

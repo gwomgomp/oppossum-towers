@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +10,7 @@ public class Tower : MonoBehaviour {
 
     public TargetingMethod targetingMethod;
 
-    public float damagePerShot;
-    public float shotCooldown;
-    public float range;
+    public TowerType type;
 
     private float currentShotCooldown = 0.0f;
 
@@ -22,12 +19,12 @@ public class Tower : MonoBehaviour {
 
     void Start() {
         enemiesInRange = new HashSet<Enemy>();
-        currentShotCooldown = shotCooldown;
+        currentShotCooldown = type.ShotCooldown;
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
-        capsuleCollider.radius = range;
-        capsuleCollider.height = range * 4.0f;
+        capsuleCollider.radius = type.Range;
+        capsuleCollider.height = type.Range * 4.0f;
     }
 
     void Update() {
@@ -41,7 +38,7 @@ public class Tower : MonoBehaviour {
     private void UpdateShotCooldown() {
         if (currentShotCooldown <= 0.0f && currentTarget != null) {
             ShootAtEnemy();
-            currentShotCooldown = shotCooldown;
+            currentShotCooldown = type.ShotCooldown;
         } else {
             currentShotCooldown -= Time.deltaTime;
         }
@@ -49,7 +46,7 @@ public class Tower : MonoBehaviour {
 
     private void ShootAtEnemy() {
         if (currentTarget != null) {
-            bool killed = currentTarget.Damage(damagePerShot);
+            bool killed = currentTarget.Damage(type.DamagePerShot);
             if (killed) {
                 enemiesInRange.Remove(currentTarget);
             }
