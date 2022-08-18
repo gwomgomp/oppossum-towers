@@ -13,23 +13,33 @@ public class ResourceEditor : Editor {
 
     private void OnEnable() {
         _resourceSpawner = target as ResourceSpawner;
+
     }
 
 #if UNITY_EDITOR
     public void OnSceneGUI() {
         if (_resourceSpawner.transform == Selection.activeTransform) {
-            DrawCheckpointHandles();
+            DrawSpawnHandles();
+        }
+
+        EditorGUI.BeginChangeCheck();
+        var typeToSpawn = _resourceSpawner.TypeToSpawn;
+        if (EditorGUI.EndChangeCheck()) {            
+            Undo.RecordObject(_resourceSpawner, "Spawner");
+            var viewedModelFilter = ((MeshFilter)_resourceSpawner.GetComponent("MeshFilter"));
+            var newMesh = Resources.Load<Mesh>($"Meshes/bigbrick");
+            viewedModelFilter.mesh = newMesh;
         }
     }
 
-    private void DrawCheckpointHandles() {
-        var checkpoints = _resourceSpawner.GetComponentsInChildren<ResourceSpawnLocation>();
-        foreach (var checkpoint in checkpoints) {
+    private void DrawSpawnHandles() {
+        var spawnpoints = _resourceSpawner.GetComponentsInChildren<ResourceSpawnLocation>();
+        foreach (var spawnpoint in spawnpoints) {
             EditorGUI.BeginChangeCheck();
-            var newTargetPosition = Handles.PositionHandle(checkpoint.transform.position, checkpoint.transform.rotation);
+            var newTargetPosition = Handles.PositionHandle(spawnpoint.transform.position, spawnpoint.transform.rotation);
             if (EditorGUI.EndChangeCheck()) {
-                Undo.RecordObject(checkpoint.transform, "Move resource spawn location");
-                checkpoint.transform.position = newTargetPosition;
+                Undo.RecordObject(spawnpoint.transform, "Move resource spawn location");
+                spawnpoint.transform.position = newTargetPosition;
             }
         }
     }
@@ -40,10 +50,14 @@ public class ResourceEditor : Editor {
         if (EditorApplication.isPlaying) {
             StartSpawningUI();
         } else {
-            NewCheckpointButton();
+            NewSpawnpointButton();
+            CleanupSpanwLocationsButton();
         }
     }
 
+    /// <summary>
+    /// Start the spawning of resources
+    /// </summary>
     private void StartSpawningUI() {
         if (!_spawningStarted && GUILayout.Button("Start Spawning")) {
             _resourceSpawner.StartSpawning();
@@ -55,19 +69,27 @@ public class ResourceEditor : Editor {
         }
     }
 
-    private void NewCheckpointButton() {
-        NewCheckpointButton("ResourceLocation");
+    /// <summary>
+    /// Button to add a new Spawnlocation to the prefab
+    /// </summary>
+    private void NewSpawnpointButton() {
+        NewSpawnpointButton("ResourceLocation");
     }
 
-    private void NewCheckpointButton(string type) {
+    /// <summary>
+    /// Add a ResourceLocation to spawn from
+    /// </summary>
+    /// <param name="type">Type of the prefab to spawn and add to the Spawner</param>
+    private void NewSpawnpointButton(string type) {
         if (GUILayout.Button($"Add {type}")) {
 
             var resourceLocationPrefab = Resources.Load<GameObject>($"Prefabs/{type}");
             var instantiationTransform = _resourceSpawner.transform;
 
+            // Randomly place location around the prefab
             var offset = Random.insideUnitCircle * 5;
-
             var instantiationPosition = instantiationTransform.position + new Vector3(offset.x, 0, offset.y);
+
             var newResourceLocation = Instantiate(
                 resourceLocationPrefab,
                 instantiationPosition,
@@ -78,19 +100,37 @@ public class ResourceEditor : Editor {
             newResourceLocation.name = $"{type} {_resourceSpawner.ResourceLocations.Count + 1}";
             Undo.RegisterCreatedObjectUndo(newResourceLocation, "Create new spanw location");
             var newSpanwLocation = newResourceLocation.GetComponent<ResourceSpawnLocation>();
-            _resourceSpawner.ResourceLocations.RemoveAll(location => ReferenceEquals(location, null) ? false : (location ? false : true));
+
+            CleanUpSpawnlocations();
+
             _resourceSpawner.ResourceLocations.Add(newSpanwLocation);
             PrefabUtility.RecordPrefabInstancePropertyModifications(_resourceSpawner);
         }
     }
 
-    private void OnDestroy() {
-        if (!Application.IsPlaying(this)) {
-            // Register Undo, so that when you ctrl-z the delete operation, it is re-added to the list
-            UnityEditor.Undo.RecordObject(_resourceSpawner, "Remove from parent");
-
+    /// <summary>
+    /// Button to clean Spawnlocations
+    /// </summary>
+    private void CleanupSpanwLocationsButton() {
+        if (GUILayout.Button($"Cleanup Spawnlocations")) {
+            CleanUpSpawnlocations();
         }
     }
+
+    /// <summary>
+    /// Cleanup deleted or "None" spawnpoints
+    /// </summary>
+    private void CleanUpSpawnlocations() {
+        _resourceSpawner.ResourceLocations.RemoveAll(location => location == null || ReferenceEquals(location, null));
+    }
+
+    //private void OnDestroy() {
+    //    if (!Application.IsPlaying(this)) {
+    //        // Register Undo, so that when you ctrl-z the delete operation, it is re-added to the list
+    //        UnityEditor.Undo.RecordObject(_resourceSpawner, "Removed from parent");
+
+    //    }
+    //}
 
 
 #endif
