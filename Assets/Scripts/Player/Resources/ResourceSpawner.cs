@@ -34,6 +34,11 @@ public class ResourceSpawner : MonoBehaviour {
         }
     }
 
+    public void ResourceTaken() {
+        _amountSpawned -= 1;
+        _timeSinceLastSpawn = 0f;
+    }
+
     internal void StartSpawning() {
         _spawning = true;
     }

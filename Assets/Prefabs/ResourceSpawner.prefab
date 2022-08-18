@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -2388835129623189487}
   - component: {fileID: -7886700242132275171}
   - component: {fileID: -6015761043971004333}
+  - component: {fileID: 8042533247728078655}
   m_Layer: 0
   m_Name: ResourceSpawner
   m_TagString: Untagged
@@ -48,8 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TypeToSpawn>k__BackingField: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
   _timeBetweenSpawns: 0
-  _amountToSpawn: 0
-  <ResourceLocations>k__BackingField: []
+  _amountToSpawn: 1
+  <ResourceLocations>k__BackingField:
+  - {fileID: 0}
 --- !u!33 &-7886700242132275171
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -100,3 +102,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8042533247728078655
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471891747423324426}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
