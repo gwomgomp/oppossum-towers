@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour {
             return;
         }
 
-        if (initialized && !carryingLoot && collider.CompareTag("Loot")) {
+        if (initialized && !carryingLoot && collider.CompareTag(TagConstants.LOOT)) {
             AttachLootToTransform(collider.gameObject);
             return;
         }

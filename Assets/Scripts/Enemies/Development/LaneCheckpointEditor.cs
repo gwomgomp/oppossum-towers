@@ -74,8 +74,8 @@ public class LaneCheckpointEditor : Editor {
             if (lastCheckpoint != null) {
                 instantiationTransform = lastCheckpoint.transform;
             }
-            var offset = Random.insideUnitCircle * 5;
-            var instantiationPosition = instantiationTransform.position + new Vector3(offset.x, 0, offset.y);
+            var randomOffset = Random.insideUnitCircle * 5; // make new checkpoint not overlap previous one
+            var instantiationPosition = instantiationTransform.position + new Vector3(randomOffset.x, 0, randomOffset.y);
             var newCheckpointObject = Instantiate(
                 checkpointPrefab,
                 instantiationPosition,
