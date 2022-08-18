@@ -96,15 +96,15 @@ public class Tower : MonoBehaviour {
     Collider target = null;
     
     foreach (Collider collider in enemiesInRange) {
-      EnemyStats enemyStats = collider.gameObject.GetComponent<EnemyStats>();
+      Enemy enemy = collider.gameObject.GetComponent<Enemy>();
       
-      if (enemyStats != null) {
+      if (enemy != null) {
         if (target == null) {
           target = collider;
         } else {
-          EnemyStats targetStats = target.gameObject.GetComponent<EnemyStats>();
+          Enemy targetStats = target.gameObject.GetComponent<Enemy>();
           
-          if (targetStats != null && targetStats.GetPriority() < enemyStats.GetPriority()) {
+          if (targetStats != null && targetStats.GetPriority() < enemy.GetPriority()) {
             target = collider;
           }
         }
@@ -118,15 +118,15 @@ public class Tower : MonoBehaviour {
     Collider target = null;
     
     foreach (Collider collider in enemiesInRange) {
-      EnemyStats enemyStats = collider.gameObject.GetComponent<EnemyStats>();
+      Enemy enemy = collider.gameObject.GetComponent<Enemy>();
       
-      if (enemyStats != null) {
+      if (enemy != null) {
         if (target == null) {
           target = collider;
         } else {
-          EnemyStats targetStats = target.gameObject.GetComponent<EnemyStats>();
+          Enemy targetStats = target.gameObject.GetComponent<Enemy>();
           
-          if (targetStats != null && targetStats.GetPriority() > enemyStats.GetPriority()) {
+          if (targetStats != null && targetStats.GetPriority() > enemy.GetPriority()) {
             target = collider;
           }
         }
@@ -140,13 +140,13 @@ public class Tower : MonoBehaviour {
     Collider target = null;
     
     foreach (Collider collider in enemiesInRange) {
-      EnemyStats enemyStats = collider.gameObject.GetComponent<EnemyStats>();
+      Enemy enemy = collider.gameObject.GetComponent<Enemy>();
       
-      if (enemyStats != null) {
+      if (enemy != null) {
         if (target == null) {
           target = collider;
         } else {
-          EnemyStats targetStats = target.gameObject.GetComponent<EnemyStats>();
+          Enemy targetStats = target.gameObject.GetComponent<Enemy>();
           
           if (targetStats != null && Vector3.Distance(transform.position, collider.gameObject.transform.position) < Vector3.Distance(transform.position, target.gameObject.transform.position)) {
             target = collider;
@@ -169,6 +169,7 @@ public class Tower : MonoBehaviour {
   private void OnTriggerEnter(Collider other) {
     if (other.CompareTag(TagConstants.ENEMY) && !enemiesInRange.Contains(other)) {
       enemiesInRange.Add(other);
+      Debug.Log("Target");
     }
   }
   
@@ -178,20 +179,20 @@ public class Tower : MonoBehaviour {
     }
   }
   
-  private void OnEnemyHit(GameObject enemy) {
+  private void OnEnemyHit(GameObject enemyObject) {
     if (towerType.areaEffectType != null) {
-      GameObject areaEffectObject = Instantiate(towerType.areaEffectType.areaEffectPrefab, enemy.transform.position, Quaternion.identity);
+      GameObject areaEffectObject = Instantiate(towerType.areaEffectType.areaEffectPrefab, enemyObject.transform.position, Quaternion.identity);
       areaEffectObject.TryGetComponent(out AreaEffect areaEffect);
       areaEffect.SetAreaEffectType(towerType.areaEffectType);
     }
     
-    EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
+    Enemy enemy = enemyObject.GetComponent<Enemy>();
       
-    if (enemyStats != null) {
-      enemyStats.RemoveHealth(towerType.damagePerShot);
+    if (enemy != null) {
+      enemy.Damage(towerType.damagePerShot);
       
       if (towerType.statusEffect != null) {
-        enemyStats.ApplyTimedStatusEffect(towerType.statusEffect, this);
+        enemy.ApplyTimedStatusEffect(towerType.statusEffect, this);
       }
     }
   }

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetingMethod: 0
   damagePerShot: 0
-  shotCooldown: 3
+  shotCooldown: 1
   range: 6
-  projectileTracksEnemy: 1
-  projectileSpeed: 5
+  projectileTracksEnemy: 0
+  projectileSpeed: 8
   projectilePrefab: {fileID: 4654570622842903390, guid: 33693a547137b394dbd56359b7b863b6, type: 3}
+  statusEffect: {fileID: 0}
   areaEffectType: {fileID: 11400000, guid: e77da1b66c8d6724da54bd366cf34511, type: 2}

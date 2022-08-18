@@ -7,10 +7,10 @@ public class AreaEffect : MonoBehaviour {
   
   private float timer = 0;
   
-  private List<EnemyStats> enemiesInArea;
+  private List<Enemy> enemiesInArea;
   
   void Start() {
-    enemiesInArea = new List<EnemyStats>();
+    enemiesInArea = new List<Enemy>();
     
     if (areaEffectType.snapToGround) {
       // Ground level should be defined by the level in the future via global variable
@@ -22,7 +22,7 @@ public class AreaEffect : MonoBehaviour {
     timer += Time.deltaTime;
     
     if (timer >= areaEffectType.duration) {
-      foreach (EnemyStats enemy in enemiesInArea) {
+      foreach (Enemy enemy in enemiesInArea) {
         enemy.RemoveStatusEffect(areaEffectType.statusEffect);
       }
       
@@ -32,24 +32,24 @@ public class AreaEffect : MonoBehaviour {
   
   private void OnTriggerEnter(Collider other) {
     if (other.CompareTag(TagConstants.ENEMY)) {
-      EnemyStats enemyStats = other.gameObject.GetComponent<EnemyStats>();
+      Enemy enemy = other.gameObject.GetComponent<Enemy>();
       
-      if (enemyStats != null) {
-        enemiesInArea.Add(enemyStats);
+      if (enemy != null) {
+        enemiesInArea.Add(enemy);
         
-        enemyStats.ApplyStatusEffect(areaEffectType.statusEffect);
+        enemy.ApplyStatusEffect(areaEffectType.statusEffect);
       }
     }
   }
   
   private void OnTriggerExit(Collider other) {
     if (other.CompareTag(TagConstants.ENEMY)) {
-      EnemyStats enemyStats = other.gameObject.GetComponent<EnemyStats>();
+      Enemy enemy = other.gameObject.GetComponent<Enemy>();
       
-      if (enemyStats != null) {
-        enemiesInArea.Remove(enemyStats);
+      if (enemy != null) {
+        enemiesInArea.Remove(enemy);
         
-        enemyStats.RemoveStatusEffect(areaEffectType.statusEffect);
+        enemy.RemoveStatusEffect(areaEffectType.statusEffect);
       }
     }
   }
