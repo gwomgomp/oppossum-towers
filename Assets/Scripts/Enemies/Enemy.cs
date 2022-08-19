@@ -1,8 +1,14 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
     public float health;
+    private float baseSpeed;
+    private float modifiedSpeed;
+    
+    private float damagePerSecondReceiving;
 
     private const float rotationSpeed = 5f;
     private const float moveDampening = 5f;
@@ -15,11 +21,21 @@ public class Enemy : MonoBehaviour {
 
     private bool carryingLoot = false;
     private GameObject currentLoot = null;
+  
+    private List<StatusEffect> activeStatusEffects;
+    private List<TimedStatusEffect> timedStatusEffects;
+    
+    void Start() {
+        activeStatusEffects = new List<StatusEffect>();
+        timedStatusEffects = new List<TimedStatusEffect>();
+    }
 
     public void Initialize(EnemyType type, LaneCheckpoint startingCheckpoint) {
         if (!initialized) {
             this.type = type;
             health = type.MaxHealth;
+            baseSpeed = type.Speed;
+            modifiedSpeed = type.Speed;
             currentTarget = startingCheckpoint;
             transform.rotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
             initialized = true;
@@ -29,6 +45,9 @@ public class Enemy : MonoBehaviour {
     }
 
     public void Update() {
+        UpdateTimedStatusEffects();
+        Damage(damagePerSecondReceiving * Time.deltaTime);
+        
         if (initialized && currentTarget != null) {
             Move();
         }
@@ -40,7 +59,7 @@ public class Enemy : MonoBehaviour {
                 currentTarget.transform.position,
                 ref velocity,
                 CalculateExpectedTravelTime(),
-                type.Speed
+                modifiedSpeed
             );
         transform.position = newPosition;
 
@@ -128,17 +147,123 @@ public class Enemy : MonoBehaviour {
             return false;
         }
     }
+  
+    public void ApplyStatusEffect(StatusEffect statusEffect) {
+        activeStatusEffects.Add(statusEffect);
+        
+        RefreshStatusEffects();
+    }
+    
+    public void RemoveStatusEffect(StatusEffect statusEffect) {
+        activeStatusEffects.Remove(statusEffect);
+        
+        RefreshStatusEffects();
+    }
+    
+    public void ApplyTimedStatusEffect(StatusEffect statusEffect, Tower originTower)
+    {
+        TimedStatusEffect newTimedStatusEffect = new TimedStatusEffect(statusEffect, originTower);
+        
+        bool statusEffectMissing = true;
+        
+        foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
+            if (newTimedStatusEffect.Equals(timedStatusEffect)) {
+                timedStatusEffect.RefreshTimer();
+                statusEffectMissing = false;
+            }
+        }
+        
+        if (statusEffectMissing) {
+            timedStatusEffects.Add(newTimedStatusEffect);
+        }
+        
+        RefreshStatusEffects();
+    }
+    
+    private void RefreshStatusEffects() {
+        float maxSlowPercentage = 0.0f;
+        float totalDamagePerSecond = 0.0f;
+        
+        foreach (StatusEffect statusEffect in activeStatusEffects) {
+            if (statusEffect.slowPercentage > maxSlowPercentage) {
+                maxSlowPercentage = statusEffect.slowPercentage;
+            }
+            
+            totalDamagePerSecond += statusEffect.damagePerSecond;
+        }
+        
+        foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
+            if (timedStatusEffect.statusEffect.slowPercentage > maxSlowPercentage) {
+                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage;
+            }
+            
+            totalDamagePerSecond += timedStatusEffect.statusEffect.damagePerSecond;
+        }
+        
+        modifiedSpeed = baseSpeed * ((100.0f - maxSlowPercentage) / 100.0f);
+        damagePerSecondReceiving = totalDamagePerSecond;
+    }
+    
+    private void UpdateTimedStatusEffects() {
+        List<int> toBeDeleted = new List<int>();
+        
+        for (int i = 0; i < timedStatusEffects.Count; i++) {
+            TimedStatusEffect timedStatusEffect = timedStatusEffects[i];
+            
+            if (timedStatusEffect.HasEnded()) {
+                toBeDeleted.Add(i);
+            } else {
+                timedStatusEffect.UpdateTimer(Time.deltaTime);
+            }
+        }
+        
+        for (int i = toBeDeleted.Count - 1; i >= 0; i--){
+            timedStatusEffects.RemoveAt(toBeDeleted[i]);
+        }
+        
+        if (toBeDeleted.Count > 0) {
+            RefreshStatusEffects();
+        }
+    }
 
     public int GetPriority() {
         return type.Priority;
     }
+}
 
-    // These two methods are purely for visualization purposes (i.e. serve no functional purpose)
-    public void BeTargeted() {
-        GetComponent<Renderer>().material = type.TargetMaterial;
+public class TimedStatusEffect {
+    public StatusEffect statusEffect;
+    public Tower originTower;
+    
+    private float timer = 0.0f;
+    
+    public TimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
+        this.statusEffect = statusEffect;
+        this.originTower = originTower;
     }
-
-    public void BeUntargeted() {
-        GetComponent<Renderer>().material = type.DefaultMaterial;
+    
+    public void UpdateTimer(float timeDelta) {
+        timer += timeDelta;
+    }
+    
+    public bool HasEnded() {
+        if (timer >= statusEffect.duration) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public bool Equals(TimedStatusEffect timedStatusEffect) {
+        if (timedStatusEffect.statusEffect == this.statusEffect && timedStatusEffect.originTower == this.originTower)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public void RefreshTimer() {
+        timer = 0.0f;
     }
 }
