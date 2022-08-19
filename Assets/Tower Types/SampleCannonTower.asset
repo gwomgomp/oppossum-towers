@@ -20,4 +20,4 @@ MonoBehaviour:
   projectileSpeed: 8
   projectilePrefab: {fileID: 4654570622842903390, guid: 33693a547137b394dbd56359b7b863b6, type: 3}
   statusEffect: {fileID: 0}
-  areaEffectType: {fileID: 11400000, guid: e77da1b66c8d6724da54bd366cf34511, type: 2}
+  areaEffectPrefab: {fileID: 3758010132418631429, guid: 8f2a23ea477d284439cc37964a722509, type: 3}

@@ -110,6 +110,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc07dc3d198663489b76f4f7cb42ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
-  snapToGround: 0
-  statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
+  areaEffectType: {fileID: 11400000, guid: e77da1b66c8d6724da54bd366cf34511, type: 2}

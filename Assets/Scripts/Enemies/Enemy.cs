@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
     public float health;
-    public float baseSpeed;
-    public float modifiedSpeed;
+    private float baseSpeed;
+    private float modifiedSpeed;
     
     private float damagePerSecondReceiving;
 
@@ -210,7 +210,7 @@ public class Enemy : MonoBehaviour {
         for (int i = 0; i < timedStatusEffects.Count; i++) {
             TimedStatusEffect timedStatusEffect = timedStatusEffects[i];
             
-            if(timedStatusEffect.HasEnded()) {
+            if (timedStatusEffect.HasEnded()) {
                 toBeDeleted.Add(i);
             } else {
                 timedStatusEffect.UpdateTimer(Time.deltaTime);
