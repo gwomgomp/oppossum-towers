@@ -17,16 +17,32 @@ public class ThirdPersonMovement : MonoBehaviour
     public float turnSmoothtime = 0.1f;
     float turnSmoothVelocity;
 
-    Vector3 velocity;
     bool isGrounded;
+    Vector3 moveDirection;
+
+    //Sliding parameters
+    private float slopeSpeed = 1f;
+    private Vector3 hitPointNormal;
+    private bool IsSliding{
+        get{
+            if(controller.isGrounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 2f)){
+                hitPointNormal = slopeHit.normal;
+                Debug.Log(Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit);
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }else{
+                return false;
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded && velocity.y < 0){
-            velocity.y = -2f;
+        if (isGrounded && moveDirection.y < 0 && !IsSliding){
+            moveDirection = Vector3.zero;
+            moveDirection.y = -2f;
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -39,14 +55,26 @@ public class ThirdPersonMovement : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothtime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            controller.Move(direction * speed * Time.deltaTime);
+            //this is breaking stuff
+            moveDirection = direction * speed;
+
+            //controller.Move(direction * speed * Time.deltaTime);
         }
 
         if(Input.GetButtonDown("Jump") && isGrounded){
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            moveDirection.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        if(!isGrounded){
+            Debug.Log("in the air");
+            moveDirection.y += gravity * Time.deltaTime;
+        }
+
+        //Slippery Slope
+        if(IsSliding){
+            moveDirection += new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
+        }
+        
+        controller.Move(moveDirection * Time.deltaTime);
     }
 }
