@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
+  m_Name: SampleCannonTower
+  m_EditorClassIdentifier: 
+  targetingMethod: 0
+  damagePerShot: 0
+  shotCooldown: 1
+  range: 6
+  projectileTracksEnemy: 0
+  projectileSpeed: 8
+  projectilePrefab: {fileID: 4654570622842903390, guid: 33693a547137b394dbd56359b7b863b6, type: 3}
+  statusEffect: {fileID: 0}
+  areaEffectPrefab: {fileID: 3758010132418631429, guid: 8f2a23ea477d284439cc37964a722509, type: 3}
