@@ -336,6 +336,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 2145993215406542538, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: m_Radius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2145993215406542542, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -384,6 +388,10 @@ PrefabInstance:
       propertyPath: range
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
+      propertyPath: towerType
+      value: 
+      objectReference: {fileID: 11400000, guid: 899137fa386dbae41bc693cec42a6c79, type: 2}
     - target: {fileID: 7662677674335646346, guid: db8ed48f8c644054e804a9f66da9124e, type: 3}
       propertyPath: shotCooldown
       value: 1

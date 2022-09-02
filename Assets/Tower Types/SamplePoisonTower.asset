@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
+  m_Name: SamplePoisonTower
+  m_EditorClassIdentifier: 
+  targetingMethod: 2
+  damagePerShot: 0
+  shotCooldown: 0.5
+  range: 8
+  projectileTracksEnemy: 1
+  projectileSpeed: 12
+  projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
+  statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
+  areaEffectPrefab: {fileID: 0}
