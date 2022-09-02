@@ -15,25 +15,19 @@ public class ThirdPersonMovement : MonoBehaviour {
 
     //Sliding parameters
     public float slideSpeed = 10f;
-    private Vector3 hitPointNormal;
+    private Vector3 lastCollisionNormal;
     private bool isSliding = false;
 
     void Update() {
-        Vector3 direction = CalculateDirection();
-        Vector3 moveDirection = CalculateMoveDirection(direction);
-
-        controller.Move(moveDirection * Time.deltaTime);
-
-        if (direction.magnitude >= 0.1f) {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        }
+        Vector3 viewDirection = CalculateViewDirection();
+        RotateTowardsViewDirection(viewDirection);        
+        moveDirection = CalculateMoveDirection(moveDirection, viewDirection);
+        ExecuteMove();
     }
 
-    private Vector3 CalculateDirection() {
+    private Vector3 CalculateViewDirection() {
         if (isSliding) {
-            return Vector3.Cross(Vector3.Cross(hitPointNormal, Vector3.down), hitPointNormal);
+            return Vector3.Cross(Vector3.Cross(lastCollisionNormal, Vector3.down), lastCollisionNormal);
         } else {
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
@@ -41,32 +35,44 @@ public class ThirdPersonMovement : MonoBehaviour {
         }
     }
 
-    private Vector3 CalculateMoveDirection(Vector3 direction) {
+    private Vector3 CalculateMoveDirection(Vector3 currentMoveDirection, Vector3 viewDirection) {
         if (isSliding) {
-            float angleFactor = Mathf.Clamp(Vector3.Dot(direction, Vector3.down) * 2, 0.1f, 1f);
-            return direction * slideSpeed * angleFactor;
+            float angleFactor = Mathf.Clamp(Vector3.Dot(viewDirection, Vector3.down) * 1.2f, 0.5f, 1f);
+            return viewDirection * slideSpeed * angleFactor;
         } else {
-            if (direction.magnitude >= 0.1f) {
-                moveDirection += direction * speed;
-                // fucky because we don't want to limit total speed, only movement speed with jumping excluded
-                Vector2 clampedMoveDirection = Vector2.ClampMagnitude(new Vector2(moveDirection.x, moveDirection.z), maxSpeed);
-                moveDirection.x = clampedMoveDirection.x;
-                moveDirection.z = clampedMoveDirection.y;
+            if (viewDirection.magnitude >= 0.1f) {
+                currentMoveDirection += viewDirection * speed;
             } else {
                 // stop movement when direction is not pointing anywhere
-                moveDirection.x = 0;
-                moveDirection.z = 0;
+                currentMoveDirection.x = 0;
+                currentMoveDirection.z = 0;
             }
 
             if (controller.isGrounded) {
                 if (Input.GetButtonDown("Jump")) {
-                    moveDirection.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                    currentMoveDirection.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 }
             } else {
-                moveDirection.y += gravity * Time.deltaTime;
+                currentMoveDirection.y += gravity * Time.deltaTime;
             }
 
-            return moveDirection;
+            return currentMoveDirection;
+        }
+    }
+
+    private void ExecuteMove() {
+        // fucky because we don't want to limit total speed, only movement speed with jumping excluded
+        Vector2 clampedMoveDirection = Vector2.ClampMagnitude(new Vector2(moveDirection.x, moveDirection.z), maxSpeed);
+        moveDirection.x = clampedMoveDirection.x;
+        moveDirection.z = clampedMoveDirection.y;
+        controller.Move(moveDirection * Time.deltaTime);
+    }
+
+    private void RotateTowardsViewDirection(Vector3 viewDirection) {
+        if (viewDirection.magnitude >= 0.1f) {
+            float targetAngle = Mathf.Atan2(viewDirection.x, viewDirection.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
     }
 
@@ -76,7 +82,7 @@ public class ThirdPersonMovement : MonoBehaviour {
     void OnControllerColliderHit(ControllerColliderHit hit) {
         if (Vector3.Angle(hit.normal, Vector3.up) > controller.slopeLimit) {
             if (!isSliding) {
-                hitPointNormal = hit.normal;
+                lastCollisionNormal = hit.normal;
                 isSliding = true;
             }
         } else {

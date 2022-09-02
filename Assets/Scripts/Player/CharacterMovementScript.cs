@@ -7,7 +7,7 @@ public class CharacterMovementScript : MonoBehaviour {
     public Camera playerCamera;
 
     void Update() {
-        //if the left button of is clicked
+        //if the left mouse button is clicked
         if (Input.GetMouseButton(0)) {
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit)) {
