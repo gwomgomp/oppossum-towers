@@ -52,6 +52,9 @@ public class Spawner : MonoBehaviour {
 
     public void PrepareNewRound(int roundNumber) {
         currentWaves = waves.Where(wave => wave.RoundToSpawnIn == roundNumber).Select(wave => new Wave(wave)).ToList();
+        if (currentWaves.Count > 0) {
+            finishedRound = false;
+        }
     }
 
     public (LaneCheckpoint, int, int) GetLastCheckpoint() {
