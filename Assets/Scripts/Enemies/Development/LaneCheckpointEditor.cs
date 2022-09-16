@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 [CustomEditor(typeof(Spawner)), CanEditMultipleObjects]
 public class LaneCheckpointEditor : Editor {
@@ -16,7 +15,6 @@ public class LaneCheckpointEditor : Editor {
         spawner = target as Spawner;
     }
 
-#if UNITY_EDITOR
     public void OnSceneGUI() {
         if (spawner.transform == Selection.activeTransform) {
             DrawCheckpointHandles();
@@ -118,5 +116,5 @@ public class LaneCheckpointEditor : Editor {
             }
         }
     }
-#endif
 }
+#endif
