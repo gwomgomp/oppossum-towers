@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Projectile : MonoBehaviour {
     private bool trackObject = true;
@@ -14,29 +11,29 @@ public class Projectile : MonoBehaviour {
     private PositionHitEvent positionHitEvent = null;
 
     void Update() {
-    float step = speed * Time.deltaTime;
+        float step = speed * Time.deltaTime;
 
-    if (trackObject) {
-        if (targetObject != null) {
-            targetPosition = targetObject.transform.position;
-        } else {
-            trackObject = false;
-        }
-    }
-
-    transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-
-    if (Vector3.Distance(transform.position, targetPosition) < 0.5f) {
-        if (trackObject && enemyHitEvent != null) {
-            enemyHitEvent.Invoke(targetObject);
-        } else if (positionHitEvent != null) {
-            positionHitEvent.Invoke(targetPosition);
+        if (trackObject) {
+            if (targetObject != null) {
+                targetPosition = targetObject.transform.position;
+            } else {
+                trackObject = false;
+            }
         }
 
-        Destroy(gameObject);
-    }
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
-    Vector3 lookDirection = targetPosition - transform.position;
+        if (Vector3.Distance(transform.position, targetPosition) < 0.5f) {
+            if (trackObject && enemyHitEvent != null) {
+                enemyHitEvent.Invoke(targetObject);
+            } else if (positionHitEvent != null) {
+                positionHitEvent.Invoke(targetPosition);
+            }
+
+            Destroy(gameObject);
+        }
+
+        Vector3 lookDirection = targetPosition - transform.position;
         transform.rotation = Quaternion.LookRotation(lookDirection);
     }
 

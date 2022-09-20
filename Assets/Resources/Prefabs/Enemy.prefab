@@ -130,8 +130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  baseSpeed: 0
-  modifiedSpeed: 0
 --- !u!1 &9111847393859845161
 GameObject:
   m_ObjectHideFlags: 0

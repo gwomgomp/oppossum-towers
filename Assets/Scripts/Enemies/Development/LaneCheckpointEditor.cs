@@ -9,8 +9,6 @@ public class LaneCheckpointEditor : Editor {
 
     private Spawner spawner;
 
-    private bool spawningStarted = false;
-
     private void OnEnable() {
         spawner = target as Spawner;
     }
@@ -36,23 +34,10 @@ public class LaneCheckpointEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        if (EditorApplication.isPlaying) {
-            StartSpawningUI();
-        } else {
+        if (!EditorApplication.isPlaying) {
             NewLaneCheckpointButton();
             NewHoardCheckpointButton();
             CorrectNameAndOrderButton();
-        }
-    }
-
-    private void StartSpawningUI() {
-        if (!spawningStarted && GUILayout.Button("Start Spawning")) {
-            spawner.StartSpawning();
-            spawningStarted = true;
-        }
-
-        if (spawningStarted) {
-            GUILayout.Label("Spawning started");
         }
     }
 
@@ -72,8 +57,8 @@ public class LaneCheckpointEditor : Editor {
             if (lastCheckpoint != null) {
                 instantiationTransform = lastCheckpoint.transform;
             }
-            var randomOffset = Random.insideUnitCircle * 5; // make new checkpoint not overlap previous one
-            var instantiationPosition = instantiationTransform.position + new Vector3(randomOffset.x, 0, randomOffset.y);
+            var offset = Random.insideUnitCircle * 5;
+            var instantiationPosition = instantiationTransform.position + new Vector3(offset.x, 0, offset.y);
             var newCheckpointObject = Instantiate(
                 checkpointPrefab,
                 instantiationPosition,

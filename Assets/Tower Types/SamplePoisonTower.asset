@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
   m_Name: SamplePoisonTower
   m_EditorClassIdentifier: 
-  targetingMethod: 0
+  targetingMethod: 2
   damagePerShot: 0
   shotCooldown: 0.5
   range: 8
@@ -20,4 +20,4 @@ MonoBehaviour:
   projectileSpeed: 12
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
   statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
-  areaEffectType: {fileID: 0}
+  areaEffectPrefab: {fileID: 0}

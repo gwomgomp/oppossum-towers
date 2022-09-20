@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyHitEvent : UnityEvent<GameObject> {}
+public class EnemyHitEvent : UnityEvent<GameObject> { }
 
-public class PositionHitEvent : UnityEvent<Vector3> {}
+public class PositionHitEvent : UnityEvent<Vector3> { }
 
 public class Tower : MonoBehaviour {
     public TowerType towerType;
@@ -76,20 +76,12 @@ public class Tower : MonoBehaviour {
     private void UpdateTarget() {
         PurgeDestroyedEnemies();
 
-        switch (towerType.targetingMethod) {
-            case TowerType.TargetingMethod.HighestPriority:
-            currentTarget = FindHighestPriorityEnemy();
-            break;
-            case TowerType.TargetingMethod.LowestPriority:
-            currentTarget = FindLowestPriorityEnemy();
-            break;
-            case TowerType.TargetingMethod.Closest:
-            currentTarget = FindClosestEnemy();
-            break;
-            default:
-            currentTarget = null;
-            break;
-        }
+        currentTarget = towerType.targetingMethod switch {
+            TowerType.TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
+            TowerType.TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
+            TowerType.TargetingMethod.Closest => FindClosestEnemy(),
+            _ => null
+        };
     }
 
     private Collider FindHighestPriorityEnemy() {
@@ -180,7 +172,7 @@ public class Tower : MonoBehaviour {
 
     private void OnEnemyHit(GameObject enemyObject) {
         if (towerType.areaEffectPrefab != null) {
-            GameObject areaEffectObject = Instantiate(towerType.areaEffectPrefab, enemyObject.transform.position, Quaternion.identity);
+            Instantiate(towerType.areaEffectPrefab, enemyObject.transform.position, Quaternion.identity);
         }
 
         Enemy enemy = enemyObject.GetComponent<Enemy>();
@@ -196,7 +188,7 @@ public class Tower : MonoBehaviour {
 
     private void OnPositionHit(Vector3 position) {
         if (towerType.areaEffectPrefab != null) {
-            GameObject areaEffectObject = Instantiate(towerType.areaEffectPrefab, position, Quaternion.identity);
+            Instantiate(towerType.areaEffectPrefab, position, Quaternion.identity);
         }
     }
 }

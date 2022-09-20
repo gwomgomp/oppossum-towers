@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class AreaEffect : MonoBehaviour {
     private float timer = 0;
 
     private List<Enemy> enemiesInArea;
-  
+
     void Start() {
         enemiesInArea = new List<Enemy>();
 
@@ -29,7 +28,7 @@ public class AreaEffect : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-  
+
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag(TagConstants.ENEMY)) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
@@ -41,7 +40,7 @@ public class AreaEffect : MonoBehaviour {
             }
         }
     }
-  
+
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag(TagConstants.ENEMY)) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
