@@ -21,8 +21,8 @@ public class TimedStatusEffect {
         return false;
     }
 
-    public bool Equals(TimedStatusEffect timedStatusEffect) {
-        if (timedStatusEffect.statusEffect == this.statusEffect && timedStatusEffect.originTower == this.originTower) {
+    public bool Equals(TimedStatusEffect other) {
+        if (other.statusEffect == this.statusEffect && other.originTower == this.originTower) {
             return true;
         }
 

@@ -30,26 +30,18 @@ public class AreaEffect : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY)) {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if (other.CompareTag(TagConstants.ENEMY) && other.gameObject.TryGetComponent(out Enemy enemy)) {
+            enemiesInArea.Add(enemy);
 
-            if (enemy != null) {
-                enemiesInArea.Add(enemy);
-
-                enemy.ApplyStatusEffect(areaEffectType.statusEffect);
-            }
+            enemy.ApplyStatusEffect(areaEffectType.statusEffect);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY)) {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if (other.CompareTag(TagConstants.ENEMY) && other.gameObject.TryGetComponent(out Enemy enemy)) {
+            enemiesInArea.Remove(enemy);
 
-            if (enemy != null) {
-                enemiesInArea.Remove(enemy);
-
-                enemy.RemoveStatusEffect(areaEffectType.statusEffect);
-            }
+            enemy.RemoveStatusEffect(areaEffectType.statusEffect);
         }
     }
 }
