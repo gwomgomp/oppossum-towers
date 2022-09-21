@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Enemy : MonoBehaviour {
     public float health;
@@ -159,22 +160,25 @@ public class Enemy : MonoBehaviour {
     }
 
     public void ApplyTimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
-        TimedStatusEffect newTimedStatusEffect = new TimedStatusEffect(statusEffect, originTower);
+        TimedStatusEffect newEffect = new(statusEffect, originTower);
 
-        bool statusEffectMissing = true;
-
-        foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
-            if (newTimedStatusEffect.Equals(timedStatusEffect)) {
-                timedStatusEffect.RefreshTimer();
-                statusEffectMissing = false;
-            }
-        }
-
-        if (statusEffectMissing) {
-            timedStatusEffects.Add(newTimedStatusEffect);
+        var effectToUpdate = timedStatusEffects.Where(effect => effect.Equals(newEffect)).FirstOrDefault(null);
+        if (effectToUpdate == null) {
+            timedStatusEffects.Add(newEffect);
+        } else {
+            effectToUpdate.RefreshTimer();
         }
 
         RefreshStatusEffects();
+    }
+
+    private void UpdateTimedStatusEffects() {
+        int removedEffects = timedStatusEffects.RemoveAll(effect => effect.HasEnded());
+        timedStatusEffects.ForEach(effect => effect.UpdateTimer(Time.deltaTime));
+
+        if (removedEffects > 0) {
+            RefreshStatusEffects();
+        }
     }
 
     private void RefreshStatusEffects() {
@@ -201,65 +205,7 @@ public class Enemy : MonoBehaviour {
         damagePerSecondReceiving = totalDamagePerSecond;
     }
 
-    private void UpdateTimedStatusEffects() {
-        List<int> toBeDeleted = new List<int>();
-
-        for (int i = 0; i < timedStatusEffects.Count; i++) {
-            TimedStatusEffect timedStatusEffect = timedStatusEffects[i];
-
-            if (timedStatusEffect.HasEnded()) {
-                toBeDeleted.Add(i);
-            } else {
-                timedStatusEffect.UpdateTimer(Time.deltaTime);
-            }
-        }
-
-        for (int i = toBeDeleted.Count - 1; i >= 0; i--) {
-            timedStatusEffects.RemoveAt(toBeDeleted[i]);
-        }
-
-        if (toBeDeleted.Count > 0) {
-            RefreshStatusEffects();
-        }
-    }
-
     public int GetPriority() {
         return type.Priority;
-    }
-}
-
-public class TimedStatusEffect {
-    public StatusEffect statusEffect;
-    public Tower originTower;
-
-    private float timer = 0.0f;
-
-    public TimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
-        this.statusEffect = statusEffect;
-        this.originTower = originTower;
-    }
-
-    public void UpdateTimer(float timeDelta) {
-        timer += timeDelta;
-    }
-
-    public bool HasEnded() {
-        if (timer >= statusEffect.duration) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool Equals(TimedStatusEffect timedStatusEffect) {
-        if (timedStatusEffect.statusEffect == this.statusEffect && timedStatusEffect.originTower == this.originTower) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public void RefreshTimer() {
-        timer = 0.0f;
     }
 }
