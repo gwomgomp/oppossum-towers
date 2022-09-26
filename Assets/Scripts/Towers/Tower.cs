@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,13 +11,13 @@ public class Tower : MonoBehaviour {
 
     private float currentShotCooldown = 0.0f;
 
-    private List<Collider> enemiesInRange;
-    private Collider currentTarget = null;
+    private HashSet<Enemy> enemiesInRange;
+    private Enemy currentTarget = null;
 
     private GameObject launchOrigin;
 
     void Start() {
-        enemiesInRange = new List<Collider>();
+        enemiesInRange = new HashSet<Enemy>();
         currentShotCooldown = towerType.shotCooldown;
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
@@ -84,21 +83,15 @@ public class Tower : MonoBehaviour {
         };
     }
 
-    private Collider FindHighestPriorityEnemy() {
-        Collider target = null;
+    private Enemy FindHighestPriorityEnemy() {
+        Enemy target = null;
 
-        foreach (Collider collider in enemiesInRange) {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
-
-            if (enemy != null) {
-                if (target == null) {
-                    target = collider;
-                } else {
-                    Enemy targetStats = target.gameObject.GetComponent<Enemy>();
-
-                    if (targetStats != null && targetStats.GetPriority() < enemy.GetPriority()) {
-                        target = collider;
-                    }
+        foreach (Enemy enemy in enemiesInRange) {
+            if (target == null) {
+                target = enemy;
+            } else {
+                if (target.GetPriority() < enemy.GetPriority()) {
+                    target = enemy;
                 }
             }
         }
@@ -106,21 +99,15 @@ public class Tower : MonoBehaviour {
         return target;
     }
 
-    private Collider FindLowestPriorityEnemy() {
-        Collider target = null;
+    private Enemy FindLowestPriorityEnemy() {
+        Enemy target = null;
 
-        foreach (Collider collider in enemiesInRange) {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
-
-            if (enemy != null) {
-                if (target == null) {
-                    target = collider;
-                } else {
-                    Enemy targetStats = target.gameObject.GetComponent<Enemy>();
-
-                    if (targetStats != null && targetStats.GetPriority() > enemy.GetPriority()) {
-                        target = collider;
-                    }
+        foreach (Enemy enemy in enemiesInRange) {
+            if (target == null) {
+                target = enemy;
+            } else {
+                if (target.GetPriority() > enemy.GetPriority()) {
+                    target = enemy;
                 }
             }
         }
@@ -128,45 +115,43 @@ public class Tower : MonoBehaviour {
         return target;
     }
 
-    private Collider FindClosestEnemy() {
-        Collider target = null;
+    private Enemy FindClosestEnemy() {
+        Enemy target = null;
 
-        foreach (Collider collider in enemiesInRange) {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
-
-            if (enemy != null) {
-                if (target == null) {
-                    target = collider;
-                } else {
-                    Enemy targetStats = target.gameObject.GetComponent<Enemy>();
-
-                    if (targetStats != null && Vector3.Distance(transform.position, collider.gameObject.transform.position) < Vector3.Distance(transform.position, target.gameObject.transform.position)) {
-                        target = collider;
-                    }
-                }
+        foreach (Enemy enemy in enemiesInRange) {
+            if (target == null) {
+                target = enemy;
+            } else {
+                target = GetCloserEnemy(target, enemy);
             }
         }
 
         return target;
+    }
+
+    private Enemy GetCloserEnemy(Enemy left, Enemy right) {
+        var leftDistance = Vector3.Distance(transform.position, left.gameObject.transform.position);
+        var rightDistance = Vector3.Distance(transform.position, right.gameObject.transform.position);
+        if (leftDistance < rightDistance) {
+            return left;
+        } else {
+            return right;
+        }
     }
 
     private void PurgeDestroyedEnemies() {
-        for (int i = enemiesInRange.Count - 1; i >= 0; i--) {
-            if (enemiesInRange[i] == null) {
-                enemiesInRange.RemoveAt(i);
-            }
-        }
+        enemiesInRange.RemoveWhere(enemy => enemy == null || enemy.gameObject == null);
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && !enemiesInRange.Contains(other)) {
-            enemiesInRange.Add(other);
+        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
+            enemiesInRange.Add(enemy);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && enemiesInRange.Contains(other)) {
-            enemiesInRange.Remove(other);
+        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
+            enemiesInRange.Remove(enemy);
         }
     }
 
