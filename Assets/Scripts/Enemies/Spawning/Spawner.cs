@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Spawner : MonoBehaviour {
+public class Spawner : MonoBehaviour, Placeable {
     [SerializeField]
     private WaveDefinition[] waves;
 
@@ -101,5 +101,9 @@ public class Spawner : MonoBehaviour {
             }
             currentCheckPoint = nextCheckpoint;
         }
+    }
+
+    public GameObject GetGameObject() {
+        return gameObject;
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LaneCheckpoint : MonoBehaviour
+public class LaneCheckpoint : MonoBehaviour, Placeable
 {
     [field: SerializeField]
     public LaneCheckpoint NextCheckpoint {get; set;}
@@ -10,5 +10,9 @@ public class LaneCheckpoint : MonoBehaviour
 
     public void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, .5f);
+    }
+
+    public GameObject GetGameObject() {
+        return gameObject;
     }
 }

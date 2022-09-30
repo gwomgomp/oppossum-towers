@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BuildingSpot : MonoBehaviour {
+public class BuildingSpot : MonoBehaviour, Placeable {
     [field: SerializeField]
     public string Name { get; private set; }
 
@@ -16,5 +16,9 @@ public class BuildingSpot : MonoBehaviour {
     public void Clear() {
         Destroy(Tower.gameObject);
         Tower = null;
+    }
+
+    public GameObject GetGameObject() {
+        return gameObject;
     }
 }
