@@ -760,7 +760,7 @@ MonoBehaviour:
         m_MethodName: Build
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: aab2dbf149ba9db46ae0284b3471ecc5, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 899137fa386dbae41bc693cec42a6c79, type: 2}
           m_ObjectArgumentAssemblyTypeName: TowerType, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1174,7 +1174,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e1697ab97d9cb28449b212788b9e44a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2105,7 +2105,7 @@ MonoBehaviour:
         m_MethodName: Build
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: aab2dbf149ba9db46ae0284b3471ecc5, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 562144a707391734ab118aea87d5b712, type: 2}
           m_ObjectArgumentAssemblyTypeName: TowerType, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
