@@ -38,6 +38,7 @@ public class LaneCheckpointEditor : Editor {
             NewLaneCheckpointButton();
             NewHoardCheckpointButton();
             CorrectNameAndOrderButton();
+            CreatePlacementButton();
         }
     }
 
@@ -98,6 +99,20 @@ public class LaneCheckpointEditor : Editor {
                 handledCheckpoints.Add(currentCheckPoint);
                 var nextCheckpoint = currentCheckPoint.NextCheckpoint;
                 currentCheckPoint = nextCheckpoint;
+            }
+        }
+    }
+
+    private void CreatePlacementButton() {
+        if (GUILayout.Button("Adjust placement")) {
+            PlacementHelper.MoveToGround(spawner.gameObject);
+
+            HashSet<LaneCheckpoint> handledCheckpoints = new();
+            var currentCheckPoint = spawner.FirstCheckpoint;
+            while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
+                PlacementHelper.MoveToGround(currentCheckPoint.gameObject);
+                handledCheckpoints.Add(currentCheckPoint);
+                currentCheckPoint = currentCheckPoint.NextCheckpoint;
             }
         }
     }
