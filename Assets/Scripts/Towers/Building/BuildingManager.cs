@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Linq;
 
 public class BuildingManager : MonoBehaviour {
     public GameObject buildingMenu;
@@ -9,18 +8,6 @@ public class BuildingManager : MonoBehaviour {
 
     private GameObject openMenu;
     private BuildingSpot openBuildingSpot;
-
-    private GameObject player;
-
-    void Start() {
-        MonoBehaviour playerScript = FindObjectOfType<ThirdPersonMovement>();
-        if (playerScript == null) {
-            playerScript = FindObjectOfType<CharacterMovementScript>();
-        }
-        if (playerScript != null) {
-            player = playerScript.gameObject;
-        }
-    }
 
     void Update() {
         if (
@@ -63,7 +50,7 @@ public class BuildingManager : MonoBehaviour {
     }
 
     private float CalculateDistanceToSpot(BuildingSpot buildingSpot) {
-        return player == null ? -1 : Vector3.Distance(player.transform.position, buildingSpot.transform.position);
+        return Vector3.Distance(PlayerFinder.Instance.Player.transform.position, buildingSpot.transform.position);
     }
 
     private void DisplayMenu(BuildingSpot buildingSpot) {

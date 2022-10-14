@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,18 +10,7 @@ public class InteractableManager : MonoBehaviour {
 
     public static InteractableManager Instance { get; private set; }
 
-    private GameObject player;
     private GameObject closestInteractable;
-
-    void Start() {
-        MonoBehaviour playerScript = FindObjectOfType<ThirdPersonMovement>();
-        if (playerScript == null) {
-            playerScript = FindObjectOfType<CharacterMovementScript>();
-        }
-        if (playerScript != null) {
-            player = playerScript.gameObject;
-        }
-    }
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -34,9 +22,10 @@ public class InteractableManager : MonoBehaviour {
 
     private void Update() {
         GameObject newClosestInteractable = interactablesInRange
-            .OrderBy(i => Vector3.Distance(i.transform.position, player.transform.position))
+            .OrderBy(i => CalculateDistance(i))
             .Select(i => i.gameObject)
             .FirstOrDefault();
+
         if (newClosestInteractable != null && (closestInteractable == null || !closestInteractable.Equals(newClosestInteractable))) {
             if (closestInteractable != null) {
                 closestInteractable.TryGetComponent(out MeshRenderer oldRenderer);
@@ -50,7 +39,7 @@ public class InteractableManager : MonoBehaviour {
 
     public bool GetClosestInteractable<T>(out T closest) {
         closest = interactablesInRange
-            .OrderBy(i => Vector3.Distance(i.transform.position, player.transform.position))
+            .OrderBy(i => CalculateDistance(i))
             .Select(i => i.GetComponentInParent<T>())
             .Where(c => c != null)
             .FirstOrDefault();
@@ -62,8 +51,12 @@ public class InteractableManager : MonoBehaviour {
         }
     }
 
+    private float CalculateDistance(Interactable interactable) {
+        return Vector3.Distance(interactable.transform.position, PlayerFinder.Instance.Player.transform.position);
+    }
+
     public bool IsRelevantEntry(GameObject entry) {
-        return entry.Equals(player);
+        return entry.Equals(PlayerFinder.Instance.Player);
     }
 
     public void StepIntoRange(Interactable interactable) {
