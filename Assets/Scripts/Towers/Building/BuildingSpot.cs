@@ -6,6 +6,10 @@ public class BuildingSpot : MonoBehaviour, Placeable {
 
     public Tower Tower { get; private set; }
 
+    private void Start() {
+        PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
+    }
+
     public void Build(TowerType type) {
         var towerPrefab = Resources.Load<GameObject>("Prefabs/Tower");
         var towerGameObject = Instantiate(towerPrefab, transform.position, transform.rotation);
