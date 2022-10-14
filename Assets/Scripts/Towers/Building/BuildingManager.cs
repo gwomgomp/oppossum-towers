@@ -11,7 +11,6 @@ public class BuildingManager : MonoBehaviour {
     private BuildingSpot openBuildingSpot;
 
     private GameObject player;
-    private BuildingSpot[] availableBuildingSpots;
 
     void Start() {
         MonoBehaviour playerScript = FindObjectOfType<ThirdPersonMovement>();
@@ -21,7 +20,6 @@ public class BuildingManager : MonoBehaviour {
         if (playerScript != null) {
             player = playerScript.gameObject;
         }
-        availableBuildingSpots = FindObjectsOfType<BuildingSpot>();
     }
 
     void Update() {
@@ -56,27 +54,8 @@ public class BuildingManager : MonoBehaviour {
         }
     }
 
-    // show building range on player
-    private void OnDrawGizmosSelected() {
-        if (player != null) {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(player.transform.position, maxDistanceToBuild);
-        }
-    }
-
     private bool GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot) {
-        closestBuildingSpot = availableBuildingSpots
-            .Select(buildingSpot => (buildingSpot, distance: CalculateDistanceToSpot(buildingSpot)))
-            .Where(tuple => tuple.distance <= maxDistanceToBuild)
-            .OrderBy(tuple => tuple.distance)
-            .Select(tuple => tuple.buildingSpot)
-            .FirstOrDefault();
-
-        if (closestBuildingSpot == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return InteractableManager.Instance.GetClosestInteractable(out closestBuildingSpot);
     }
 
     private bool IsSpotInRange(BuildingSpot buildingSpot) {
