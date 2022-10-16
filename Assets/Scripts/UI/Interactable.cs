@@ -6,6 +6,7 @@ public class Interactable : MonoBehaviour {
     private void Start() {
         TryGetComponent(out SphereCollider collider);
         collider.radius = InteractableManager.Instance.MaxDistanceToInteract;
+        PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {
