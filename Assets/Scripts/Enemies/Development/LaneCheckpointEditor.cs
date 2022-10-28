@@ -60,12 +60,9 @@ public class LaneCheckpointEditor : Editor {
             }
             var offset = Random.insideUnitCircle * 5;
             var instantiationPosition = instantiationTransform.position + new Vector3(offset.x, 0, offset.y);
-            var newCheckpointObject = Instantiate(
-                checkpointPrefab,
-                instantiationPosition,
-                instantiationTransform.rotation,
-                spawner.transform
-            );
+            var newCheckpointObject = PrefabUtility.InstantiatePrefab(checkpointPrefab) as GameObject;
+            newCheckpointObject.transform.SetPositionAndRotation(instantiationPosition, instantiationTransform.rotation);
+            newCheckpointObject.transform.SetParent(spawner.transform);
             newCheckpointObject.name = $"{type} {(type == "Hoard" ? hoardCount : checkpointCount) + 1}";
             Undo.RegisterCreatedObjectUndo(newCheckpointObject, "Create new checkpoint");
             var newCheckpoint = newCheckpointObject.GetComponent<LaneCheckpoint>();
