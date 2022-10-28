@@ -34,16 +34,21 @@ public class InteractableManager : MonoBehaviour {
             newClosestInteractable.TryGetComponent(out MeshRenderer newRenderer);
             newRenderer.enabled = true;
             closestInteractable = newClosestInteractable;
+        } else if (newClosestInteractable == null && closestInteractable != null) {
+            if (closestInteractable != null) {
+                closestInteractable.TryGetComponent(out MeshRenderer renderer);
+                renderer.enabled = false;
+            }
         }
     }
 
     public bool GetClosestInteractable<T>(out T closest) {
-        closest = interactablesInRange
-            .OrderBy(i => CalculateDistance(i))
-            .Select(i => i.GetComponentInParent<T>())
-            .Where(c => c != null)
-            .FirstOrDefault();
+        if (closestInteractable == null) {
+            closest = default;
+            return false;
+        }
 
+        closest = closestInteractable.GetComponentInParent<T>();
         if (closest == null) {
             return false;
         } else {
