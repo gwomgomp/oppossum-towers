@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour {
+    [SerializeField]
+    private float distanceModifier = 1;
+
     private void Start() {
         TryGetComponent(out SphereCollider collider);
-        collider.radius = InteractableManager.Instance.MaxDistanceToInteract;
-        PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
+        collider.radius = InteractableManager.Instance.MaxDistanceToInteract * distanceModifier;
     }
 
     private void OnTriggerEnter(Collider other) {
