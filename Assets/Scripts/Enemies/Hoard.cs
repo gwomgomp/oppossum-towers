@@ -13,4 +13,8 @@ public class Hoard : LaneCheckpoint
             return false;
         }
     }
+
+    public void DepositLoot() {
+        availableLoot++;
+    }
 }

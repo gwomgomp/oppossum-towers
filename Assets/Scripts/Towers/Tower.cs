@@ -144,13 +144,15 @@ public class Tower : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
+        if (other.CompareTag(TagConstants.ENEMY)) {
+            Enemy enemy = other.GetComponentInParent<Enemy>();
             enemiesInRange.Add(enemy);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
+        if (other.CompareTag(TagConstants.ENEMY)) {
+            Enemy enemy = other.GetComponentInParent<Enemy>();
             enemiesInRange.Remove(enemy);
         }
     }
