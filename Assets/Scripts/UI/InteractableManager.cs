@@ -35,10 +35,9 @@ public class InteractableManager : MonoBehaviour {
             newRenderer.enabled = true;
             closestInteractable = newClosestInteractable;
         } else if (newClosestInteractable == null && closestInteractable != null) {
-            if (closestInteractable != null) {
-                closestInteractable.TryGetComponent(out MeshRenderer renderer);
-                renderer.enabled = false;
-            }
+            closestInteractable.TryGetComponent(out MeshRenderer renderer);
+            renderer.enabled = false;
+            closestInteractable = null;
         }
     }
 
