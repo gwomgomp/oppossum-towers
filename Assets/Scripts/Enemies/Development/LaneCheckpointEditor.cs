@@ -38,6 +38,7 @@ public class LaneCheckpointEditor : Editor {
             NewLaneCheckpointButton();
             NewHoardCheckpointButton();
             CorrectNameAndOrderButton();
+            CreatePlacementButton();
         }
     }
 
@@ -59,12 +60,9 @@ public class LaneCheckpointEditor : Editor {
             }
             var offset = Random.insideUnitCircle * 5;
             var instantiationPosition = instantiationTransform.position + new Vector3(offset.x, 0, offset.y);
-            var newCheckpointObject = Instantiate(
-                checkpointPrefab,
-                instantiationPosition,
-                instantiationTransform.rotation,
-                spawner.transform
-            );
+            var newCheckpointObject = PrefabUtility.InstantiatePrefab(checkpointPrefab) as GameObject;
+            newCheckpointObject.transform.SetPositionAndRotation(instantiationPosition, instantiationTransform.rotation);
+            newCheckpointObject.transform.SetParent(spawner.transform);
             newCheckpointObject.name = $"{type} {(type == "Hoard" ? hoardCount : checkpointCount) + 1}";
             Undo.RegisterCreatedObjectUndo(newCheckpointObject, "Create new checkpoint");
             var newCheckpoint = newCheckpointObject.GetComponent<LaneCheckpoint>();
@@ -98,6 +96,20 @@ public class LaneCheckpointEditor : Editor {
                 handledCheckpoints.Add(currentCheckPoint);
                 var nextCheckpoint = currentCheckPoint.NextCheckpoint;
                 currentCheckPoint = nextCheckpoint;
+            }
+        }
+    }
+
+    private void CreatePlacementButton() {
+        if (GUILayout.Button("Adjust placement")) {
+            PlacementHelper.MoveToGround(spawner.gameObject);
+
+            HashSet<LaneCheckpoint> handledCheckpoints = new();
+            var currentCheckPoint = spawner.FirstCheckpoint;
+            while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
+                PlacementHelper.MoveToGround(currentCheckPoint.gameObject);
+                handledCheckpoints.Add(currentCheckPoint);
+                currentCheckPoint = currentCheckPoint.NextCheckpoint;
             }
         }
     }

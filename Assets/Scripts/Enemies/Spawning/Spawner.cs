@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour {
     private bool finishedRound = false;
 
     public void Start() {
-        RoundManager.Instance.Register(this);
+        PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
     }
 
     public void Update() {

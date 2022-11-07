@@ -25,6 +25,16 @@ public class RoundManager : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        Spawner[] spawners = FindObjectsOfType<Spawner>();
+        spawnerCount = spawners.Length;
+        foreach (var spawner in spawners)
+        {
+            OnNextRound += spawner.PrepareNewRound;
+            spawner.OnSpawningFinished += HandleFinishedSpawner;
+        }
+    }
+
     public void Update() {
         if (roundFinished) {
             timeSinceRoundEnd += Time.deltaTime;
@@ -34,12 +44,6 @@ public class RoundManager : MonoBehaviour {
                 StartNewRound();
             }
         }
-    }
-
-    public void Register(Spawner spawner) {
-        OnNextRound += spawner.PrepareNewRound;
-        spawnerCount++;
-        spawner.OnSpawningFinished += HandleFinishedSpawner;
     }
 
     public void Run() {
