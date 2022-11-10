@@ -270,7 +270,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8471891747423324428, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
   m_PrefabInstance: {fileID: 1951175001}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1862164207
+--- !u!1 &1330655921
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,50 +278,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1862164210}
-  - component: {fileID: 1862164208}
-  - component: {fileID: 1862164209}
+  - component: {fileID: 1330655924}
+  - component: {fileID: 1330655922}
+  - component: {fileID: 1330655923}
   m_Layer: 0
-  m_Name: ResourceLocation 2
+  m_Name: ResourceLocation 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1862164208
+--- !u!114 &1330655922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862164207}
+  m_GameObject: {fileID: 1330655921}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9bbf692234b1574fb07d6f010f2f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &1862164209
+--- !u!135 &1330655923
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862164207}
+  m_GameObject: {fileID: 1330655921}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1862164210
+--- !u!4 &1330655924
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862164207}
+  m_GameObject: {fileID: 1330655921}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.23289669, y: 0, z: -3.2110934}
+  m_LocalPosition: {x: 0.18422484, y: 1.1775739, z: -0.8278903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -336,12 +336,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: _amountToSpawn
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: _timeBetweenSpawns
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: <ResourceLocations>k__BackingField.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: <ResourceLocations>k__BackingField.Array.data[0]
@@ -350,7 +354,11 @@ PrefabInstance:
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: <ResourceLocations>k__BackingField.Array.data[1]
       value: 
-      objectReference: {fileID: 1862164208}
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: <ResourceLocations>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 1330655922}
     - target: {fileID: 8471891747423324426, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_Name
       value: ResourceSpawner
