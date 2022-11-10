@@ -1,31 +1,59 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Spawner : MonoBehaviour {
     [SerializeField]
-    private EnemyType typeToSpawn;
-    [SerializeField]
-    private float timeBetweenSpawns;
-    [SerializeField]
-    private int amountToSpawn;
+    private WaveDefinition[] waves;
+
+    private List<Wave> currentWaves;
 
     [field: SerializeField]
     public LaneCheckpoint FirstCheckpoint { get; set; }
 
-    private float timeSinceLastSpawn = 0f;
-    private int amountSpawned = 0;
-    private bool spawning = false;
+    public delegate void SpawnFinished();
+    public event SpawnFinished OnSpawningFinished;
+
+    private bool finishedRound = false;
+
+    public void Start() {
+        PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
+    }
 
     public void Update() {
-        if (spawning && amountSpawned < amountToSpawn && timeSinceLastSpawn >= timeBetweenSpawns) {
-            var enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
-            var enemyGameObject = Instantiate(enemyPrefab, transform.position, Quaternion.LookRotation(FirstCheckpoint.transform.position, Vector3.up));
-            var enemy = enemyGameObject.GetComponent<Enemy>();
-            enemy.Initialize(typeToSpawn, FirstCheckpoint);
-            timeSinceLastSpawn = 0f;
-            amountSpawned++;
-        } else {
-            timeSinceLastSpawn += Time.deltaTime;
+        if (currentWaves == null) {
+            return;
+        }
+
+        foreach (var wave in currentWaves) {
+            switch (wave.GetSpawnStatus()) {
+                case SpawnStatus.READY: {
+                        var enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
+                        var enemyGameObject = Instantiate(
+                            enemyPrefab,
+                            transform.position,
+                            Quaternion.LookRotation(FirstCheckpoint.transform.position, Vector3.up)
+                        );
+                        wave.Spawn(enemyGameObject, FirstCheckpoint);
+                        break;
+                    }
+                case SpawnStatus.WAITING:
+                    wave.Update(Time.deltaTime);
+                    break;
+            }
+        }
+
+        currentWaves.RemoveAll(wave => wave.GetSpawnStatus() == SpawnStatus.FINISHED);
+        if (!finishedRound && currentWaves.Count == 0) {
+            finishedRound = true;
+            OnSpawningFinished();
+        }
+    }
+
+    public void PrepareNewRound(int roundNumber) {
+        currentWaves = waves.Where(wave => wave.RoundToSpawnIn == roundNumber).Select(wave => new Wave(wave)).ToList();
+        if (currentWaves.Count > 0) {
+            finishedRound = false;
         }
     }
 
@@ -48,10 +76,6 @@ public class Spawner : MonoBehaviour {
             }
         }
         return (null, 0, 0);
-    }
-
-    internal void StartSpawning() {
-        spawning = true;
     }
 
     public void OnDrawGizmos() {

@@ -3,20 +3,16 @@ using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 [CustomEditor(typeof(Spawner)), CanEditMultipleObjects]
 public class LaneCheckpointEditor : Editor {
 
     private Spawner spawner;
 
-    private bool spawningStarted = false;
-
     private void OnEnable() {
         spawner = target as Spawner;
     }
 
-#if UNITY_EDITOR
     public void OnSceneGUI() {
         if (spawner.transform == Selection.activeTransform) {
             DrawCheckpointHandles();
@@ -38,23 +34,11 @@ public class LaneCheckpointEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        if (EditorApplication.isPlaying) {
-            StartSpawningUI();
-        } else {
+        if (!EditorApplication.isPlaying) {
             NewLaneCheckpointButton();
             NewHoardCheckpointButton();
             CorrectNameAndOrderButton();
-        }
-    }
-
-    private void StartSpawningUI() {
-        if (!spawningStarted && GUILayout.Button("Start Spawning")) {
-            spawner.StartSpawning();
-            spawningStarted = true;
-        }
-
-        if (spawningStarted) {
-            GUILayout.Label("Spawning started");
+            CreatePlacementButton();
         }
     }
 
@@ -74,14 +58,11 @@ public class LaneCheckpointEditor : Editor {
             if (lastCheckpoint != null) {
                 instantiationTransform = lastCheckpoint.transform;
             }
-            var randomOffset = Random.insideUnitCircle * 5; // make new checkpoint not overlap previous one
-            var instantiationPosition = instantiationTransform.position + new Vector3(randomOffset.x, 0, randomOffset.y);
-            var newCheckpointObject = Instantiate(
-                checkpointPrefab,
-                instantiationPosition,
-                instantiationTransform.rotation,
-                spawner.transform
-            );
+            var offset = Random.insideUnitCircle * 5;
+            var instantiationPosition = instantiationTransform.position + new Vector3(offset.x, 0, offset.y);
+            var newCheckpointObject = PrefabUtility.InstantiatePrefab(checkpointPrefab) as GameObject;
+            newCheckpointObject.transform.SetPositionAndRotation(instantiationPosition, instantiationTransform.rotation);
+            newCheckpointObject.transform.SetParent(spawner.transform);
             newCheckpointObject.name = $"{type} {(type == "Hoard" ? hoardCount : checkpointCount) + 1}";
             Undo.RegisterCreatedObjectUndo(newCheckpointObject, "Create new checkpoint");
             var newCheckpoint = newCheckpointObject.GetComponent<LaneCheckpoint>();
@@ -118,5 +99,19 @@ public class LaneCheckpointEditor : Editor {
             }
         }
     }
-#endif
+
+    private void CreatePlacementButton() {
+        if (GUILayout.Button("Adjust placement")) {
+            PlacementHelper.MoveToGround(spawner.gameObject);
+
+            HashSet<LaneCheckpoint> handledCheckpoints = new();
+            var currentCheckPoint = spawner.FirstCheckpoint;
+            while (currentCheckPoint != null && !handledCheckpoints.Contains(currentCheckPoint)) {
+                PlacementHelper.MoveToGround(currentCheckPoint.gameObject);
+                handledCheckpoints.Add(currentCheckPoint);
+                currentCheckPoint = currentCheckPoint.NextCheckpoint;
+            }
+        }
+    }
 }
+#endif

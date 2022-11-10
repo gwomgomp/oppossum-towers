@@ -1,8 +1,13 @@
-using System;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Enemy : MonoBehaviour {
     public float health;
+    private float baseSpeed;
+    private float modifiedSpeed;
+
+    private float damagePerSecondReceiving;
 
     private const float rotationSpeed = 5f;
     private const float moveDampening = 5f;
@@ -16,10 +21,20 @@ public class Enemy : MonoBehaviour {
     private bool carryingLoot = false;
     private GameObject currentLoot = null;
 
+    private List<StatusEffect> activeStatusEffects;
+    private List<TimedStatusEffect> timedStatusEffects;
+
+    void Start() {
+        activeStatusEffects = new List<StatusEffect>();
+        timedStatusEffects = new List<TimedStatusEffect>();
+    }
+
     public void Initialize(EnemyType type, LaneCheckpoint startingCheckpoint) {
         if (!initialized) {
             this.type = type;
             health = type.MaxHealth;
+            baseSpeed = type.Speed;
+            modifiedSpeed = type.Speed;
             currentTarget = startingCheckpoint;
             transform.rotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
             initialized = true;
@@ -29,6 +44,9 @@ public class Enemy : MonoBehaviour {
     }
 
     public void Update() {
+        UpdateTimedStatusEffects();
+        Damage(damagePerSecondReceiving * Time.deltaTime);
+
         if (initialized && currentTarget != null) {
             Move();
         }
@@ -40,7 +58,7 @@ public class Enemy : MonoBehaviour {
                 currentTarget.transform.position,
                 ref velocity,
                 CalculateExpectedTravelTime(),
-                type.Speed
+                modifiedSpeed
             );
         transform.position = newPosition;
 
@@ -129,16 +147,65 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void ApplyStatusEffect(StatusEffect statusEffect) {
+        activeStatusEffects.Add(statusEffect);
+
+        RefreshStatusEffects();
+    }
+
+    public void RemoveStatusEffect(StatusEffect statusEffect) {
+        activeStatusEffects.Remove(statusEffect);
+
+        RefreshStatusEffects();
+    }
+
+    public void ApplyTimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
+        TimedStatusEffect newEffect = new(statusEffect, originTower);
+
+        var effectToUpdate = timedStatusEffects.Where(effect => effect.Equals(newEffect)).FirstOrDefault(null);
+        if (effectToUpdate == null) {
+            timedStatusEffects.Add(newEffect);
+        } else {
+            effectToUpdate.RefreshTimer();
+        }
+
+        RefreshStatusEffects();
+    }
+
+    private void UpdateTimedStatusEffects() {
+        int removedEffects = timedStatusEffects.RemoveAll(effect => effect.HasEnded());
+        timedStatusEffects.ForEach(effect => effect.UpdateTimer(Time.deltaTime));
+
+        if (removedEffects > 0) {
+            RefreshStatusEffects();
+        }
+    }
+
+    private void RefreshStatusEffects() {
+        float maxSlowPercentage = 0.0f;
+        float totalDamagePerSecond = 0.0f;
+
+        foreach (StatusEffect statusEffect in activeStatusEffects) {
+            if (statusEffect.slowPercentage > maxSlowPercentage) {
+                maxSlowPercentage = statusEffect.slowPercentage;
+            }
+
+            totalDamagePerSecond += statusEffect.damagePerSecond;
+        }
+
+        foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
+            if (timedStatusEffect.statusEffect.slowPercentage > maxSlowPercentage) {
+                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage;
+            }
+
+            totalDamagePerSecond += timedStatusEffect.statusEffect.damagePerSecond;
+        }
+
+        modifiedSpeed = baseSpeed * ((100.0f - maxSlowPercentage) / 100.0f);
+        damagePerSecondReceiving = totalDamagePerSecond;
+    }
+
     public int GetPriority() {
         return type.Priority;
-    }
-
-    // These two methods are purely for visualization purposes (i.e. serve no functional purpose)
-    public void BeTargeted() {
-        GetComponent<Renderer>().material = type.TargetMaterial;
-    }
-
-    public void BeUntargeted() {
-        GetComponent<Renderer>().material = type.DefaultMaterial;
     }
 }

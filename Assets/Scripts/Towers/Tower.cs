@@ -1,66 +1,84 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public class EnemyHitEvent : UnityEvent<GameObject> { }
+
+public class PositionHitEvent : UnityEvent<Vector3> { }
 
 public class Tower : MonoBehaviour {
-    public enum TargetingMethod {
-        HighestPriority,
-        LowestPriority,
-        Closest
-    }
-
-    public TargetingMethod targetingMethod;
-
-    public float damagePerShot;
-    public float shotCooldown;
-    public float range;
+    public TowerType towerType;
 
     private float currentShotCooldown = 0.0f;
 
     private HashSet<Enemy> enemiesInRange;
     private Enemy currentTarget = null;
 
+    private GameObject launchOrigin;
+
     void Start() {
         enemiesInRange = new HashSet<Enemy>();
-        currentShotCooldown = shotCooldown;
+        currentShotCooldown = towerType.shotCooldown;
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
-        capsuleCollider.radius = range;
-        capsuleCollider.height = range * 4.0f;
-    }
+        capsuleCollider.radius = towerType.range;
+        capsuleCollider.height = towerType.range * 4.0f;
 
-    void Update() {
-        if (currentTarget == null && enemiesInRange.Count > 0) {
-            SelectNewTarget();
-        }
+        launchOrigin = gameObject;
 
-        UpdateShotCooldown();
-    }
-
-    private void UpdateShotCooldown() {
-        if (currentShotCooldown <= 0.0f && currentTarget != null) {
-            ShootAtEnemy();
-            currentShotCooldown = shotCooldown;
-        } else {
-            currentShotCooldown -= Time.deltaTime;
-        }
-    }
-
-    private void ShootAtEnemy() {
-        if (currentTarget != null) {
-            bool killed = currentTarget.Damage(damagePerShot);
-            if (killed) {
-                enemiesInRange.Remove(currentTarget);
+        foreach (Transform child in transform) {
+            if (child.CompareTag(TagConstants.LAUNCHORIGIN)) {
+                launchOrigin = child.gameObject;
+                break;
             }
         }
     }
 
-    private void SelectNewTarget() {
-        currentTarget = targetingMethod switch {
-            TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
-            TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
-            TargetingMethod.Closest => FindClosestEnemy(),
+    void Update() {
+        if (currentShotCooldown > 0.0f) {
+            currentShotCooldown -= Time.deltaTime;
+        } else {
+            UpdateTarget();
+
+            if (currentTarget != null) {
+                ShootAtEnemy();
+                currentShotCooldown = towerType.shotCooldown;
+            }
+        }
+    }
+
+    private void ShootAtEnemy() {
+        if (towerType.projectilePrefab != null) {
+            GameObject projectileObject = Instantiate(towerType.projectilePrefab, launchOrigin.transform.position, Quaternion.identity);
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+
+            if (towerType.projectileTracksEnemy) {
+                projectile.SetTargetObject(currentTarget.gameObject);
+            } else {
+                projectile.SetTargetPosition(currentTarget.gameObject.transform.position);
+            }
+
+            projectile.SetSpeed(towerType.projectileSpeed);
+
+            EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
+            enemyHitEvent.AddListener(OnEnemyHit);
+
+            PositionHitEvent positionHitEvent = new PositionHitEvent();
+            positionHitEvent.AddListener(OnPositionHit);
+
+            projectile.SetEnemyHitEvent(enemyHitEvent);
+            projectile.SetPositionHitEvent(positionHitEvent);
+        }
+    }
+
+    private void UpdateTarget() {
+        PurgeDestroyedEnemies();
+
+        currentTarget = towerType.targetingMethod switch {
+            TowerType.TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
+            TowerType.TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
+            TowerType.TargetingMethod.Closest => FindClosestEnemy(),
             _ => null
         };
     }
@@ -78,8 +96,6 @@ public class Tower : MonoBehaviour {
             }
         }
 
-        VisualizeTargeting(target);
-
         return target;
     }
 
@@ -96,8 +112,6 @@ public class Tower : MonoBehaviour {
             }
         }
 
-        VisualizeTargeting(target);
-
         return target;
     }
 
@@ -108,45 +122,58 @@ public class Tower : MonoBehaviour {
             if (target == null) {
                 target = enemy;
             } else {
-                if (Vector3.Distance(transform.position, enemy.gameObject.transform.position) < Vector3.Distance(transform.position, target.gameObject.transform.position)) {
-                    target = enemy;
-                }
+                target = GetCloserEnemy(target, enemy);
             }
         }
-
-        VisualizeTargeting(target);
 
         return target;
     }
 
-    // This is purely for visualization purposes (i.e. serves no functional purpose)
-    private void VisualizeTargeting(Enemy target) {
-        if (currentTarget != target) {
-            if (currentTarget != null) {
-                if (currentTarget != null) {
-                    currentTarget.BeUntargeted();
-                }
-            }
-
-            if (target != null) {
-                target.BeTargeted();
-            }
+    private Enemy GetCloserEnemy(Enemy left, Enemy right) {
+        var leftDistance = Vector3.Distance(transform.position, left.gameObject.transform.position);
+        var rightDistance = Vector3.Distance(transform.position, right.gameObject.transform.position);
+        if (leftDistance < rightDistance) {
+            return left;
+        } else {
+            return right;
         }
+    }
+
+    private void PurgeDestroyedEnemies() {
+        enemiesInRange.RemoveWhere(enemy => enemy == null || enemy.gameObject == null);
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.TryGetComponent(out Enemy enemy)) {
+        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
             enemiesInRange.Add(enemy);
         }
-
-        SelectNewTarget();
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.TryGetComponent(out Enemy enemy)) {
+        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
             enemiesInRange.Remove(enemy);
         }
+    }
 
-        SelectNewTarget();
+    private void OnEnemyHit(GameObject enemyObject) {
+        if (towerType.areaEffectPrefab != null) {
+            Instantiate(towerType.areaEffectPrefab, enemyObject.transform.position, Quaternion.identity);
+        }
+
+        Enemy enemy = enemyObject.GetComponent<Enemy>();
+
+        if (enemy != null) {
+            enemy.Damage(towerType.damagePerShot);
+
+            if (towerType.statusEffect != null) {
+                enemy.ApplyTimedStatusEffect(towerType.statusEffect, this);
+            }
+        }
+    }
+
+    private void OnPositionHit(Vector3 position) {
+        if (towerType.areaEffectPrefab != null) {
+            Instantiate(towerType.areaEffectPrefab, position, Quaternion.identity);
+        }
     }
 }
