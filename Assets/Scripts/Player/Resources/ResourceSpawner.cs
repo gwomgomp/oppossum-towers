@@ -24,7 +24,9 @@ public class ResourceSpawner : MonoBehaviour {
             ResourceLocations.HasFreeSpawnSpots() &&
             _amountSpawned < _amountToSpawn &&
             _timeSinceLastSpawn >= _timeBetweenSpawns) {
-            var resourceLocation = ResourceLocations.FindAll(location => !location.IsResourcePlaced)[Random.Range(0, ResourceLocations.Count)];
+
+            var freeSpawnSpots = ResourceLocations.FindAll(location => location.IsFree);
+            var resourceLocation = freeSpawnSpots[Random.Range(0, freeSpawnSpots.Count)];
             var resourcePrefab = Resources.Load<GameObject>($"Prefabs/Resources/{TypeToSpawn.name}");
             var resourceGameObject = Instantiate(resourcePrefab, resourceLocation.transform.position, Quaternion.LookRotation(transform.position, Vector3.up));
             var resource = resourceGameObject.GetComponent<Resource>();

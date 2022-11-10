@@ -3,13 +3,13 @@ using UnityEngine;
 public class ResourceSpawnLocation : MonoBehaviour
 {
 
-    public bool IsResourcePlaced {
+    public bool IsFree {
         get {
-            return _isResourcePlaced;
+            return _isFree;
         }
     }
 
-    private bool _isResourcePlaced = false;
+    private bool _isFree = true;
 
     public void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, .5f);
@@ -31,10 +31,10 @@ public class ResourceSpawnLocation : MonoBehaviour
         var spawner = transform.parent.gameObject.GetComponent<ResourceSpawner>();
         // TODO: Add security that player cant just move in/out with object in hand
         spawner.ResourceTaken();
-        _isResourcePlaced = false;
+        _isFree = true;
     }
     private void HandleResourcePlaced() {
 
-        _isResourcePlaced = true;
+        _isFree = false;
     }
 }
