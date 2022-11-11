@@ -10,8 +10,7 @@ public class Loot : MonoBehaviour {
         interactable.gameObject.SetActive(false);
         InteractableManager.Instance.StepOutOffRange(interactable);
         Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (var collider in colliders)
-        {
+        foreach (var collider in colliders) {
             collider.enabled = false;
         }
         transform.SetParent(attachmentPoint, true);
@@ -23,8 +22,7 @@ public class Loot : MonoBehaviour {
         Interactable interactable = GetComponentInChildren<Interactable>(true);
         interactable.gameObject.SetActive(true);
         Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (var collider in colliders)
-        {
+        foreach (var collider in colliders) {
             collider.enabled = true;
         }
         transform.position = transform.parent.transform.position;
