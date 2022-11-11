@@ -6,7 +6,7 @@ public class Loot : MonoBehaviour {
     }
 
     internal void AttachToTransform(Transform attachmentPoint) {
-        Interactable interactable = GetComponentInChildren<Interactable>();
+        Interactable interactable = this.RequireComponentInChildren<Interactable>();
         interactable.gameObject.SetActive(false);
         InteractableManager.Instance.StepOutOffRange(interactable);
         Collider[] colliders = GetComponentsInChildren<Collider>();
@@ -19,7 +19,7 @@ public class Loot : MonoBehaviour {
     }
 
     internal void DetachFromTransform() {
-        Interactable interactable = GetComponentInChildren<Interactable>(true);
+        Interactable interactable = this.RequireComponentInChildren<Interactable>(true);
         interactable.gameObject.SetActive(true);
         Collider[] colliders = GetComponentsInChildren<Collider>();
         foreach (var collider in colliders) {

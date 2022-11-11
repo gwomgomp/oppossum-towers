@@ -5,7 +5,7 @@ public class EnemyBody : MonoBehaviour
     private Enemy enemy;
 
     private void Start() {
-        enemy = GetComponentInParent<Enemy>();
+        enemy = this.RequireComponentInParent<Enemy>();
     }
 
     private void OnTriggerEnter(Collider collider) {
@@ -14,8 +14,8 @@ public class EnemyBody : MonoBehaviour
             return;
         }
 
-        if (collider.CompareTag(TagConstants.LOOT)) {
-            enemy.HandleLoot(collider.GetComponentInParent<Loot>());
+        if (collider.TryGetComponentInParentForTag(TagConstants.LOOT, out Loot loot)) {
+            enemy.HandleLoot(loot);
             return;
         }
     }

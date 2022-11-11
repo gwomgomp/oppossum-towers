@@ -84,8 +84,9 @@ public class Enemy : MonoBehaviour {
         Hoard hoard = checkpoint as Hoard;
         if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
             var lootPrefab = Resources.Load<GameObject>("Prefabs/Loot");
-            var loot = Instantiate(lootPrefab);
-            AttachLootToTransform(loot.GetComponent<Loot>());
+            var lootGameObject = Instantiate(lootPrefab);
+            var loot = lootGameObject.RequireComponent<Loot>();
+            AttachLootToTransform(loot);
         }
     }
 

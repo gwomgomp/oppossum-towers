@@ -26,16 +26,17 @@ public class InteractableManager : MonoBehaviour {
             .Select(i => i.gameObject)
             .FirstOrDefault();
 
-        if (newClosestInteractable != null && (closestInteractable == null || !closestInteractable.Equals(newClosestInteractable))) {
-            if (closestInteractable != null) {
-                closestInteractable.TryGetComponent(out MeshRenderer oldRenderer);
+        if (newClosestInteractable != null
+                && (closestInteractable == null || !closestInteractable.Equals(newClosestInteractable))
+                && newClosestInteractable.TryGetComponent(out MeshRenderer newRenderer)) {
+            if (closestInteractable != null && closestInteractable.TryGetComponent(out MeshRenderer oldRenderer)) {
                 oldRenderer.enabled = false;
             }
-            newClosestInteractable.TryGetComponent(out MeshRenderer newRenderer);
             newRenderer.enabled = true;
             closestInteractable = newClosestInteractable;
-        } else if (newClosestInteractable == null && closestInteractable != null) {
-            closestInteractable.TryGetComponent(out MeshRenderer renderer);
+        } else if (newClosestInteractable == null
+                && closestInteractable != null
+                && closestInteractable.TryGetComponent(out MeshRenderer renderer)) {
             renderer.enabled = false;
             closestInteractable = null;
         }
