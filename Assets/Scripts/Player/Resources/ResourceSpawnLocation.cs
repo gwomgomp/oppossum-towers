@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class ResourceSpawnLocation : MonoBehaviour
-{
+public class ResourceSpawnLocation : MonoBehaviour {
 
     public bool IsFree {
         get {
@@ -14,7 +13,7 @@ public class ResourceSpawnLocation : MonoBehaviour
     public void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, .5f);
     }
-       
+
     private void OnTriggerExit(Collider collider) {
         var resource = collider.GetComponent<Resource>();
         if (resource != null) HandleResourceTaken();

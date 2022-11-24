@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class Resource : MonoBehaviour
-{
+public class Resource : MonoBehaviour {
     private bool initialized = false;
     private ResourceType type = null;
     private float weight = 0;
