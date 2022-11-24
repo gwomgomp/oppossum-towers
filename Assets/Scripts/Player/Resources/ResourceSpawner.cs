@@ -6,12 +6,6 @@ public class ResourceSpawner : MonoBehaviour {
     [field: SerializeField]
     public ResourceType TypeToSpawn { get; private set; }
 
-    [SerializeField]
-    private float timeBetweenSpawns;
-
-    [SerializeField]
-    private int amountToSpawn;
-
     [field: SerializeField]
     public List<ResourceSpawnLocation> ResourceLocations { get; set; } = new List<ResourceSpawnLocation>();
 
@@ -22,13 +16,12 @@ public class ResourceSpawner : MonoBehaviour {
     public void Update() {
         if (spawning &&
             ResourceLocations.HasFreeSpawnSpots() &&
-            amountSpawned < amountToSpawn &&
-            timeSinceLastSpawn >= timeBetweenSpawns) {
+            amountSpawned < TypeToSpawn.SpawnCap &&
+            timeSinceLastSpawn >= TypeToSpawn.SpawnCooldown) {
 
             var freeSpawnSpots = ResourceLocations.FindAll(location => location.IsFree);
             var resourceLocation = freeSpawnSpots[Random.Range(0, freeSpawnSpots.Count)];
-            var resourcePrefab = Resources.Load<GameObject>($"Prefabs/Resources/{TypeToSpawn.name}");
-            var resourceGameObject = Instantiate(resourcePrefab, resourceLocation.transform.position, Quaternion.LookRotation(transform.position, Vector3.up));
+            var resourceGameObject = Instantiate(TypeToSpawn.Prefab, resourceLocation.transform.position, Quaternion.LookRotation(transform.position, Vector3.up));
             var resource = resourceGameObject.GetComponent<Resource>();
             resource.Initialize(TypeToSpawn, resourceLocation);
 

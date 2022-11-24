@@ -10,4 +10,7 @@ public class ResourceType : ScriptableObject {
 
     [field: SerializeField]
     public float SpawnCooldown { get; private set; }
+
+    [field: SerializeField]
+    public GameObject Prefab { get; private set; }
 }
