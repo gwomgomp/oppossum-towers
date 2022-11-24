@@ -7,23 +7,23 @@ public class ResourceSpawner : MonoBehaviour {
     public ResourceType TypeToSpawn { get; private set; }
 
     [SerializeField]
-    private float _timeBetweenSpawns;
+    private float timeBetweenSpawns;
 
     [SerializeField]
-    private int _amountToSpawn;
+    private int amountToSpawn;
 
     [field: SerializeField]
     public List<ResourceSpawnLocation> ResourceLocations { get; set; } = new List<ResourceSpawnLocation>();
 
-    private float _timeSinceLastSpawn = 0f;
-    private int _amountSpawned = 0;
-    private bool _spawning = false;
+    private float timeSinceLastSpawn = 0f;
+    private int amountSpawned = 0;
+    private bool spawning = false;
 
     public void Update() {
-        if (_spawning &&
+        if (spawning &&
             ResourceLocations.HasFreeSpawnSpots() &&
-            _amountSpawned < _amountToSpawn &&
-            _timeSinceLastSpawn >= _timeBetweenSpawns) {
+            amountSpawned < amountToSpawn &&
+            timeSinceLastSpawn >= timeBetweenSpawns) {
 
             var freeSpawnSpots = ResourceLocations.FindAll(location => location.IsFree);
             var resourceLocation = freeSpawnSpots[Random.Range(0, freeSpawnSpots.Count)];
@@ -32,20 +32,19 @@ public class ResourceSpawner : MonoBehaviour {
             var resource = resourceGameObject.GetComponent<Resource>();
             resource.Initialize(TypeToSpawn, resourceLocation);
 
-            _timeSinceLastSpawn = 0f;
-            _amountSpawned++;
+            timeSinceLastSpawn = 0f;
+            amountSpawned++;
         } else {
-            _timeSinceLastSpawn += Time.deltaTime;
+            timeSinceLastSpawn += Time.deltaTime;
         }
     }
 
     public void ResourceTaken() {
-        _amountSpawned -= 1;
-        _timeSinceLastSpawn = 0f;
+        amountSpawned -= 1;
     }
 
     internal void StartSpawning() {
-        _spawning = true;
+        spawning = true;
     }
 
     public void OnDrawGizmos() {

@@ -9,5 +9,5 @@ public class ResourceType : ScriptableObject {
     public float SpawnCap { get; private set; }
 
     [field: SerializeField]
-    public float SpanwCooldown { get; private set; }
+    public float SpawnCooldown { get; private set; }
 }

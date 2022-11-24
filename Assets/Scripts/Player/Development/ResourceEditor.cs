@@ -21,15 +21,6 @@ public class ResourceEditor : Editor {
         if (_resourceSpawner.transform == Selection.activeTransform) {
             DrawSpawnHandles();
         }
-
-        EditorGUI.BeginChangeCheck();
-        var typeToSpawn = _resourceSpawner.TypeToSpawn;
-        if (EditorGUI.EndChangeCheck()) {            
-            Undo.RecordObject(_resourceSpawner, "Spawner");
-            var viewedModelFilter = ((MeshFilter)_resourceSpawner.GetComponent("MeshFilter"));
-            var newMesh = Resources.Load<Mesh>($"Meshes/bigbrick");
-            viewedModelFilter.mesh = newMesh;
-        }
     }
 
     private void DrawSpawnHandles() {
@@ -51,7 +42,7 @@ public class ResourceEditor : Editor {
             StartSpawningUI();
         } else {
             NewSpawnpointButton();
-            CleanupSpanwLocationsButton();
+            CleanupSpawnLocationsButton();
         }
     }
 
@@ -70,7 +61,7 @@ public class ResourceEditor : Editor {
     }
 
     /// <summary>
-    /// Button to add a new Spawnlocation to the prefab
+    /// Button to add a new SpawnLocation to the prefab
     /// </summary>
     private void NewSpawnpointButton() {
         NewSpawnpointButton("ResourceLocation");
@@ -98,40 +89,32 @@ public class ResourceEditor : Editor {
             );
 
             newResourceLocation.name = $"{type} {_resourceSpawner.ResourceLocations.Count + 1}";
-            Undo.RegisterCreatedObjectUndo(newResourceLocation, "Create new spanw location");
-            var newSpanwLocation = newResourceLocation.GetComponent<ResourceSpawnLocation>();
+            Undo.RegisterCreatedObjectUndo(newResourceLocation, "Create new spawn location");
+            var newSpawnLocation = newResourceLocation.GetComponent<ResourceSpawnLocation>();
 
-            CleanUpSpawnlocations();
+            CleanUpSpawnLocations();
 
-            _resourceSpawner.ResourceLocations.Add(newSpanwLocation);
+            _resourceSpawner.ResourceLocations.Add(newSpawnLocation);
             PrefabUtility.RecordPrefabInstancePropertyModifications(_resourceSpawner);
         }
     }
 
     /// <summary>
-    /// Button to clean Spawnlocations
+    /// Button to clean SpawnLocations
     /// </summary>
-    private void CleanupSpanwLocationsButton() {
-        if (GUILayout.Button($"Cleanup Spawnlocations")) {
-            CleanUpSpawnlocations();
+    private void CleanupSpawnLocationsButton() {
+        if (GUILayout.Button($"Cleanup SpawnLocations")) {
+            CleanUpSpawnLocations();
+            PrefabUtility.RecordPrefabInstancePropertyModifications(_resourceSpawner);
         }
     }
 
     /// <summary>
     /// Cleanup deleted or "None" spawnpoints
     /// </summary>
-    private void CleanUpSpawnlocations() {
+    private void CleanUpSpawnLocations() {
         _resourceSpawner.ResourceLocations.RemoveAll(location => location == null || ReferenceEquals(location, null));
     }
-
-    //private void OnDestroy() {
-    //    if (!Application.IsPlaying(this)) {
-    //        // Register Undo, so that when you ctrl-z the delete operation, it is re-added to the list
-    //        UnityEditor.Undo.RecordObject(_resourceSpawner, "Removed from parent");
-
-    //    }
-    //}
-
 
 #endif
 }
