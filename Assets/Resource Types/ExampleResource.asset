@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: ExampleResource
   m_EditorClassIdentifier: 
   <Weight>k__BackingField: 100
-  <SpawnCap>k__BackingField: 1
+  <SpawnCap>k__BackingField: 3
+  <SpawnCooldown>k__BackingField: 1
+  <Prefab>k__BackingField: {fileID: 5390878954546635444, guid: 533cc4c464b3fd141a67cfe355fc1946, type: 3}
