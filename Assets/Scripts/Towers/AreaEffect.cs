@@ -30,7 +30,7 @@ public class AreaEffect : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && other.gameObject.TryGetComponent(out Enemy enemy)) {
+        if (other.TryGetComponentInParentForTag(TagConstants.ENEMY, out Enemy enemy)) {
             enemiesInArea.Add(enemy);
 
             enemy.ApplyStatusEffect(areaEffectType.statusEffect);
@@ -38,7 +38,7 @@ public class AreaEffect : MonoBehaviour {
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && other.gameObject.TryGetComponent(out Enemy enemy)) {
+        if (other.TryGetComponentInParentForTag(TagConstants.ENEMY, out Enemy enemy)) {
             enemiesInArea.Remove(enemy);
 
             enemy.RemoveStatusEffect(areaEffectType.statusEffect);

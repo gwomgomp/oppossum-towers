@@ -39,7 +39,7 @@ public class Wave {
         timeSinceLastSpawn = 0f;
         amountSpawned++;
 
-        var enemy = enemyGameObject.GetComponent<Enemy>();
+        var enemy = enemyGameObject.RequireComponent<Enemy>();
         enemy.Initialize(Definition.TypeToSpawn, firstCheckPoint);
     }
 

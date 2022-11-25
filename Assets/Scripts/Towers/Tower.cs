@@ -20,7 +20,7 @@ public class Tower : MonoBehaviour {
         enemiesInRange = new HashSet<Enemy>();
         currentShotCooldown = towerType.shotCooldown;
 
-        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+        CapsuleCollider capsuleCollider = this.RequireComponent<CapsuleCollider>();
 
         capsuleCollider.radius = towerType.range;
         capsuleCollider.height = towerType.range * 4.0f;
@@ -51,7 +51,7 @@ public class Tower : MonoBehaviour {
     private void ShootAtEnemy() {
         if (towerType.projectilePrefab != null) {
             GameObject projectileObject = Instantiate(towerType.projectilePrefab, launchOrigin.transform.position, Quaternion.identity);
-            Projectile projectile = projectileObject.GetComponent<Projectile>();
+            Projectile projectile = projectileObject.RequireComponent<Projectile>();
 
             if (towerType.projectileTracksEnemy) {
                 projectile.SetTargetObject(currentTarget.gameObject);
@@ -144,13 +144,13 @@ public class Tower : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
+        if (other.TryGetComponentInParentForTag(TagConstants.ENEMY, out Enemy enemy)) {
             enemiesInRange.Add(enemy);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag(TagConstants.ENEMY) && other.TryGetComponent(out Enemy enemy)) {
+        if (other.TryGetComponentInParentForTag(TagConstants.ENEMY, out Enemy enemy)) {
             enemiesInRange.Remove(enemy);
         }
     }
@@ -160,9 +160,7 @@ public class Tower : MonoBehaviour {
             Instantiate(towerType.areaEffectPrefab, enemyObject.transform.position, Quaternion.identity);
         }
 
-        Enemy enemy = enemyObject.GetComponent<Enemy>();
-
-        if (enemy != null) {
+        if (enemyObject.TryGetComponent<Enemy>(out Enemy enemy)) {
             enemy.Damage(towerType.damagePerShot);
 
             if (towerType.statusEffect != null) {

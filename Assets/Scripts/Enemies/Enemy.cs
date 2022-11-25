@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
 
     private bool carryingLoot = false;
-    private GameObject currentLoot = null;
+    private Loot currentLoot = null;
 
     private List<StatusEffect> activeStatusEffects;
     private List<TimedStatusEffect> timedStatusEffects;
@@ -52,6 +52,20 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void HandleCheckpoint(LaneCheckpoint checkpoint) {
+        if (checkpoint == currentTarget) {
+            HandleHoardCheckpoint(checkpoint);
+            HandleDropOffCheckpoint(checkpoint);
+            HandleLastCheckpoint(checkpoint);
+        }
+    }
+
+    public void HandleLoot(Loot loot) {
+        if (!carryingLoot) {
+            AttachLootToTransform(loot);
+        }
+    }
+
     private void Move() {
         var newPosition = Vector3.SmoothDamp(
                 transform.position,
@@ -66,53 +80,34 @@ public class Enemy : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider collider) {
-        if (initialized && collider.gameObject.TryGetComponent(out LaneCheckpoint next) && next == currentTarget) {
-            HandleHoardCheckpoint(next);
-            HandleDropOffCheckpoint(next);
-            HandleLastCheckpoint(next);
-            return;
-        }
-
-        if (initialized && !carryingLoot && collider.CompareTag(TagConstants.LOOT)) {
-            AttachLootToTransform(collider.gameObject);
-            return;
-        }
-    }
-
     private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
         Hoard hoard = checkpoint as Hoard;
         if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
-            var checkpointPrefab = Resources.Load<GameObject>("Prefabs/Loot");
-            var loot = Instantiate(checkpointPrefab);
+            var lootPrefab = Resources.Load<GameObject>("Prefabs/Loot");
+            var lootGameObject = Instantiate(lootPrefab);
+            var loot = lootGameObject.RequireComponent<Loot>();
             AttachLootToTransform(loot);
         }
     }
 
-    private void AttachLootToTransform(GameObject loot) {
+    private void AttachLootToTransform(Loot loot) {
         currentLoot = loot;
         carryingLoot = true;
-        loot.TryGetComponent(out Collider collider);
-        collider.enabled = false;
-        loot.transform.SetParent(transform);
-        loot.transform.position = transform.position;
-        loot.transform.Translate(Vector3.up * 2, Space.World);
+        loot.AttachToTransform(transform);
     }
 
-    private void DetachLootFromTransform(GameObject loot) {
+    private void DetachLootFromTransform(Loot loot) {
         currentLoot = null;
         carryingLoot = false;
-        loot.TryGetComponent(out Collider collider);
-        collider.enabled = true;
-        loot.transform.SetParent(transform.parent);
-        loot.transform.position = transform.position;
+        loot.DetachFromTransform();
     }
 
     private void HandleDropOffCheckpoint(LaneCheckpoint checkpoint) {
         if (carryingLoot && checkpoint.IsLootDropOff) {
             Debug.Log("Extracted loot");
-            DetachLootFromTransform(currentLoot);
-            Destroy(currentLoot);
+            Loot toExtract = currentLoot;
+            DetachLootFromTransform(toExtract);
+            Destroy(toExtract.gameObject);
         }
     }
 

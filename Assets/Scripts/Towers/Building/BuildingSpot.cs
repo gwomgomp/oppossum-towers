@@ -13,7 +13,7 @@ public class BuildingSpot : MonoBehaviour, Placeable {
     public void Build(TowerType type) {
         var towerPrefab = Resources.Load<GameObject>("Prefabs/Tower");
         var towerGameObject = Instantiate(towerPrefab, transform.position, transform.rotation);
-        Tower = towerGameObject.GetComponent<Tower>();
+        Tower = towerGameObject.RequireComponent<Tower>();
         Tower.towerType = type;
     }
 
