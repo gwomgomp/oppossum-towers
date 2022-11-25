@@ -15,7 +15,7 @@ public class Resource : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(resourceSpawnLocation.transform.position);
             initialized = true;
         } else {
-            Debug.LogError("Do not try to initialize enemy twice");
+            Debug.LogError("Do not try to initialize resource twice");
         }
     }
 }
