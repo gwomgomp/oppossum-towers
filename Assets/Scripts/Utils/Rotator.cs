@@ -6,7 +6,7 @@ public class Rotator : MonoBehaviour {
     [SerializeField]
     private Vector3 randomizationFactors;
 
-    public Vector3 randomization;
+    private Vector3 randomization;
 
     void Start() {
         Vector3 random = Random.insideUnitSphere - new Vector3(0.5f, 0.5f, 0.5f);
