@@ -14,15 +14,19 @@ public class ResourceSpawner : MonoBehaviour {
     private bool spawning = false;
 
     public void Update() {
-        if (spawning &&
-            ResourceLocations.HasFreeSpawnSpots() &&
-            amountSpawned < TypeToSpawn.SpawnCap &&
-            timeSinceLastSpawn >= TypeToSpawn.SpawnCooldown) {
+        if (spawning
+            && ResourceLocations.HasFreeSpawnSpots()
+            && amountSpawned < TypeToSpawn.SpawnCap
+            && timeSinceLastSpawn >= TypeToSpawn.SpawnCooldown) {
 
-            var freeSpawnSpots = ResourceLocations.FindAll(location => location.IsFree);
-            var resourceLocation = freeSpawnSpots[Random.Range(0, freeSpawnSpots.Count)];
-            var resourceGameObject = Instantiate(TypeToSpawn.Prefab, resourceLocation.transform.position, Quaternion.LookRotation(transform.position, Vector3.up));
-            var resource = resourceGameObject.GetComponent<Resource>();
+            var resourceLocation = ResourceLocations.Find(location => location.IsFree());
+            var resourceGameObject = Instantiate(
+                TypeToSpawn.Prefab,
+                resourceLocation.transform.position,
+                Quaternion.LookRotation(Vector3.forward, Vector3.up),
+                resourceLocation.transform
+            );
+            var resource = resourceGameObject.RequireComponentInChildren<Resource>();
             resource.Initialize(TypeToSpawn, resourceLocation);
 
             timeSinceLastSpawn = 0f;
@@ -43,5 +47,4 @@ public class ResourceSpawner : MonoBehaviour {
     public void OnDrawGizmos() {
         Gizmos.DrawWireCube(transform.position, Vector3.one);
     }
-
 }

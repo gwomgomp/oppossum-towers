@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingSpot : MonoBehaviour, Placeable {
+public class BuildingSpot : MonoBehaviour, Placeable, Storage {
     [field: SerializeField]
     public string Name { get; private set; }
 
     public Tower Tower { get; private set; }
+
+    private List<Resource> depositedResources = new();
 
     private void Start() {
         PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
@@ -24,5 +27,14 @@ public class BuildingSpot : MonoBehaviour, Placeable {
 
     public GameObject GetGameObject() {
         return gameObject;
+    }
+
+    public bool Store(Cargo cargo) {
+        if (cargo is Resource resource) {
+            depositedResources.Add(resource);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
