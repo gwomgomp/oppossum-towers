@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
   m_Name: SampleArrowTower
   m_EditorClassIdentifier: 
+  displayName: Arrow
   targetingMethod: 2
   damagePerShot: 5
   shotCooldown: 0.6
