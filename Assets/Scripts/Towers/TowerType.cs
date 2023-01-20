@@ -2,6 +2,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tower Type", menuName = "Towers/Tower Type", order = 1)]
 public class TowerType : ScriptableObject {
+    public string displayName;
+
     public enum TargetingMethod {
         HighestPriority,
         LowestPriority,
