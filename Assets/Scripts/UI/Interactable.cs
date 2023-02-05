@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour {
     [SerializeField]
     private float distanceModifier = 1;
 
-    private void Start() {
+    private InteractableManager interactableManager;
+
+    void Start() {
+        interactableManager = ManagerProvider.Instance.GetManager<InteractableManager>();
         TryGetComponent(out SphereCollider collider);
-        collider.radius = InteractableManager.Instance.MaxDistanceToInteract * distanceModifier;
+        collider.radius = ManagerProvider.Instance.GetManager<InteractableManager>().MaxDistanceToInteract * distanceModifier;
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (InteractableManager.Instance.IsRelevantEntry(other.gameObject)) {
-            InteractableManager.Instance.StepIntoRange(this);
+        if (interactableManager.IsRelevantEntry(other.gameObject)) {
+            interactableManager.StepIntoRange(this);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (InteractableManager.Instance.IsRelevantEntry(other.gameObject)) {
-            InteractableManager.Instance.StepOutOffRange(this);
+        if (interactableManager.IsRelevantEntry(other.gameObject)) {
+            interactableManager.StepOutOffRange(this);
         }
     }
 }

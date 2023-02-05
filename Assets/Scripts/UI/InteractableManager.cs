@@ -8,16 +8,10 @@ public class InteractableManager : MonoBehaviour {
 
     private HashSet<Interactable> interactablesInRange = new();
 
-    public static InteractableManager Instance { get; private set; }
-
     private GameObject closestInteractable;
 
-    private void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(this);
-        } else {
-            Instance = this;
-        }
+    void Awake() {
+        ManagerProvider.Instance.RegisterManager(this);
     }
 
     private void Update() {

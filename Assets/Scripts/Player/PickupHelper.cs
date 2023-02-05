@@ -5,7 +5,7 @@ public class PickupHelper
     public static void Attach(MonoBehaviour target, Transform attachmentPoint) {
         Interactable interactable = target.RequireComponentInChildren<Interactable>();
         interactable.gameObject.SetActive(false);
-        InteractableManager.Instance.StepOutOffRange(interactable);
+        ManagerProvider.Instance.GetManager<InteractableManager>().StepOutOffRange(interactable);
         Collider[] colliders = target.GetComponentsInChildren<Collider>();
         foreach (var collider in colliders) {
             collider.enabled = false;

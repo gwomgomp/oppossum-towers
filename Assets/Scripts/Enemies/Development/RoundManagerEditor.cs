@@ -17,11 +17,12 @@ public class RoundManagerEditor : Editor {
     }
 
     private void StartSpawningUI() {
-        if (!RoundManager.Instance.Running && GUILayout.Button("Start Spawning")) {
-            RoundManager.Instance.Run();
+        var roundManager = ManagerProvider.Instance.GetManager<RoundManager>();
+        if (!roundManager.Running && GUILayout.Button("Start Spawning")) {
+            roundManager.Run();
         }
 
-        if (RoundManager.Instance.Running) {
+        if (roundManager.Running) {
             GUILayout.Label("Spawning started");
         }
     }
