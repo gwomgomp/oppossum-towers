@@ -29,4 +29,8 @@ public class Resource : MonoBehaviour, Cargo {
     public GameObject GetGameObject() {
         return gameObject;
     }
+
+    public ResourceType GetResourceType() {
+        return type;
+    }
 }

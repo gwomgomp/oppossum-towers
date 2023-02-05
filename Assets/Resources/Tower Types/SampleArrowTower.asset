@@ -22,3 +22,6 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
   statusEffect: {fileID: 0}
   areaEffectPrefab: {fileID: 0}
+  buildCosts:
+  - resourceType: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
+    count: 1

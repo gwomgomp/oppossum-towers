@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BuildingSpot : MonoBehaviour, Placeable, Storage {
     [field: SerializeField]
@@ -36,5 +37,19 @@ public class BuildingSpot : MonoBehaviour, Placeable, Storage {
         } else {
             return false;
         }
+    }
+
+    public bool HasEnoughResourcesFor(TowerType towerType) {
+        var buildCosts = towerType.buildCosts;
+        if (buildCosts == null) {
+            return true;
+        }
+        foreach (var buildCost in buildCosts) {
+            var resourceCount = depositedResources.Select(resource => resource.GetResourceType()).Where(type => type.Equals(buildCost.resourceType)).Count();
+            if (resourceCount < buildCost.count) {
+                return false;
+            }
+        }
+        return true;
     }
 }

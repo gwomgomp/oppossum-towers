@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class BuildingManager : MonoBehaviour {
     public GameObject buildingMenu;
@@ -18,6 +19,18 @@ public class BuildingManager : MonoBehaviour {
     private GameObject openMenu;
     private BuildingSpot openBuildingSpot;
 
+    private InteractableManager interactableManager;
+
+    void Awake() {
+        ManagerProvider.Instance.RegisterManager(this);
+    }
+
+    void Start() {
+        var inputManager = ManagerProvider.Instance.GetManager<InputManager>();
+        inputManager.RegisterInput(InputManager.InputType.Interact, Interact, 50);
+        interactableManager = ManagerProvider.Instance.GetManager<InteractableManager>();
+    }
+
     void Update() {
         if (
             Input.GetMouseButtonDown(0)
@@ -33,25 +46,27 @@ public class BuildingManager : MonoBehaviour {
             CloseMenu();
         }
 
-        if (Input.GetButtonDown("Interact")) {
-            if (GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot)) {
-                if (openBuildingSpot == closestBuildingSpot) {
-                    CloseMenu();
-                } else {
-                    DisplayMenu(closestBuildingSpot);
-                }
-            } else {
-                CloseMenu();
-            }
-        }
-
         if (openBuildingSpot != null && !IsSpotInRange(openBuildingSpot)) {
             CloseMenu();
         }
     }
 
+    private bool Interact() {
+        if (GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot)) {
+            if (openBuildingSpot == closestBuildingSpot) {
+                CloseMenu();
+            } else {
+                DisplayMenu(closestBuildingSpot);
+            }
+            return true;
+        } else {
+            CloseMenu();
+            return false;
+        }
+    }
+
     private bool GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot) {
-        return InteractableManager.Instance.GetClosestInteractable(out closestBuildingSpot);
+        return interactableManager.GetClosestInteractable(out closestBuildingSpot);
     }
 
     private bool IsSpotInRange(BuildingSpot buildingSpot) {
@@ -122,6 +137,10 @@ public class BuildingManager : MonoBehaviour {
 
             var text = button.GetComponentInChildren<TextMeshProUGUI>();
             text.SetText(towerType.displayName);
+
+            var buttonComponent = button.GetComponent<Button>();
+            buttonComponent.interactable = openBuildingSpot.HasEnoughResourcesFor(towerType);
+            buttonComponent.onClick.AddListener(() => Build(towerType));
 
             createdButtons++;
             if (createdButtons >= maxButtonsPerRow) {
