@@ -1,31 +1,19 @@
 using UnityEngine;
 
-public class Loot : MonoBehaviour {
+public class Loot : MonoBehaviour, Cargo {
     void Start() {
         PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
     }
 
-    internal void AttachToTransform(Transform attachmentPoint) {
-        Interactable interactable = this.RequireComponentInChildren<Interactable>();
-        interactable.gameObject.SetActive(false);
-        InteractableManager.Instance.StepOutOffRange(interactable);
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (var collider in colliders) {
-            collider.enabled = false;
-        }
-        transform.SetParent(attachmentPoint, true);
-        transform.position = attachmentPoint.position;
-        transform.Translate(Vector3.up * 2, Space.World);
+    public void AttachToTransform(Transform attachmentPoint) {
+        PickupHelper.Attach(this, attachmentPoint);
     }
 
-    internal void DetachFromTransform() {
-        Interactable interactable = this.RequireComponentInChildren<Interactable>(true);
-        interactable.gameObject.SetActive(true);
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (var collider in colliders) {
-            collider.enabled = true;
-        }
-        transform.position = transform.parent.transform.position;
-        transform.SetParent(transform.parent.parent, true);
+    public void DetachFromTransform() {
+        PickupHelper.Detach(this);
+    }
+
+    public GameObject GetGameObject() {
+        return gameObject;
     }
 }

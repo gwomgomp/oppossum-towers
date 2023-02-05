@@ -1,31 +1,28 @@
 using UnityEngine;
 
-public class ResourceSpawnLocation : MonoBehaviour {
+public class ResourceSpawnLocation : MonoBehaviour, Placeable {
 
-    public bool IsFree { get; private set; }
+    private Resource currentResource;
 
     public void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, .5f);
     }
 
-    private void OnTriggerExit(Collider collider) {
-        var resource = collider.GetComponent<Resource>();
-        if (resource != null) HandleResourceTaken();
+    public void PlaceResource(Resource resource) {
+        currentResource = resource;
     }
 
-    private void OnTriggerEnter(Collider collider) {
-        var resource = collider.GetComponent<Resource>();
-        if (resource != null) HandleResourcePlaced();
+    public Resource TakeResource() {
+        Resource resource = currentResource;
+        currentResource = null;
+        return resource;
     }
 
-    private void HandleResourceTaken() {
-        var spawner = transform.parent.gameObject.GetComponent<ResourceSpawner>();
-        // TODO: Add security that player cant just move in/out with object in hand
-        spawner.ResourceTaken();
-        IsFree = true;
+    public bool IsFree() {
+        return currentResource == null;
     }
 
-    private void HandleResourcePlaced() {
-        IsFree = false;
+    public GameObject GetGameObject() {
+        return gameObject;
     }
 }

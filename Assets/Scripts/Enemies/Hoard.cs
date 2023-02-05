@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class Hoard : LaneCheckpoint
-{
+public class Hoard : LaneCheckpoint, Storage {
     [SerializeField]
     private int availableLoot;
 
@@ -16,5 +15,14 @@ public class Hoard : LaneCheckpoint
 
     public void DepositLoot() {
         availableLoot++;
+    }
+
+    public bool Store(Cargo cargo) {
+        if (cargo is Loot) {
+            DepositLoot();
+            return true;
+        } else {
+            return false;
+        }
     }
 }
