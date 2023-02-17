@@ -7,24 +7,24 @@ using UnityEditor;
 [CustomEditor(typeof(ResourceSpawner)), CanEditMultipleObjects]
 public class ResourceEditor : Editor {
 
-    private ResourceSpawner _resourceSpawner;
+    private ResourceSpawner resourceSpawner;
 
-    private bool _spawningStarted = false;
+    private bool spawningStarted = false;
 
     private void OnEnable() {
-        _resourceSpawner = target as ResourceSpawner;
+        resourceSpawner = target as ResourceSpawner;
 
     }
 
 #if UNITY_EDITOR
     public void OnSceneGUI() {
-        if (_resourceSpawner.transform == Selection.activeTransform) {
+        if (resourceSpawner.transform == Selection.activeTransform) {
             DrawSpawnHandles();
         }
     }
 
     private void DrawSpawnHandles() {
-        var spawnpoints = _resourceSpawner.GetComponentsInChildren<ResourceSpawnLocation>();
+        var spawnpoints = resourceSpawner.GetComponentsInChildren<ResourceSpawnLocation>();
         foreach (var spawnpoint in spawnpoints) {
             EditorGUI.BeginChangeCheck();
             var newTargetPosition = Handles.PositionHandle(spawnpoint.transform.position, spawnpoint.transform.rotation);
@@ -50,12 +50,12 @@ public class ResourceEditor : Editor {
     /// Start the spawning of resources
     /// </summary>
     private void StartSpawningUI() {
-        if (!_spawningStarted && GUILayout.Button("Start Spawning")) {
-            _resourceSpawner.StartSpawning();
-            _spawningStarted = true;
+        if (!spawningStarted && GUILayout.Button("Start Spawning")) {
+            resourceSpawner.StartSpawning(0);
+            spawningStarted = true;
         }
 
-        if (_spawningStarted) {
+        if (spawningStarted) {
             GUILayout.Label("Resource Spawning started");
         }
     }
@@ -75,7 +75,7 @@ public class ResourceEditor : Editor {
         if (GUILayout.Button($"Add {type}")) {
 
             var resourceLocationPrefab = Resources.Load<GameObject>($"Prefabs/{type}");
-            var instantiationTransform = _resourceSpawner.transform;
+            var instantiationTransform = resourceSpawner.transform;
 
             // Randomly place location around the prefab
             var offset = Random.insideUnitCircle * 5;
@@ -85,17 +85,17 @@ public class ResourceEditor : Editor {
                 resourceLocationPrefab,
                 instantiationPosition,
                 instantiationTransform.rotation,
-                _resourceSpawner.transform
+                resourceSpawner.transform
             );
 
-            newResourceLocation.name = $"{type} {_resourceSpawner.ResourceLocations.Count + 1}";
+            newResourceLocation.name = $"{type} {resourceSpawner.ResourceLocations.Count + 1}";
             Undo.RegisterCreatedObjectUndo(newResourceLocation, "Create new spawn location");
             var newSpawnLocation = newResourceLocation.GetComponent<ResourceSpawnLocation>();
 
             CleanUpSpawnLocations();
 
-            _resourceSpawner.ResourceLocations.Add(newSpawnLocation);
-            PrefabUtility.RecordPrefabInstancePropertyModifications(_resourceSpawner);
+            resourceSpawner.ResourceLocations.Add(newSpawnLocation);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(resourceSpawner);
         }
     }
 
@@ -105,7 +105,7 @@ public class ResourceEditor : Editor {
     private void CleanupSpawnLocationsButton() {
         if (GUILayout.Button($"Cleanup SpawnLocations")) {
             CleanUpSpawnLocations();
-            PrefabUtility.RecordPrefabInstancePropertyModifications(_resourceSpawner);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(resourceSpawner);
         }
     }
 
@@ -113,7 +113,7 @@ public class ResourceEditor : Editor {
     /// Cleanup deleted or "None" spawnpoints
     /// </summary>
     private void CleanUpSpawnLocations() {
-        _resourceSpawner.ResourceLocations.RemoveAll(location => location == null || ReferenceEquals(location, null));
+        resourceSpawner.ResourceLocations.RemoveAll(location => location == null || ReferenceEquals(location, null));
     }
 
 #endif

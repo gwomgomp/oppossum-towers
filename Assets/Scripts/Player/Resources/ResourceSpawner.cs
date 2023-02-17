@@ -14,8 +14,10 @@ public class ResourceSpawner : MonoBehaviour {
     private bool spawning = false;
 
     public void Update() {
-        if (spawning
-            && ResourceLocations.HasFreeSpawnSpots()
+
+        if (!spawning) return;
+
+        if (ResourceLocations.HasFreeSpawnSpots()
             && amountSpawned < TypeToSpawn.SpawnCap
             && timeSinceLastSpawn >= TypeToSpawn.SpawnCooldown) {
 
@@ -40,8 +42,17 @@ public class ResourceSpawner : MonoBehaviour {
         amountSpawned -= 1;
     }
 
-    internal void StartSpawning() {
+    /// <summary>
+    /// start spawn of resources
+    /// TODO: base something of the resources spawned on roundnumber
+    /// </summary>
+    /// <param name="roundNumber"></param>
+    internal void StartSpawning(int roundNumber) {
         spawning = true;
+    }
+
+    internal void StopSpawning() {
+        spawning = false;
     }
 
     public void OnDrawGizmos() {
