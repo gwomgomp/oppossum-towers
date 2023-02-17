@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tower Type", menuName = "Towers/Tower Type", order = 1)]
 public class TowerType : ScriptableObject {
+    public string displayName;
+
     public enum TargetingMethod {
         HighestPriority,
         LowestPriority,
@@ -20,4 +23,12 @@ public class TowerType : ScriptableObject {
     public GameObject projectilePrefab;
     public StatusEffect statusEffect;
     public GameObject areaEffectPrefab;
+
+    public ResourceCost[] buildCosts;
+
+    [Serializable]
+    public struct ResourceCost {
+        public ResourceType resourceType;
+        public int count;
+    }
 }

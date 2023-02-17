@@ -1,8 +1,6 @@
 using UnityEngine;
 
 public class RoundManager : MonoBehaviour {
-    public static RoundManager Instance { get; private set; }
-
     public delegate void NewRound(int roundNumber);
     public event NewRound OnNextRound;
 
@@ -17,12 +15,8 @@ public class RoundManager : MonoBehaviour {
     private bool roundFinished = false;
     private float timeSinceRoundEnd = 0f;
 
-    public void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(this);
-        } else {
-            Instance = this;
-        }
+    void Awake() {
+        ManagerProvider.Instance.RegisterManager(this);
     }
 
     private void Start() {

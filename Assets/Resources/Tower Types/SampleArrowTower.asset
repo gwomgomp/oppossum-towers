@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: SamplePoisonTower
+  m_Name: SampleArrowTower
   m_EditorClassIdentifier: 
+  displayName: Arrow
   targetingMethod: 2
-  damagePerShot: 0
-  shotCooldown: 0.5
+  damagePerShot: 5
+  shotCooldown: 0.6
   range: 8
   projectileTracksEnemy: 1
-  projectileSpeed: 12
+  projectileSpeed: 14
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
-  statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
+  statusEffect: {fileID: 0}
   areaEffectPrefab: {fileID: 0}
+  buildCosts:
+  - resourceType: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
+    count: 1

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
   m_Name: SampleCannonTower
   m_EditorClassIdentifier: 
+  displayName: Cannon
   targetingMethod: 2
   damagePerShot: 0
   shotCooldown: 1

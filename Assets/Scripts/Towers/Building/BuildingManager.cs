@@ -1,13 +1,35 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class BuildingManager : MonoBehaviour {
     public GameObject buildingMenu;
     public GameObject adjustMenu;
 
+    [Header("Gameplay Settings")]
     public float maxDistanceToBuild = 0f;
+
+    [Header("UI Settings")]
+    public GameObject towerButtonPrefab;
+    public float horizontalSpace;
+    public float verticalSpace;
+
+    public int maxButtonsPerRow;
 
     private GameObject openMenu;
     private BuildingSpot openBuildingSpot;
+
+    private InteractableManager interactableManager;
+
+    void Awake() {
+        ManagerProvider.Instance.RegisterManager(this);
+    }
+
+    void Start() {
+        var inputManager = ManagerProvider.Instance.GetManager<InputManager>();
+        inputManager.RegisterInput(InputManager.InputType.Interact, Interact, 50);
+        interactableManager = ManagerProvider.Instance.GetManager<InteractableManager>();
+    }
 
     void Update() {
         if (
@@ -24,25 +46,27 @@ public class BuildingManager : MonoBehaviour {
             CloseMenu();
         }
 
-        if (Input.GetButtonDown("Interact")) {
-            if (GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot)) {
-                if (openBuildingSpot == closestBuildingSpot) {
-                    CloseMenu();
-                } else {
-                    DisplayMenu(closestBuildingSpot);
-                }
-            } else {
-                CloseMenu();
-            }
-        }
-
         if (openBuildingSpot != null && !IsSpotInRange(openBuildingSpot)) {
             CloseMenu();
         }
     }
 
+    private bool Interact() {
+        if (GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot)) {
+            if (openBuildingSpot == closestBuildingSpot) {
+                CloseMenu();
+            } else {
+                DisplayMenu(closestBuildingSpot);
+            }
+            return true;
+        } else {
+            CloseMenu();
+            return false;
+        }
+    }
+
     private bool GetClosestBuildingSpot(out BuildingSpot closestBuildingSpot) {
-        return InteractableManager.Instance.GetClosestInteractable(out closestBuildingSpot);
+        return interactableManager.GetClosestInteractable(out closestBuildingSpot);
     }
 
     private bool IsSpotInRange(BuildingSpot buildingSpot) {
@@ -55,13 +79,14 @@ public class BuildingManager : MonoBehaviour {
 
     private void DisplayMenu(BuildingSpot buildingSpot) {
         openBuildingSpot = buildingSpot;
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(buildingSpot.transform.position);
         if (buildingSpot.Tower == null) {
             openMenu = buildingMenu;
+            PopulateBuildingMenu();
         } else {
             openMenu = adjustMenu;
         }
         openMenu.SetActive(true);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(buildingSpot.transform.position);
         openMenu.transform.position = screenPosition;
     }
 
@@ -85,7 +110,57 @@ public class BuildingManager : MonoBehaviour {
         if (openMenu != null) {
             openBuildingSpot = null;
             openMenu.SetActive(false);
+            if (openMenu.Equals(buildingMenu)) {
+                DepopulateBuildingMenu();
+            }
             openMenu = null;
+        }
+    }
+
+    private void PopulateBuildingMenu() {
+        var buttonSize = towerButtonPrefab.GetComponent<RectTransform>().rect.size;
+        var buttonWidth = buttonSize.x;
+        var buttonHeight = buttonSize.y;
+
+        var leftStart = CalculateLeftEndOfButtons(buttonWidth);
+
+        var createdButtons = 0;
+        var finishedRows = 0;
+        var towerTypes = Resources.LoadAll<TowerType>("Tower Types");
+        foreach (TowerType towerType in towerTypes) {
+            var button = Instantiate(towerButtonPrefab, buildingMenu.transform, false);
+
+            var horizontalPosition = leftStart - createdButtons * (buttonWidth + horizontalSpace);
+            button.transform.Translate(Vector3.left * horizontalPosition);
+            var verticalPosition = finishedRows * (buttonHeight + verticalSpace);
+            button.transform.Translate(Vector3.down * verticalPosition);
+
+            var text = button.GetComponentInChildren<TextMeshProUGUI>();
+            text.SetText(towerType.displayName);
+
+            var buttonComponent = button.GetComponent<Button>();
+            buttonComponent.interactable = openBuildingSpot.HasEnoughResourcesFor(towerType);
+            buttonComponent.onClick.AddListener(() => Build(towerType));
+
+            createdButtons++;
+            if (createdButtons >= maxButtonsPerRow) {
+                createdButtons = 0;
+                finishedRows++;
+            }
+        }
+    }
+
+    private float CalculateLeftEndOfButtons(float buttonWidth) {
+        if (maxButtonsPerRow % 2 == 0) {
+            return maxButtonsPerRow / 2 * (buttonWidth + horizontalSpace) - (buttonWidth / 2 + horizontalSpace / 2);
+        } else {
+            return Mathf.Floor(maxButtonsPerRow / 2) * (buttonWidth + horizontalSpace);
+        }
+    }
+
+    private void DepopulateBuildingMenu() {
+        foreach (Transform button in buildingMenu.transform) {
+            Destroy(button.gameObject);
         }
     }
 }
