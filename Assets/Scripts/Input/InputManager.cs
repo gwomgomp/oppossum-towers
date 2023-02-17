@@ -17,11 +17,11 @@ public class InputManager : MonoBehaviour {
 
     void Update() {
         foreach (var input in registeredInputs.Keys) {
-            handleInput(input);
+            HandleInput(input);
         }
     }
 
-    private void handleInput(string input) {
+    private void HandleInput(string input) {
         if (Input.GetButtonDown(input)) {
             foreach (var func in registeredInputs[input].Values) {
                 if (func.Invoke()) {
