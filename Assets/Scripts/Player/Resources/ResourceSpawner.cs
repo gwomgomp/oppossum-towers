@@ -19,10 +19,10 @@ public class ResourceSpawner : MonoBehaviour {
 
     public void Update() {
 
-        if (!spawning) return;
+        if (!spawning ||
+            amountSpawned >= currentWave.AmountToSpawn) return;
 
         if (ResourceLocations.HasFreeSpawnSpots()
-            && amountSpawned < currentWave.AmountToSpawn
             && timeSinceLastSpawn >= currentWave.TimeBetweenSpawns) {
 
             var resourceLocation = ResourceLocations.Find(location => location.IsFree());
