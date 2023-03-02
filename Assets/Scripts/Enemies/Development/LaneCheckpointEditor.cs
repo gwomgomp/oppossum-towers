@@ -4,13 +4,13 @@ using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 
-[CustomEditor(typeof(Spawner)), CanEditMultipleObjects]
+[CustomEditor(typeof(EnemySpawner)), CanEditMultipleObjects]
 public class LaneCheckpointEditor : Editor {
 
-    private Spawner spawner;
+    private EnemySpawner spawner;
 
     private void OnEnable() {
-        spawner = target as Spawner;
+        spawner = target as EnemySpawner;
     }
 
     public void OnSceneGUI() {

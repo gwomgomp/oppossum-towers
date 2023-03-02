@@ -23,7 +23,7 @@ public class RoundManager : MonoBehaviour {
     }
 
     private void Start() {
-        Spawner[] spawners = FindObjectsOfType<Spawner>();
+        EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
         spawnerCount = spawners.Length;
         foreach (var spawner in spawners) {
             OnNextRound += spawner.PrepareNewRound;
@@ -32,7 +32,7 @@ public class RoundManager : MonoBehaviour {
 
         ResourceSpawner[] resourceSpawners = FindObjectsOfType<ResourceSpawner>();
         foreach (var resourceSpawner in resourceSpawners) {
-            OnNextRound += resourceSpawner.StartSpawning;
+            OnNextRound += resourceSpawner.PrepareNewRound;
             OnFinishedRound += resourceSpawner.StopSpawning;
         }
     }

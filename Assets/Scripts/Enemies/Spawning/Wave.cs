@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct WaveDefinition {
+public struct WaveDefinition<T> {
     [field: SerializeField]
     public int RoundToSpawnIn { get; private set; }
     [field: SerializeField]
-    public EnemyType TypeToSpawn { get; private set; }
+    public T TypeToSpawn { get; private set; }
     [field: SerializeField]
     public float TimeBetweenSpawns { get; private set; }
     [field: SerializeField]
@@ -22,12 +22,12 @@ public enum SpawnStatus {
 }
 
 public class Wave {
-    private WaveDefinition Definition;
+    private WaveDefinition<EnemyType> Definition;
 
     private float timeSinceLastSpawn = 0f;
     private int amountSpawned = 0;
 
-    public Wave(WaveDefinition definition) {
+    public Wave(WaveDefinition<EnemyType> definition) {
         Definition = definition;
     }
 

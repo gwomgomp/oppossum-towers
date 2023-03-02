@@ -51,7 +51,7 @@ public class ResourceEditor : Editor {
     /// </summary>
     private void StartSpawningUI() {
         if (!spawningStarted && GUILayout.Button("Start Spawning")) {
-            resourceSpawner.StartSpawning(0);
+            resourceSpawner.PrepareNewRound(0);
             spawningStarted = true;
         }
 

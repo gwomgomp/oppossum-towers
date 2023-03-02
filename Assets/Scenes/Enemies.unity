@@ -391,6 +391,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: <ResourceLocations>k__BackingField.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -406,6 +410,38 @@ PrefabInstance:
       propertyPath: <ResourceLocations>k__BackingField.Array.data[2]
       value: 
       objectReference: {fileID: 954152659}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[0].<TypeToSpawn>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<TypeToSpawn>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[0].<AmountToSpawn>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<AmountToSpawn>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[0].<RoundToSpawnIn>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<RoundToSpawnIn>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[0].<TimeBetweenSpawns>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<TimeBetweenSpawns>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324426, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_Name
       value: ResourceSpawner
