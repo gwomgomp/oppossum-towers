@@ -892,5 +892,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.4278755
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.6604447
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_HorizontalAxis.m_MaxValue
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_HorizontalAxis.m_MinValue
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_HorizontalRecentering.m_enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34006755d693102469b878d0e47edea9, type: 3}

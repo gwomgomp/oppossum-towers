@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ThirdPersonMovement : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
     public CharacterController controller;
 
     [Header("Horizontal Movement Settings")]
