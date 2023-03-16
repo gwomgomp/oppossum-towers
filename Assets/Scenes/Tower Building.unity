@@ -2093,13 +2093,17 @@ PrefabInstance:
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: waves.Array.data[1].<TypeToSpawn>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 04587384a6cbe6949833c2cecd696b43, type: 2}
+      objectReference: {fileID: 11400000, guid: 54ddfd08de316154a9acf77d2120356e, type: 2}
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: waves.Array.data[1].<AmountToSpawn>k__BackingField
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: waves.Array.data[1].<RoundToSpawnIn>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[0].<TimeBetweenSpawns>k__BackingField
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
