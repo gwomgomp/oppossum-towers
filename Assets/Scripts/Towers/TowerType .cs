@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tower Type", menuName = "Towers/Tower Type", order = 1)]
 public class TowerType : ScriptableObject {
     public string displayName;
 
@@ -26,7 +25,7 @@ public class TowerType : ScriptableObject {
     public GameObject areaEffectPrefab;
 
     public ResourceCost[] buildCosts;
-    public List<TowerType> upgrades;
+    public List<TowerUpgradeType> upgrades;
 
     [Serializable]
     public struct ResourceCost {

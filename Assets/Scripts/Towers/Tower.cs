@@ -76,9 +76,9 @@ public class Tower : MonoBehaviour {
         PurgeDestroyedEnemies();
 
         currentTarget = towerType.targetingMethod switch {
-            TowerType.TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
-            TowerType.TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
-            TowerType.TargetingMethod.Closest => FindClosestEnemy(),
+            TowerBaseType.TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
+            TowerBaseType.TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
+            TowerBaseType.TargetingMethod.Closest => FindClosestEnemy(),
             _ => null
         };
     }

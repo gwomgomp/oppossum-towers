@@ -84,6 +84,7 @@ public class BuildingManager : MonoBehaviour {
             PopulateBuildingMenu();
         } else {
             openMenu = adjustMenu;
+            PopulateAdjustMenu(buildingSpot);
         }
         openMenu.SetActive(true);
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(buildingSpot.transform.position);
@@ -126,9 +127,42 @@ public class BuildingManager : MonoBehaviour {
 
         var createdButtons = 0;
         var finishedRows = 0;
-        var towerTypes = Resources.LoadAll<TowerType>("Tower Types");
-        foreach (TowerType towerType in towerTypes) {
+        var towerTypes = Resources.LoadAll<TowerBaseType>("Tower Types");
+        foreach (TowerBaseType towerType in towerTypes) {
             var button = Instantiate(towerButtonPrefab, buildingMenu.transform, false);
+
+            var horizontalPosition = leftStart - createdButtons * (buttonWidth + horizontalSpace);
+            button.transform.Translate(Vector3.left * horizontalPosition);
+            var verticalPosition = finishedRows * (buttonHeight + verticalSpace);
+            button.transform.Translate(Vector3.down * verticalPosition);
+
+            var text = button.GetComponentInChildren<TextMeshProUGUI>();
+            text.SetText(towerType.displayName);
+
+            var buttonComponent = button.GetComponent<Button>();
+            buttonComponent.interactable = openBuildingSpot.HasEnoughResourcesFor(towerType);
+            buttonComponent.onClick.AddListener(() => Build(towerType));
+
+            createdButtons++;
+            if (createdButtons >= maxButtonsPerRow) {
+                createdButtons = 0;
+                finishedRows++;
+            }
+        }
+    }
+
+    private void PopulateAdjustMenu(BuildingSpot buildingSpot) {
+        var buttonSize = towerButtonPrefab.GetComponent<RectTransform>().rect.size;
+        var buttonWidth = buttonSize.x;
+        var buttonHeight = buttonSize.y;
+
+        var leftStart = CalculateLeftEndOfButtons(buttonWidth);
+
+        var createdButtons = 0;
+        var finishedRows = 1;
+        var towerTypes = buildingSpot.Tower.towerType.upgrades;
+        foreach (TowerUpgradeType towerType in towerTypes) {
+            var button = Instantiate(towerButtonPrefab, adjustMenu.transform, false);
 
             var horizontalPosition = leftStart - createdButtons * (buttonWidth + horizontalSpace);
             button.transform.Translate(Vector3.left * horizontalPosition);

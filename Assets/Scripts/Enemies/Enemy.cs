@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour {
     public float health;
@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     private float modifiedSpeed;
 
     private float damagePerSecondReceiving;
+    private float weakenPercentage;
 
     private const float rotationSpeed = 5f;
     private const float moveDampening = 5f;
@@ -129,7 +130,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public bool Damage(float damage) {
-        health -= damage;
+        health -= damage + damage * weakenPercentage / 100;
 
         if (health <= 0.0f) {
             if (carryingLoot) {
@@ -157,7 +158,7 @@ public class Enemy : MonoBehaviour {
     public void ApplyTimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
         TimedStatusEffect newEffect = new(statusEffect, originTower);
 
-        var effectToUpdate = timedStatusEffects.Where(effect => effect.Equals(newEffect)).FirstOrDefault(null);
+        var effectToUpdate = timedStatusEffects.FirstOrDefault(effect => effect.Equals(newEffect));
         if (effectToUpdate == null) {
             timedStatusEffects.Add(newEffect);
         } else {
@@ -184,6 +185,9 @@ public class Enemy : MonoBehaviour {
             if (statusEffect.slowPercentage > maxSlowPercentage) {
                 maxSlowPercentage = statusEffect.slowPercentage;
             }
+            if (statusEffect.weakenPercentage > weakenPercentage) {
+                weakenPercentage = statusEffect.weakenPercentage;
+            }
 
             totalDamagePerSecond += statusEffect.damagePerSecond;
         }
@@ -191,6 +195,9 @@ public class Enemy : MonoBehaviour {
         foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
             if (timedStatusEffect.statusEffect.slowPercentage > maxSlowPercentage) {
                 maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage;
+            }
+            if (timedStatusEffect.statusEffect.weakenPercentage > weakenPercentage) {
+                weakenPercentage = timedStatusEffect.statusEffect.weakenPercentage;
             }
 
             totalDamagePerSecond += timedStatusEffect.statusEffect.damagePerSecond;

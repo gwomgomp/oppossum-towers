@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class BuildingSpot : MonoBehaviour, Placeable, Storage {
     [field: SerializeField]
@@ -15,6 +15,8 @@ public class BuildingSpot : MonoBehaviour, Placeable, Storage {
     }
 
     public void Build(TowerType type) {
+        if (Tower != null) Clear();
+
         var towerPrefab = Resources.Load<GameObject>("Prefabs/Tower");
         var towerGameObject = Instantiate(towerPrefab, transform.position, transform.rotation);
         Tower = towerGameObject.RequireComponent<Tower>();

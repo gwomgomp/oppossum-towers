@@ -9,21 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: SampleArrowTower
+  m_Script: {fileID: 11500000, guid: e196fb37cf44b704191783e0c8b308ea, type: 3}
+  m_Name: SniperRangeSidegrade
   m_EditorClassIdentifier: 
-  displayName: Arrow
-  targetingMethod: 2
+  displayName: GoLong
+  targetingMethod: 0
   damagePerShot: 5
-  shotCooldown: 0.6
-  range: 8
+  shotCooldown: 0.5
+  range: 32
   projectileTracksEnemy: 1
-  projectileSpeed: 14
+  projectileSpeed: 32
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
   statusEffect: {fileID: 0}
   areaEffectPrefab: {fileID: 0}
-  buildCosts:
-  - resourceType: {fileID: 0}
-    count: 0
-  upgrades:
-  - {fileID: 11400000, guid: df09d046e25babd498ac332d5a2098d5, type: 2}
+  buildCosts: []
+  upgrades: []

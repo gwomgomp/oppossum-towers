@@ -1339,6 +1339,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: <ResourceLocations>k__BackingField.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -1354,6 +1358,38 @@ PrefabInstance:
       propertyPath: <ResourceLocations>k__BackingField.Array.data[2]
       value: 
       objectReference: {fileID: 592313314}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<TypeToSpawn>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 54ddfd08de316154a9acf77d2120356e, type: 2}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<AmountToSpawn>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<RoundToSpawnIn>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[0].<TimeBetweenSpawns>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2388835129623189487, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: waves.Array.data[1].<TimeBetweenSpawns>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2141696609591652767, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624348407771544211, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934150591959930329, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324426, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_Name
       value: ResourceSpawner
@@ -1364,7 +1400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324428, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.1950321
+      value: -1.77
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324428, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1372,7 +1408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324428, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.4
+      value: -6.68
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324428, guid: e37dce8bd9a2a4d45b2549a24543832d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1474,7 +1510,7 @@ PrefabInstance:
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[1].<TypeToSpawn>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 1028375b66efcd84fab87de38d095460, type: 2}
+      objectReference: {fileID: 11400000, guid: 1ea3fe991065e594eb906f56c70945fb, type: 2}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[0].<AmountToSpawn>k__BackingField
       value: 1
