@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31311962f9cc9b142bfb4235e65e2506, type: 3}
-  m_Name: SampleEffect
+  m_Name: RampUpSlow
   m_EditorClassIdentifier: 
-  consecutiveRampUpCount: 1
-  slowPercentage: 50
+  consecutiveRampUpCount: 20
+  slowPercentage: 75
   weakenPercentage: 0
-  damagePerSecond: 2
+  damagePerSecond: 0
   duration: 10

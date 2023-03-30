@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31311962f9cc9b142bfb4235e65e2506, type: 3}
   m_Name: CrippleEffect
   m_EditorClassIdentifier: 
+  consecutiveRampUpCount: 1
   slowPercentage: 25
   weakenPercentage: 50
   damagePerSecond: 0

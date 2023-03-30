@@ -4,6 +4,12 @@ public class TimedStatusEffect {
 
     private float timer = 0.0f;
 
+    private float consecutiveHits = 0;
+    public float ConsecutiveHits { get => consecutiveHits; }
+    public void AddHit() {
+        consecutiveHits += 1f;
+    }
+
     public TimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
         this.statusEffect = statusEffect;
         this.originTower = originTower;

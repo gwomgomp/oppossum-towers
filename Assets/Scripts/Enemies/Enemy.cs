@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour {
 
     public void Update() {
         UpdateTimedStatusEffects();
-        Damage(damagePerSecondReceiving * Time.deltaTime);
+        if (damagePerSecondReceiving > 0) Damage(damagePerSecondReceiving * Time.deltaTime);
 
         if (initialized && currentTarget != null) {
             Move();
@@ -160,8 +160,10 @@ public class Enemy : MonoBehaviour {
 
         var effectToUpdate = timedStatusEffects.FirstOrDefault(effect => effect.Equals(newEffect));
         if (effectToUpdate == null) {
+            newEffect.AddHit();
             timedStatusEffects.Add(newEffect);
         } else {
+            effectToUpdate.AddHit();
             effectToUpdate.RefreshTimer();
         }
 
@@ -193,8 +195,9 @@ public class Enemy : MonoBehaviour {
         }
 
         foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
-            if (timedStatusEffect.statusEffect.slowPercentage > maxSlowPercentage) {
-                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage;
+            var rampUpCount = timedStatusEffect.ConsecutiveHits <= timedStatusEffect.statusEffect.consecutiveRampUpCount ? timedStatusEffect.ConsecutiveHits : timedStatusEffect.statusEffect.consecutiveRampUpCount;
+            if (timedStatusEffect.statusEffect.slowPercentage / timedStatusEffect.statusEffect.consecutiveRampUpCount * rampUpCount > maxSlowPercentage) {
+                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage / timedStatusEffect.statusEffect.consecutiveRampUpCount * rampUpCount;
             }
             if (timedStatusEffect.statusEffect.weakenPercentage > weakenPercentage) {
                 weakenPercentage = timedStatusEffect.statusEffect.weakenPercentage;
