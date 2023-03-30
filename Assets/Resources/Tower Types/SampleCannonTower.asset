@@ -17,6 +17,7 @@ MonoBehaviour:
   damagePerShot: 0
   shotCooldown: 1
   range: 6
+  targetCount: 1
   projectileTracksEnemy: 0
   projectileSpeed: 8
   projectilePrefab: {fileID: 4654570622842903390, guid: 33693a547137b394dbd56359b7b863b6, type: 3}
@@ -24,6 +25,6 @@ MonoBehaviour:
   areaEffectPrefab: {fileID: 3758010132418631429, guid: 8f2a23ea477d284439cc37964a722509, type: 3}
   buildCosts: []
   upgrades:
-  - {fileID: 11400000, guid: 899137fa386dbae41bc693cec42a6c79, type: 2}
-  - {fileID: 11400000}
-  - {fileID: 11400000, guid: 7366b420c21f0b44cbbd87031653db8c, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

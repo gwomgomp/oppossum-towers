@@ -12,7 +12,7 @@ public class Tower : MonoBehaviour {
     private float currentShotCooldown = 0.0f;
 
     private HashSet<Enemy> enemiesInRange;
-    private Enemy currentTarget = null;
+    private List<Enemy> currentTargets = new();
 
     private GameObject launchOrigin;
 
@@ -41,7 +41,7 @@ public class Tower : MonoBehaviour {
         } else {
             UpdateTarget();
 
-            if (currentTarget != null) {
+            if (currentTargets.Count > 0) {
                 ShootAtEnemy();
                 currentShotCooldown = towerType.shotCooldown;
             }
@@ -50,47 +50,51 @@ public class Tower : MonoBehaviour {
 
     private void ShootAtEnemy() {
         if (towerType.projectilePrefab != null) {
-            GameObject projectileObject = Instantiate(towerType.projectilePrefab, launchOrigin.transform.position, Quaternion.identity);
-            Projectile projectile = projectileObject.RequireComponent<Projectile>();
+            foreach (var currentTarget in currentTargets) {
+                GameObject projectileObject = Instantiate(towerType.projectilePrefab, launchOrigin.transform.position, Quaternion.identity);
+                Projectile projectile = projectileObject.RequireComponent<Projectile>();
 
-            if (towerType.projectileTracksEnemy) {
-                projectile.SetTargetObject(currentTarget.gameObject);
-            } else {
-                projectile.SetTargetPosition(currentTarget.gameObject.transform.position);
+                if (towerType.projectileTracksEnemy) {
+                    projectile.SetTargetObject(currentTarget.gameObject);
+                } else {
+                    projectile.SetTargetPosition(currentTarget.gameObject.transform.position);
+                }
+
+                projectile.SetSpeed(towerType.projectileSpeed);
+
+                EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
+                enemyHitEvent.AddListener(OnEnemyHit);
+
+                PositionHitEvent positionHitEvent = new PositionHitEvent();
+                positionHitEvent.AddListener(OnPositionHit);
+
+                projectile.SetEnemyHitEvent(enemyHitEvent);
+                projectile.SetPositionHitEvent(positionHitEvent);
             }
-
-            projectile.SetSpeed(towerType.projectileSpeed);
-
-            EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
-            enemyHitEvent.AddListener(OnEnemyHit);
-
-            PositionHitEvent positionHitEvent = new PositionHitEvent();
-            positionHitEvent.AddListener(OnPositionHit);
-
-            projectile.SetEnemyHitEvent(enemyHitEvent);
-            projectile.SetPositionHitEvent(positionHitEvent);
         }
     }
 
     private void UpdateTarget() {
         PurgeDestroyedEnemies();
-
-        currentTarget = towerType.targetingMethod switch {
-            TowerBaseType.TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
-            TowerBaseType.TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
-            TowerBaseType.TargetingMethod.Closest => FindClosestEnemy(),
-            _ => null
-        };
+        currentTargets.Clear();
+        while (currentTargets.Count < towerType.targetCount && currentTargets.Count < enemiesInRange.Count) {
+            currentTargets.Add(towerType.targetingMethod switch {
+                TowerType.TargetingMethod.HighestPriority => FindHighestPriorityEnemy(),
+                TowerType.TargetingMethod.LowestPriority => FindLowestPriorityEnemy(),
+                TowerType.TargetingMethod.Closest => FindClosestEnemy(),
+                _ => throw new System.NotImplementedException()
+            });
+        }
     }
 
     private Enemy FindHighestPriorityEnemy() {
         Enemy target = null;
 
         foreach (Enemy enemy in enemiesInRange) {
-            if (target == null) {
-                target = enemy;
-            } else {
-                if (target.GetPriority() < enemy.GetPriority()) {
+            if (!currentTargets.Contains(enemy)) {
+                if (target == null) {
+                    target = enemy;
+                } else if (target.GetPriority() < enemy.GetPriority()) {
                     target = enemy;
                 }
             }
@@ -103,11 +107,12 @@ public class Tower : MonoBehaviour {
         Enemy target = null;
 
         foreach (Enemy enemy in enemiesInRange) {
-            if (target == null) {
-                target = enemy;
-            } else {
-                if (target.GetPriority() > enemy.GetPriority()) {
+            if (!currentTargets.Contains(enemy)) {
+                if (target == null) {
                     target = enemy;
+                } else if (target.GetPriority() > enemy.GetPriority()) {
+                    target = enemy;
+
                 }
             }
         }
@@ -119,10 +124,12 @@ public class Tower : MonoBehaviour {
         Enemy target = null;
 
         foreach (Enemy enemy in enemiesInRange) {
-            if (target == null) {
-                target = enemy;
-            } else {
-                target = GetCloserEnemy(target, enemy);
+            if (!currentTargets.Contains(enemy)) {
+                if (target == null) {
+                    target = enemy;
+                } else {
+                    target = GetCloserEnemy(target, enemy);
+                }
             }
         }
 

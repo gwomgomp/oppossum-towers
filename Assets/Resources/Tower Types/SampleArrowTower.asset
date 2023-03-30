@@ -17,6 +17,7 @@ MonoBehaviour:
   damagePerShot: 5
   shotCooldown: 0.6
   range: 8
+  targetCount: 1
   projectileTracksEnemy: 1
   projectileSpeed: 14
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
