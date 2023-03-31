@@ -4,10 +4,6 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 
 public class Resource : MonoBehaviour, Cargo {
-    private static float DroppingRange = 5;
-    private static float FloatSpeed = 2;
-    private static float ReturnDelay = 5;
-
     private bool initialized = false;
     private ResourceType type = null;
     private ResourceSpawnLocation resourceSpawnLocation = null;
@@ -47,9 +43,10 @@ public class Resource : MonoBehaviour, Cargo {
     }
 
     private bool IsHoardInRange() {
+        var hoardSafetyDistance = ManagerProvider.Instance.GetManager<ConfigurationManager>().GetConfig<float>("Resource", "HoardingDistance");
         Hoard[] hoards = FindObjectsOfType<Hoard>();
         foreach (var hoard in hoards) {
-            if (Vector3.Distance(transform.position, hoard.transform.position) < DroppingRange) {
+            if (Vector3.Distance(transform.position, hoard.transform.position) < hoardSafetyDistance) {
                 return true;
             }
         }
@@ -57,10 +54,13 @@ public class Resource : MonoBehaviour, Cargo {
     }
 
     private void MoveToSpawner() {
-        returnTween = transform.DOMove(resourceSpawner.transform.position, FloatSpeed)
+        ConfigurationManager configurationManager = ManagerProvider.Instance.GetManager<ConfigurationManager>();
+        var resourceFloatSpeed = configurationManager.GetConfig<float>("Resource", "ReturnSpeed");
+        var returnDelay = configurationManager.GetConfig<float>("Resource", "ReturnDelay");
+        returnTween = transform.DOMove(resourceSpawner.transform.position, resourceFloatSpeed)
             .SetEase(Ease.InExpo)
             .SetSpeedBased(true)
-            .SetDelay(ReturnDelay)
+            .SetDelay(returnDelay)
             .OnComplete(ReturnToSpawner);
     }
 
