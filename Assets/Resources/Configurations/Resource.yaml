@@ -1,0 +1,7 @@
+configurations:
+  - name: HoardingDistance
+    value: 5
+  - name: ReturnSpeed
+    value: 2
+  - name: ReturnDelay
+    value: 5
