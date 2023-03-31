@@ -4,11 +4,13 @@ public class Resource : MonoBehaviour, Cargo {
     private bool initialized = false;
     private ResourceType type = null;
     private ResourceSpawnLocation resourceSpawnLocation = null;
+    private ResourceSpawner resourceSpawner = null;
 
-    public void Initialize(ResourceType type, ResourceSpawnLocation startingPosition) {
+    public void Initialize(ResourceType type, ResourceSpawnLocation startingPosition, ResourceSpawner resourceSpawner) {
         if (!initialized) {
             this.type = type;
             resourceSpawnLocation = startingPosition;
+            resourceSpawner = resourceSpawner;;
             initialized = true;
             startingPosition.PlaceResource(this);
         } else {
@@ -24,6 +26,25 @@ public class Resource : MonoBehaviour, Cargo {
 
     public void DetachFromTransform() {
         PickupHelper.Detach(this);
+        if (IsSpawnerInRange()) {
+            resourceSpawner.ReturnResource();
+            Destroy(gameObject);
+
+        } else if (!IsHoardInRange) {
+            MoveToSpawner();
+        }
+    }
+
+    private bool IsHoardInRange() {
+
+    }
+
+    private bool IsSpawnerInRange() {
+
+    }
+
+    private void MoveToSpawner() {
+
     }
 
     public GameObject GetGameObject() {

@@ -36,7 +36,7 @@ public class ResourceSpawner : MonoBehaviour {
         }
     }
 
-    public void ResourceTaken() {
+    public void ReturnResource() {
         amountSpawned -= 1;
     }
 
