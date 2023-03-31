@@ -27,7 +27,7 @@ public class ResourceSpawner : MonoBehaviour {
                 resourceLocation.transform
             );
             var resource = resourceGameObject.RequireComponentInChildren<Resource>();
-            resource.Initialize(TypeToSpawn, resourceLocation);
+            resource.Initialize(TypeToSpawn, resourceLocation, this);
 
             timeSinceLastSpawn = 0f;
             amountSpawned++;

@@ -23,4 +23,8 @@ public class Interactable : MonoBehaviour {
             interactableManager.StepOutOffRange(this);
         }
     }
+
+    void OnDestroy() {
+        interactableManager.StepOutOffRange(this);
+    }
 }
