@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31311962f9cc9b142bfb4235e65e2506, type: 3}
-  m_Name: RampUpSlow
+  m_Name: StackingSlow
   m_EditorClassIdentifier: 
-  consecutiveRampUpCount: 20
-  slowPercentage: 75
+  maxStacks: 20
+  slowPercentage: 3.75
   weakenPercentage: 0
   damagePerSecond: 0
-  duration: 10
+  duration: 2

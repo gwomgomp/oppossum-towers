@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e196fb37cf44b704191783e0c8b308ea, type: 3}
-  m_Name: RapidFireSlow
+  m_Name: RapidFireRampUp
   m_EditorClassIdentifier: 
-  displayName: SlowStack
-  targetingMethod: 2
-  damagePerShot: 1
-  rampUpMultiplier: 0
-  rampUpShotsNeeded: 0
+  displayName: RampUpDmg
+  targetingMethod: 0
+  damagePerShot: 2
+  rampUpMultiplier: 2
+  rampUpShotsNeeded: 20
   shotCooldown: 0.1
   range: 8
-  targetCount: 3
+  targetCount: 1
   projectileTracksEnemy: 1
   projectileSpeed: 28
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
-  statusEffect: {fileID: 11400000, guid: 9ca523dd4ee0fdc41ab42b6419cb808f, type: 2}
+  statusEffect: {fileID: 0}
   areaEffectPrefab: {fileID: 0}
   buildCosts: []
   upgrades: []

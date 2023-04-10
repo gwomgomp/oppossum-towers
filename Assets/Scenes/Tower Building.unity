@@ -1517,7 +1517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[1].<AmountToSpawn>k__BackingField
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[0].<RoundToSpawnIn>k__BackingField

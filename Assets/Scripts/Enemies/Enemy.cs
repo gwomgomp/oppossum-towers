@@ -160,10 +160,10 @@ public class Enemy : MonoBehaviour {
 
         var effectToUpdate = timedStatusEffects.FirstOrDefault(effect => effect.Equals(newEffect));
         if (effectToUpdate == null) {
-            newEffect.AddHit();
+            newEffect.ApplyStack();
             timedStatusEffects.Add(newEffect);
         } else {
-            effectToUpdate.AddHit();
+            effectToUpdate.ApplyStack();
             effectToUpdate.RefreshTimer();
         }
 
@@ -195,9 +195,8 @@ public class Enemy : MonoBehaviour {
         }
 
         foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
-            var rampUpCount = timedStatusEffect.ConsecutiveHits <= timedStatusEffect.statusEffect.consecutiveRampUpCount ? timedStatusEffect.ConsecutiveHits : timedStatusEffect.statusEffect.consecutiveRampUpCount;
-            if (timedStatusEffect.statusEffect.slowPercentage / timedStatusEffect.statusEffect.consecutiveRampUpCount * rampUpCount > maxSlowPercentage) {
-                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage / timedStatusEffect.statusEffect.consecutiveRampUpCount * rampUpCount;
+            if (timedStatusEffect.statusEffect.slowPercentage * timedStatusEffect.AppliedStacks > maxSlowPercentage) {
+                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage * timedStatusEffect.AppliedStacks;
             }
             if (timedStatusEffect.statusEffect.weakenPercentage > weakenPercentage) {
                 weakenPercentage = timedStatusEffect.statusEffect.weakenPercentage;

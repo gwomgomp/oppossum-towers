@@ -15,6 +15,8 @@ MonoBehaviour:
   displayName: Rapid Fire
   targetingMethod: 0
   damagePerShot: 2
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
   shotCooldown: 0.1
   range: 8
   targetCount: 1
@@ -26,3 +28,5 @@ MonoBehaviour:
   buildCosts: []
   upgrades:
   - {fileID: 11400000, guid: 62e5fd6a8b43e744cb33323d5a9637d5, type: 2}
+  - {fileID: 11400000, guid: 5b4c1694f1ff2f64f9dc684e3c27ef6b, type: 2}
+  - {fileID: 11400000, guid: 7285a635aa444044db6ba01ea819adbb, type: 2}

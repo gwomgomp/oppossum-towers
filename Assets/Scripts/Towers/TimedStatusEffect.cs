@@ -4,10 +4,10 @@ public class TimedStatusEffect {
 
     private float timer = 0.0f;
 
-    private float consecutiveHits = 0;
-    public float ConsecutiveHits { get => consecutiveHits; }
-    public void AddHit() {
-        consecutiveHits += 1f;
+    private float appliedStacks = 0;
+    public float AppliedStacks { get => appliedStacks; }
+    public void ApplyStack() {
+        if (appliedStacks < statusEffect.maxStacks) appliedStacks += 1f;
     }
 
     public TimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
