@@ -19,6 +19,7 @@ public class TowerType : ScriptableObject {
     public float shotCooldown;
     public float range;
     public float targetCount;
+    public bool attackAllInRange;
 
     public bool projectileTracksEnemy;
     public float projectileSpeed;

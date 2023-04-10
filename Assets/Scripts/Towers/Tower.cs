@@ -44,7 +44,10 @@ public class Tower : MonoBehaviour {
             UpdateTarget();
 
             if (currentTargets.Count > 0) {
-                ShootAtCurrentTargets();
+
+                if (towerType.attackAllInRange) AreaAroundSelf();
+                else ShootAtCurrentTargets();
+
                 currentShotCooldown = towerType.shotCooldown;
             }
         }
@@ -79,11 +82,29 @@ public class Tower : MonoBehaviour {
         }
     }
 
+    private void AreaAroundSelf() {
+        if (towerType.projectilePrefab != null) {
+            GameObject projectileObject = Instantiate(towerType.projectilePrefab, launchOrigin.transform.position, Quaternion.identity);
+            Projectile projectile = projectileObject.RequireComponent<Projectile>();
+
+            projectile.SetTargetPosition(launchOrigin.transform.position);
+            projectile.SetSpeed(towerType.projectileSpeed);
+
+            EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
+            enemyHitEvent.AddListener(OnEnemyHit);
+
+            PositionHitEvent positionHitEvent = new PositionHitEvent();
+            positionHitEvent.AddListener(OnPositionHit);
+
+            projectile.SetEnemyHitEvent(enemyHitEvent);
+            projectile.SetPositionHitEvent(positionHitEvent);
+        }
+    }
+
     private void UpdateTarget() {
         PurgeDestroyedEnemies();
         PurgeOutOfRangeEnemies();
 
-        //Debug.Log($"{towerType.targetCount}, {currentTargets.Count}, {enemiesInRange.Count}");
         // If multitarget is at max but there are still other enemies in range
         if (currentTargets.Count == towerType.targetCount && currentTargets.Count < enemiesInRange.Count) {
             switch (towerType.targetingMethod) {
@@ -246,6 +267,7 @@ public class Tower : MonoBehaviour {
     /// <param name="consecutiveHits"></param>
     /// <returns></returns>
     private float ConsecutiveMultiplier(float consecutiveHits) {
+        Debug.Log(consecutiveHits);
         if (towerType.rampUpShotsNeeded == 0)
             return 1;
 

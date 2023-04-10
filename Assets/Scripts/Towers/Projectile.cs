@@ -4,7 +4,7 @@ public class Projectile : MonoBehaviour {
     private bool trackObject = true;
     private Vector3 targetPosition = Vector3.zero;
     private GameObject targetObject = null;
-    public float ConescutiveHits { get; set; }
+    public float ConescutiveHits { get; set; } = 0f;
 
     private float speed = 10.0f;
 

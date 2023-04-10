@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31311962f9cc9b142bfb4235e65e2506, type: 3}
-  m_Name: StackingSlow
+  m_Script: {fileID: 11500000, guid: e258a88f6f66d8d4f965790d37a87418, type: 3}
+  m_Name: BurnArea
   m_EditorClassIdentifier: 
-  maxStacks: 20
-  slowPercentage: 3.75
-  weakenPercentage: 0
-  damagePerSecond: 0
-  duration: 1
+  duration: 2
+  snapToGround: 0
+  statusEffect: {fileID: 11400000, guid: ea7912921616edd41b1f1aa3956cd4d2, type: 2}

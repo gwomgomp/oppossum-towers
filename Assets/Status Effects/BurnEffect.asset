@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31311962f9cc9b142bfb4235e65e2506, type: 3}
-  m_Name: StackingSlow
+  m_Name: BurnEffect
   m_EditorClassIdentifier: 
-  maxStacks: 20
-  slowPercentage: 3.75
+  maxStacks: 0
+  slowPercentage: 0
   weakenPercentage: 0
-  damagePerSecond: 0
-  duration: 1
+  damagePerSecond: 4
+  duration: 2

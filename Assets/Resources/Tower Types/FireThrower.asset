@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: SampleArrowTower
+  m_Name: FireThrower
   m_EditorClassIdentifier: 
-  displayName: Arrow
-  targetingMethod: 2
-  damagePerShot: 5
-  shotCooldown: 0.6
+  displayName: Fire Thrower
+  targetingMethod: 0
+  damagePerShot: 0
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
+  shotCooldown: 2
   range: 8
   targetCount: 1
   projectileTracksEnemy: 1
   projectileSpeed: 14
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
-  statusEffect: {fileID: 0}
+  statusEffect: {fileID: 11400000, guid: ea7912921616edd41b1f1aa3956cd4d2, type: 2}
   areaEffectPrefab: {fileID: 0}
   buildCosts:
   - resourceType: {fileID: 0}
     count: 0
   upgrades:
-  - {fileID: 11400000, guid: df09d046e25babd498ac332d5a2098d5, type: 2}
-  - {fileID: 11400000, guid: a3ee81cf326845c4caa3bc2b37673fe8, type: 2}
+  - {fileID: 11400000, guid: 58a4190442d7e80418969bd12227fb83, type: 2}
