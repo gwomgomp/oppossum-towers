@@ -11,10 +11,16 @@ public class LaneCheckpointEditor : Editor {
 
     private void OnEnable() {
         spawner = target as Spawner;
+        Tools.hidden = true;
+    }
+
+    private void OnDisable() {
+        Tools.hidden = false;
     }
 
     public void OnSceneGUI() {
         if (spawner.transform == Selection.activeTransform) {
+            DrawTransformHandle(spawner, "Move spawner");
             DrawCheckpointHandles();
         }
     }
@@ -22,12 +28,16 @@ public class LaneCheckpointEditor : Editor {
     private void DrawCheckpointHandles() {
         var checkpoints = spawner.GetComponentsInChildren<LaneCheckpoint>();
         foreach (var checkpoint in checkpoints) {
-            EditorGUI.BeginChangeCheck();
-            var newTargetPosition = Handles.PositionHandle(checkpoint.transform.position, checkpoint.transform.rotation);
-            if (EditorGUI.EndChangeCheck()) {
-                Undo.RecordObject(checkpoint.transform, "Move checkpoint");
-                checkpoint.transform.position = newTargetPosition;
-            }
+            DrawTransformHandle(checkpoint, "Move checkpoint");
+        }
+    }
+
+    private void DrawTransformHandle(MonoBehaviour target, string name) {
+        EditorGUI.BeginChangeCheck();
+        var newTargetPosition = Handles.PositionHandle(target.transform.position, target.transform.rotation);
+        if (EditorGUI.EndChangeCheck()) {
+            Undo.RecordObject(target.transform, name);
+            target.transform.position = newTargetPosition;
         }
     }
 
