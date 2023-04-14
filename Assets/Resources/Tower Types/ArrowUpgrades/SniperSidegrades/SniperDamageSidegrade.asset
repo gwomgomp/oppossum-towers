@@ -15,8 +15,12 @@ MonoBehaviour:
   displayName: SteadyAim
   targetingMethod: 0
   damagePerShot: 15
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
   shotCooldown: 0.25
   range: 16
+  targetCount: 1
+  attackAllInRange: 0
   projectileTracksEnemy: 1
   projectileSpeed: 14
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}

@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: SlowStack
   targetingMethod: 2
-  damagePerShot: 1
+  damagePerShot: 0.1
   rampUpMultiplier: 0
   rampUpShotsNeeded: 0
   shotCooldown: 0.1
   range: 8
   targetCount: 3
+  attackAllInRange: 0
   projectileTracksEnemy: 1
   projectileSpeed: 28
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}

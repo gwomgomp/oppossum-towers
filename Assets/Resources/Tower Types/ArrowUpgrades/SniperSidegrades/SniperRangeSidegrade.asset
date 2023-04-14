@@ -15,8 +15,12 @@ MonoBehaviour:
   displayName: GoLong
   targetingMethod: 0
   damagePerShot: 5
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
   shotCooldown: 0.5
   range: 32
+  targetCount: 1
+  attackAllInRange: 0
   projectileTracksEnemy: 1
   projectileSpeed: 32
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
