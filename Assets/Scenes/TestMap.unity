@@ -42538,15 +42538,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637642238936624938, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.9240384
+      value: 6.1976376
       objectReference: {fileID: 0}
     - target: {fileID: 8637642238936624938, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.4278755
+      value: 11.490666
       objectReference: {fileID: 0}
     - target: {fileID: 8637642238936624938, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.868241
+      value: -7.386059
       objectReference: {fileID: 0}
     - target: {fileID: 8637642238936624939, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_Lens.Dutch
@@ -42578,31 +42578,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.9240384
+      value: 6.1976376
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.4278755
+      value: 11.490666
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.868241
+      value: -7.386059
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.88302225
+      value: 0.8516508
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.32139382
+      value: 0.39713126
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.32139382
+      value: -0.30997553
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591677, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.11697777
+      value: 0.14454395
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591678, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_Depth
@@ -42610,7 +42610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591678, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: orthographic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239807591678, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: field of view
@@ -42626,7 +42626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_VerticalAxis.Value
-      value: 50
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_HorizontalAxis.Value
@@ -42634,15 +42634,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_VerticalAxis.m_MaxValue
-      value: 50
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239815572046, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_VerticalAxis.m_MinValue
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8637642239815572048, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_CameraDistance
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34006755d693102469b878d0e47edea9, type: 3}
