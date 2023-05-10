@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 public class Enemy : MonoBehaviour {
     public float health;
     private float baseSpeed;
@@ -143,9 +142,18 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void CheckForTriggerEffects(DamageType damageType) {
+        timedStatusEffects.ForEach(effect => {
+            var triggeringEffects = effect.statusEffect.triggeringEffects.FindAll(trigger => trigger.damageType == damageType);
+            triggeringEffects.ForEach(trigger => {
+                trigger.isTriggered = true;
+            });
+        });
+    }
+
     public void ApplyStatusEffect(StatusEffect statusEffect) {
         activeStatusEffects.Add(statusEffect);
-
+        CheckForTriggerEffects(statusEffect.damageType);
         RefreshStatusEffects();
     }
 
@@ -159,6 +167,7 @@ public class Enemy : MonoBehaviour {
         TimedStatusEffect newEffect = new(statusEffect, originTower);
 
         var effectToUpdate = timedStatusEffects.FirstOrDefault(effect => effect.Equals(newEffect));
+        CheckForTriggerEffects(statusEffect.damageType);
         if (effectToUpdate == null) {
             newEffect.ApplyStack();
             timedStatusEffects.Add(newEffect);
@@ -172,7 +181,14 @@ public class Enemy : MonoBehaviour {
 
     private void UpdateTimedStatusEffects() {
         int removedEffects = timedStatusEffects.RemoveAll(effect => effect.HasEnded());
-        timedStatusEffects.ForEach(effect => effect.UpdateTimer(Time.deltaTime));
+
+        timedStatusEffects.ForEach(effect => {
+            effect.UpdateTimer(Time.deltaTime);
+        });
+
+        var triggeredEffects = timedStatusEffects.FindAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.isTriggered));
+        removedEffects += timedStatusEffects.RemoveAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.isTriggered));
+        triggeredEffects.ForEach(triggeredEffect => triggeredEffect.statusEffect.triggeringEffects.ForEach(triggered => ApplyTimedStatusEffect(triggered.effect, triggeredEffect.originTower)));
 
         if (removedEffects > 0) {
             RefreshStatusEffects();
@@ -202,6 +218,7 @@ public class Enemy : MonoBehaviour {
                 weakenPercentage = timedStatusEffect.statusEffect.weakenPercentage;
             }
 
+            CheckForTriggerEffects(timedStatusEffect.statusEffect.damageType);
             totalDamagePerSecond += timedStatusEffect.statusEffect.damagePerSecond;
         }
 

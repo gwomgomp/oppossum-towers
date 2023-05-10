@@ -13,6 +13,7 @@ public class TowerType : ScriptableObject {
 
     public TargetingMethod targetingMethod;
 
+    public DamageType damageType;
     public float damagePerShot;
     public float rampUpMultiplier;
     public float rampUpShotsNeeded;

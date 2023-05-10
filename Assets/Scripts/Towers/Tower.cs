@@ -254,12 +254,15 @@ public class Tower : MonoBehaviour {
 
         if (enemyObject.TryGetComponent(out Enemy enemy)) {
             enemy.Damage(towerType.damagePerShot * ConsecutiveMultiplier(consecutiveHits));
+            enemy.CheckForTriggerEffects(towerType.damageType);
 
             if (towerType.statusEffect != null) {
                 enemy.ApplyTimedStatusEffect(towerType.statusEffect, this);
             }
         }
     }
+
+
 
     /// <summary>
     /// At the moment calculates from 0 to rampUpMultiplier, might change that to 1 to rampUpMultiplier?

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31311962f9cc9b142bfb4235e65e2506, type: 3}
   m_Name: BurnEffect
   m_EditorClassIdentifier: 
-  maxStacks: 0
+  damageType: 1
+  maxStacks: 1
   slowPercentage: 0
   weakenPercentage: 0
   damagePerSecond: 4
   duration: 2
+  triggeringEffects: []

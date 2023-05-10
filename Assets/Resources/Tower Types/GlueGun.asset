@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: FireThrower
+  m_Name: GlueGun
   m_EditorClassIdentifier: 
-  displayName: Fire Thrower
-  targetingMethod: 0
-  damageType: 1
-  damagePerShot: 0
+  displayName: GlueGun
+  targetingMethod: 2
+  damageType: 0
+  damagePerShot: 5
   rampUpMultiplier: 0
   rampUpShotsNeeded: 0
-  shotCooldown: 2
+  shotCooldown: 0.6
   range: 8
   targetCount: 1
   attackAllInRange: 0
   projectileTracksEnemy: 1
   projectileSpeed: 14
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
-  statusEffect: {fileID: 11400000, guid: ea7912921616edd41b1f1aa3956cd4d2, type: 2}
+  statusEffect: {fileID: 11400000, guid: 2c836432822dee641a13e6bfb655c2bb, type: 2}
   areaEffectPrefab: {fileID: 0}
   buildCosts:
   - resourceType: {fileID: 0}
     count: 0
   upgrades:
-  - {fileID: 11400000, guid: 58a4190442d7e80418969bd12227fb83, type: 2}
-  - {fileID: 11400000, guid: b2f496e3de07c1945b260e3ac345ed16, type: 2}
+  - {fileID: 11400000, guid: df09d046e25babd498ac332d5a2098d5, type: 2}
+  - {fileID: 11400000, guid: a3ee81cf326845c4caa3bc2b37673fe8, type: 2}
