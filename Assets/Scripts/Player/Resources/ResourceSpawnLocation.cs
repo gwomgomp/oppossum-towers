@@ -20,7 +20,6 @@ public class ResourceSpawnLocation : MonoBehaviour, Placeable {
     public Resource TakeResource() {
         Resource resource = currentResource;
         currentResource = null;
-        resourceSpawner.ResourceTaken();
         return resource;
     }
 

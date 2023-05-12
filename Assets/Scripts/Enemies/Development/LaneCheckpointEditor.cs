@@ -1,8 +1,8 @@
-using UnityEngine;
-using System.Collections.Generic;
 
 #if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(EnemySpawner)), CanEditMultipleObjects]
 public class LaneCheckpointEditor : Editor {
@@ -13,8 +13,13 @@ public class LaneCheckpointEditor : Editor {
         spawner = target as EnemySpawner;
     }
 
+    private void OnDisable() {
+        Tools.hidden = false;
+    }
+
     public void OnSceneGUI() {
         if (spawner.transform == Selection.activeTransform) {
+            DrawTransformHandle(spawner, "Move spawner");
             DrawCheckpointHandles();
         }
     }
@@ -22,12 +27,16 @@ public class LaneCheckpointEditor : Editor {
     private void DrawCheckpointHandles() {
         var checkpoints = spawner.GetComponentsInChildren<LaneCheckpoint>();
         foreach (var checkpoint in checkpoints) {
-            EditorGUI.BeginChangeCheck();
-            var newTargetPosition = Handles.PositionHandle(checkpoint.transform.position, checkpoint.transform.rotation);
-            if (EditorGUI.EndChangeCheck()) {
-                Undo.RecordObject(checkpoint.transform, "Move checkpoint");
-                checkpoint.transform.position = newTargetPosition;
-            }
+            DrawTransformHandle(checkpoint, "Move checkpoint");
+        }
+    }
+
+    private void DrawTransformHandle(MonoBehaviour target, string name) {
+        EditorGUI.BeginChangeCheck();
+        var newTargetPosition = Handles.PositionHandle(target.transform.position, target.transform.rotation);
+        if (EditorGUI.EndChangeCheck()) {
+            Undo.RecordObject(target.transform, name);
+            target.transform.position = newTargetPosition;
         }
     }
 
