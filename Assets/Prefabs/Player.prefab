@@ -128,6 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8637642238936624938}
   - component: {fileID: 8637642238936624939}
+  - component: {fileID: 5862041587708825666}
   m_Layer: 0
   m_Name: Cinemachine
   m_TagString: Untagged
@@ -143,7 +144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8637642238936624940}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 0, y: 6.4278755, z: -7.6604447}
+  m_LocalPosition: {x: 4.924039, y: 6.4278755, z: -5.8682413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 7
-    NearClipPlane: -5
+    NearClipPlane: 0.001
     FarClipPlane: 2000
     Dutch: 0
     ModeOverride: 0
@@ -189,6 +190,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 8637642239815572049}
+--- !u!114 &5862041587708825666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8637642238936624940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90434055c98a0be42a7bbbed21e7b346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8637642239329121652
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,8 +301,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8637642239807592192}
-  m_LocalRotation: {x: 0.34202015, y: -0, z: -0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 12.047875, z: -7.6604447}
+  m_LocalRotation: {x: 0.32139382, y: -0.32139382, z: 0.11697777, w: 0.88302225}
+  m_LocalPosition: {x: 7.3860583, y: 14.761814, z: -8.802362}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -319,9 +332,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -5
+  near clip plane: 0.001
   far clip plane: 2000
-  field of view: 60
+  field of view: 54.230736
   orthographic: 1
   orthographic size: 7
   m_Depth: -1
@@ -508,7 +521,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_HorizontalAxis:
-    Value: 0
+    Value: -40
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
