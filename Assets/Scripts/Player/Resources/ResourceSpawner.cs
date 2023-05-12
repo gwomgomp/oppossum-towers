@@ -33,7 +33,7 @@ public class ResourceSpawner : MonoBehaviour {
                 resourceLocation.transform
             );
             var resource = resourceGameObject.RequireComponentInChildren<Resource>();
-            resource.Initialize(currentWave.TypeToSpawn, resourceLocation);
+            resource.Initialize(currentWave.TypeToSpawn, resourceLocation, this);
 
             timeSinceLastSpawn = 0f;
             amountSpawned++;
@@ -42,7 +42,7 @@ public class ResourceSpawner : MonoBehaviour {
         }
     }
 
-    public void ResourceTaken() {
+    public void ReturnResource() {
         amountSpawned -= 1;
     }
 

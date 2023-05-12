@@ -27,6 +27,11 @@ public class PickupManager : MonoBehaviour {
                 return true;
             }
         }
+        if (carrying is Resource resource) {
+            carrying = null;
+            resource.DetachFromTransform();
+            return true;
+        }
         return false;
     }
 
