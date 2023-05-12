@@ -146,7 +146,7 @@ public class Enemy : MonoBehaviour {
         timedStatusEffects.ForEach(effect => {
             var triggeringEffects = effect.statusEffect.triggeringEffects.FindAll(trigger => trigger.damageType == damageType);
             triggeringEffects.ForEach(trigger => {
-                trigger.isTriggered = true;
+                trigger.IsTriggered = true;
             });
         });
     }
@@ -186,8 +186,8 @@ public class Enemy : MonoBehaviour {
             effect.UpdateTimer(Time.deltaTime);
         });
 
-        var triggeredEffects = timedStatusEffects.FindAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.isTriggered));
-        removedEffects += timedStatusEffects.RemoveAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.isTriggered));
+        var triggeredEffects = timedStatusEffects.FindAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.IsTriggered));
+        removedEffects += timedStatusEffects.RemoveAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.IsTriggered));
         triggeredEffects.ForEach(triggeredEffect => triggeredEffect.statusEffect.triggeringEffects.ForEach(triggered => ApplyTimedStatusEffect(triggered.effect, triggeredEffect.originTower)));
 
         if (removedEffects > 0) {

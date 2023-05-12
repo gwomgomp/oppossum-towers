@@ -19,5 +19,5 @@ public class TriggerEffect {
     public DamageType damageType;
     public StatusEffect effect;
 
-    public bool isTriggered;
+    public bool IsTriggered { get; set; }
 }

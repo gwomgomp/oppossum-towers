@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageType: 4
   maxStacks: 1
-  slowPercentage: 50
+  slowPercentage: 25
   weakenPercentage: 0
-  damagePerSecond: 0
+  damagePerSecond: 4
   duration: 5
-  triggeringEffects:
-  - damageType: 1
-    effect: {fileID: 11400000, guid: ea7912921616edd41b1f1aa3956cd4d2, type: 2}
+  triggeringEffects: []

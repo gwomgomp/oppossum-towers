@@ -20,4 +20,5 @@ MonoBehaviour:
   duration: 5
   triggeringEffects:
   - damageType: 1
-    effect: {fileID: 11400000, guid: ea7912921616edd41b1f1aa3956cd4d2, type: 2}
+    effect: {fileID: 11400000, guid: 1d248bdcf8bf9f94e9074c33ee24e4c5, type: 2}
+    isTriggered: 0
