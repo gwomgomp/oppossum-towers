@@ -1,7 +1,7 @@
-using UnityEngine;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using UnityEngine;
 
 public class Resource : MonoBehaviour, Cargo {
     private bool initialized = false;
@@ -37,7 +37,7 @@ public class Resource : MonoBehaviour, Cargo {
 
     public void DetachFromTransform() {
         PickupHelper.Detach(this);
-         if (!IsHoardInRange()) {
+        if (!IsHoardInRange()) {
             MoveToSpawner();
         }
     }

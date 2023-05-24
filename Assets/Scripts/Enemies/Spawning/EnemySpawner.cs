@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
-public class Spawner : MonoBehaviour {
+public class EnemySpawner : MonoBehaviour {
     [SerializeField]
-    private WaveDefinition[] waves;
+    private WaveDefinition<EnemyType>[] waves;
 
     private List<Wave> currentWaves;
 

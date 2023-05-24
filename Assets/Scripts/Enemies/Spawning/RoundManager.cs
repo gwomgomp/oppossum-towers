@@ -4,6 +4,9 @@ public class RoundManager : MonoBehaviour {
     public delegate void NewRound(int roundNumber);
     public event NewRound OnNextRound;
 
+    public delegate void FinishedRound();
+    public event FinishedRound OnFinishedRound;
+
     public bool Running { get; private set; }
 
     public float timeBetweenRounds = 0f;
@@ -20,12 +23,17 @@ public class RoundManager : MonoBehaviour {
     }
 
     private void Start() {
-        Spawner[] spawners = FindObjectsOfType<Spawner>();
+        EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
         spawnerCount = spawners.Length;
-        foreach (var spawner in spawners)
-        {
+        foreach (var spawner in spawners) {
             OnNextRound += spawner.PrepareNewRound;
             spawner.OnSpawningFinished += HandleFinishedSpawner;
+        }
+
+        ResourceSpawner[] resourceSpawners = FindObjectsOfType<ResourceSpawner>();
+        foreach (var resourceSpawner in resourceSpawners) {
+            OnNextRound += resourceSpawner.PrepareNewRound;
+            OnFinishedRound += resourceSpawner.StopSpawning;
         }
     }
 
@@ -55,6 +63,7 @@ public class RoundManager : MonoBehaviour {
     private void FinishRound() {
         Debug.Log(string.Format("Round {0} finished.", roundNumber));
         roundFinished = true;
+        OnFinishedRound();
     }
 
     private void StartNewRound() {
@@ -63,4 +72,5 @@ public class RoundManager : MonoBehaviour {
         OnNextRound(roundNumber);
         Debug.Log(string.Format("Round {0} started.", roundNumber));
     }
+
 }

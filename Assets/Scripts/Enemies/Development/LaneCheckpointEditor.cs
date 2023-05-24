@@ -1,17 +1,16 @@
-using UnityEngine;
-using System.Collections.Generic;
 
 #if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(Spawner)), CanEditMultipleObjects]
+[CustomEditor(typeof(EnemySpawner)), CanEditMultipleObjects]
 public class LaneCheckpointEditor : Editor {
 
-    private Spawner spawner;
+    private EnemySpawner spawner;
 
     private void OnEnable() {
-        spawner = target as Spawner;
-        Tools.hidden = true;
+        spawner = target as EnemySpawner;
     }
 
     private void OnDisable() {

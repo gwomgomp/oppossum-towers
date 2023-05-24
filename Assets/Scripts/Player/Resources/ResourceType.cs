@@ -6,11 +6,5 @@ public class ResourceType : ScriptableObject {
     public float Weight { get; private set; }
 
     [field: SerializeField]
-    public float SpawnCap { get; private set; }
-
-    [field: SerializeField]
-    public float SpawnCooldown { get; private set; }
-
-    [field: SerializeField]
     public GameObject Prefab { get; private set; }
 }
