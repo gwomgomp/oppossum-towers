@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour {
     private static readonly Dictionary<InputType, string> inputMapping = new() {
-        {InputType.Interact, "Interact"}
+        {InputType.Interact, "Interact"},
+        {InputType.Camera, "Camera"},
     };
 
     private readonly Dictionary<string, SortedList<int, Func<bool>>> registeredInputs = new();
@@ -45,6 +46,7 @@ public class InputManager : MonoBehaviour {
     }
 
     public enum InputType {
-        Interact
+        Interact,
+        Camera
     }
 }
