@@ -8,6 +8,18 @@
 
 It is recommended to use EditorConfig to automatically adhere to a unified code style.
 
+## Controls
+
+| Keys       | Action        |
+|------------|---------------|
+| WASD       | Move          |
+| Shift      | Sprint        |
+| Ctrl       | Walk          |
+| Space      | Jump          |
+| E / LMB    | Interact      |
+| T          | Tactical View |
+| Mousewheel | Zoom          |
+
 ## Plugins
 
 Download the following plugins:
