@@ -1554,7 +1554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: <FirstCheckpoint>k__BackingField
@@ -1567,14 +1567,22 @@ PrefabInstance:
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[1].<TypeToSpawn>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 1ea3fe991065e594eb906f56c70945fb, type: 2}
+      objectReference: {fileID: 11400000, guid: 001fc32647dfc854aa616245c7f0ba43, type: 2}
+    - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
+      propertyPath: waves.Array.data[2].<TypeToSpawn>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f2c65ac11217be4581a834f72b42367, type: 2}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[0].<AmountToSpawn>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[1].<AmountToSpawn>k__BackingField
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
+      propertyPath: waves.Array.data[2].<AmountToSpawn>k__BackingField
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[0].<RoundToSpawnIn>k__BackingField
@@ -1582,6 +1590,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[1].<RoundToSpawnIn>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
+      propertyPath: waves.Array.data[2].<RoundToSpawnIn>k__BackingField
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
@@ -1593,12 +1605,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
+      propertyPath: waves.Array.data[2].<TimeBeforeSpawns>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[0].<TimeBetweenSpawns>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
       propertyPath: waves.Array.data[1].<TimeBetweenSpawns>k__BackingField
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471891747423324429, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}
+      propertyPath: waves.Array.data[2].<TimeBetweenSpawns>k__BackingField
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd1bae066d04dd1479cdb7b4ef51bb11, type: 3}

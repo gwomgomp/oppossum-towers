@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: RapidFireTower
   m_EditorClassIdentifier: 
   displayName: Rapid Fire
-  targetingMethod: 0
+  targetingMethod: 1
+  damageType: 0
   damagePerShot: 2
   rampUpMultiplier: 0
   rampUpShotsNeeded: 0
   shotCooldown: 0.1
   range: 8
   targetCount: 1
+  attackAllInRange: 0
   projectileTracksEnemy: 1
   projectileSpeed: 28
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}

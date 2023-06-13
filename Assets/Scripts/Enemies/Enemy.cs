@@ -144,10 +144,10 @@ public class Enemy : MonoBehaviour {
 
     public void CheckForTriggerEffects(DamageType damageType) {
         timedStatusEffects.ForEach(effect => {
-            var triggeringEffects = effect.statusEffect.triggeringEffects.FindAll(trigger => trigger.damageType == damageType);
-            triggeringEffects.ForEach(trigger => {
-                trigger.IsTriggered = true;
-            });
+            effect.statusEffect.triggeringEffects.FindAll(trigger => trigger.damageType == damageType)
+                .ForEach(trigger => {
+                    trigger.IsTriggered = true;
+                });
         });
     }
 
@@ -211,8 +211,8 @@ public class Enemy : MonoBehaviour {
         }
 
         foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
-            if (timedStatusEffect.statusEffect.slowPercentage * timedStatusEffect.AppliedStacks > maxSlowPercentage) {
-                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage * timedStatusEffect.AppliedStacks;
+            if (timedStatusEffect.SlowPercentage > maxSlowPercentage) {
+                maxSlowPercentage = timedStatusEffect.SlowPercentage;
             }
             if (timedStatusEffect.statusEffect.weakenPercentage > weakenPercentage) {
                 weakenPercentage = timedStatusEffect.statusEffect.weakenPercentage;

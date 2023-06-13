@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Towers;
+using Assets.Scripts.Towers.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,7 +15,7 @@ public class Tower : MonoBehaviour {
     private float currentShotCooldown = 0.0f;
 
     private HashSet<Enemy> enemiesInRange;
-    private List<Target> currentTargets = new();
+    private HashSet<Target> currentTargets = new();
 
     private GameObject launchOrigin;
 
@@ -133,14 +134,13 @@ public class Tower : MonoBehaviour {
     }
 
     private void FindAnyHigherPriorityEnemy() {
-        currentTargets.ForEach(target => {
-            foreach (Enemy enemy in enemiesInRange) {
-                if (!currentTargets.Any(target => target.Enemy.Equals(enemy)) && target.Enemy.GetPriority() < enemy.GetPriority()) {
-                    target.Enemy = enemy;
-                    target.ConsecutiveHits = 0f;
-                }
+        foreach (Enemy enemy in enemiesInRange.Except(currentTargets.Select(target => target.Enemy))) {
+            if (currentTargets.Any(target => target.Enemy.GetPriority() < enemy.GetPriority())) {
+                var target = currentTargets.Where(target => enemy.GetPriority() > target.Enemy.GetPriority()).GetFarthestTarget(transform.position);
+                target.Enemy = enemy;
+                target.ConsecutiveHits = 0f;
             }
-        });
+        }
     }
 
     private Enemy FindHighestPriorityEnemy() {
@@ -160,14 +160,13 @@ public class Tower : MonoBehaviour {
     }
 
     private void FindAnyLowerPriorityEnemy() {
-        currentTargets.ForEach(target => {
-            foreach (Enemy enemy in enemiesInRange) {
-                if (!currentTargets.Any(target => target.Enemy.Equals(enemy)) && target.Enemy.GetPriority() > enemy.GetPriority()) {
-                    target.Enemy = enemy;
-                    target.ConsecutiveHits = 0f;
-                }
+        foreach (Enemy enemy in enemiesInRange.Except(currentTargets.Select(target => target.Enemy))) {
+            if (currentTargets.Any(target => enemy.GetPriority() < target.Enemy.GetPriority())) {
+                var target = currentTargets.Where(target => enemy.GetPriority() < target.Enemy.GetPriority()).GetFarthestTarget(transform.position);
+                target.Enemy = enemy;
+                target.ConsecutiveHits = 0f;
             }
-        });
+        }
     }
 
     private Enemy FindLowestPriorityEnemy() {
@@ -187,17 +186,13 @@ public class Tower : MonoBehaviour {
     }
 
     private void FindAnyCloserEnemy() {
-        currentTargets.ForEach(target => {
-            foreach (Enemy enemy in enemiesInRange) {
-                if (!currentTargets.Any(target => target.Enemy.Equals(enemy))) {
-                    var potentialCloserTarget = GetCloserEnemy(target.Enemy, enemy);
-                    if (!potentialCloserTarget.Equals(target)) {
-                        target.Enemy = potentialCloserTarget;
-                        target.ConsecutiveHits = 0f;
-                    }
-                }
+        var farthestTarget = currentTargets.GetFarthestTarget(transform.position);
+        foreach (Enemy enemy in enemiesInRange.Except(currentTargets.Select(target => target.Enemy))) {
+            if (GetCloserEnemy(farthestTarget.Enemy, enemy).Equals(enemy)) {
+                farthestTarget.Enemy = enemy;
+                farthestTarget.ConsecutiveHits = 0f;
             }
-        });
+        }
     }
 
     private Enemy FindClosestEnemy() {
@@ -228,11 +223,11 @@ public class Tower : MonoBehaviour {
 
     private void PurgeDestroyedEnemies() {
         enemiesInRange.RemoveWhere(enemy => enemy == null || enemy.gameObject == null);
-        currentTargets.RemoveAll(target => target.Enemy == null || target.Enemy.gameObject == null);
+        currentTargets.RemoveWhere(target => target.Enemy == null || target.Enemy.gameObject == null);
     }
 
     private void PurgeOutOfRangeEnemies() {
-        currentTargets.RemoveAll(target => !enemiesInRange.Contains(target.Enemy));
+        currentTargets.RemoveWhere(target => !enemiesInRange.Contains(target.Enemy));
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -253,7 +248,7 @@ public class Tower : MonoBehaviour {
         }
 
         if (enemyObject.TryGetComponent(out Enemy enemy)) {
-            enemy.Damage(towerType.damagePerShot * ConsecutiveMultiplier(consecutiveHits));
+            enemy.Damage(towerType.damagePerShot * GetConsecutiveMultiplier(consecutiveHits));
             enemy.CheckForTriggerEffects(towerType.damageType);
 
             if (towerType.statusEffect != null) {
@@ -269,8 +264,7 @@ public class Tower : MonoBehaviour {
     /// </summary>
     /// <param name="consecutiveHits"></param>
     /// <returns></returns>
-    private float ConsecutiveMultiplier(float consecutiveHits) {
-        Debug.Log(consecutiveHits);
+    private float GetConsecutiveMultiplier(float consecutiveHits) {
         if (towerType.rampUpShotsNeeded == 0)
             return 1;
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -119,39 +121,14 @@ public class BuildingManager : MonoBehaviour {
     }
 
     private void PopulateBuildingMenu() {
-        var buttonSize = towerButtonPrefab.GetComponent<RectTransform>().rect.size;
-        var buttonWidth = buttonSize.x;
-        var buttonHeight = buttonSize.y;
-
-        var leftStart = CalculateLeftEndOfButtons(buttonWidth);
-
-        var createdButtons = 0;
-        var finishedRows = 0;
-        var towerTypes = Resources.LoadAll<TowerBaseType>("Tower Types");
-        foreach (TowerBaseType towerType in towerTypes) {
-            var button = Instantiate(towerButtonPrefab, buildingMenu.transform, false);
-
-            var horizontalPosition = leftStart - createdButtons * (buttonWidth + horizontalSpace);
-            button.transform.Translate(Vector3.left * horizontalPosition);
-            var verticalPosition = finishedRows * (buttonHeight + verticalSpace);
-            button.transform.Translate(Vector3.down * verticalPosition);
-
-            var text = button.GetComponentInChildren<TextMeshProUGUI>();
-            text.SetText(towerType.displayName);
-
-            var buttonComponent = button.GetComponent<Button>();
-            buttonComponent.interactable = openBuildingSpot.HasEnoughResourcesFor(towerType);
-            buttonComponent.onClick.AddListener(() => Build(towerType));
-
-            createdButtons++;
-            if (createdButtons >= maxButtonsPerRow) {
-                createdButtons = 0;
-                finishedRows++;
-            }
-        }
+        PopulateMenu(Resources.LoadAll<TowerBaseType>("Tower Types").ToList(), 0);
     }
 
     private void PopulateAdjustMenu(BuildingSpot buildingSpot) {
+        PopulateMenu(buildingSpot.Tower.towerType.upgrades, 1);
+    }
+
+    private void PopulateMenu<T>(List<T> towerTypes, int finishedRows) where T : TowerType {
         var buttonSize = towerButtonPrefab.GetComponent<RectTransform>().rect.size;
         var buttonWidth = buttonSize.x;
         var buttonHeight = buttonSize.y;
@@ -159,11 +136,8 @@ public class BuildingManager : MonoBehaviour {
         var leftStart = CalculateLeftEndOfButtons(buttonWidth);
 
         var createdButtons = 0;
-        var finishedRows = 1;
-        var towerTypes = buildingSpot.Tower.towerType.upgrades;
-        foreach (TowerUpgradeType towerType in towerTypes) {
-            var button = Instantiate(towerButtonPrefab, adjustMenu.transform, false);
-
+        foreach (TowerType towerType in towerTypes) {
+            var button = Instantiate(towerButtonPrefab, openMenu.transform, false);
             var horizontalPosition = leftStart - createdButtons * (buttonWidth + horizontalSpace);
             button.transform.Translate(Vector3.left * horizontalPosition);
             var verticalPosition = finishedRows * (buttonHeight + verticalSpace);

@@ -1,7 +1,7 @@
 public enum DamageType {
-    projectile,
-    fire,
-    cold,
-    glue,
-    oil
+    Projectile,
+    Fire,
+    Cold,
+    Glue,
+    Oil
 }

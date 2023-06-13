@@ -9,8 +9,6 @@ public class ResourceEditor : Editor {
 
     private ResourceSpawner resourceSpawner;
 
-    private bool spawningStarted = false;
-
     private void OnEnable() {
         resourceSpawner = target as ResourceSpawner;
 
@@ -37,27 +35,8 @@ public class ResourceEditor : Editor {
 
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
-
-        if (EditorApplication.isPlaying) {
-            StartSpawningUI();
-        } else {
-            NewSpawnpointButton();
-            CleanupSpawnLocationsButton();
-        }
-    }
-
-    /// <summary>
-    /// Start the spawning of resources
-    /// </summary>
-    private void StartSpawningUI() {
-        if (!spawningStarted && GUILayout.Button("Start Spawning")) {
-            resourceSpawner.PrepareNewRound(0);
-            spawningStarted = true;
-        }
-
-        if (spawningStarted) {
-            GUILayout.Label("Resource Spawning started");
-        }
+        NewSpawnpointButton();
+        CleanupSpawnLocationsButton();
     }
 
     /// <summary>
