@@ -19,12 +19,6 @@ public class PlayerController : MonoBehaviour {
     [Header("Turn Settings")]
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
-    
-    private InteractableManager interactableManager;
-    
-    private bool isClimbing = false;
-    
-    private Ladder activeLadder = null;
 
     private bool IsSliding {
         get {
@@ -79,42 +73,29 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-
-    void Start() {
-        var inputManager = ManagerProvider.Instance.GetManager<InputManager>();
-        inputManager.RegisterInput(InputManager.InputType.Interact, Climb, 60);
-        interactableManager = ManagerProvider.Instance.GetManager<InteractableManager>();
-    }
+    
+    private bool isClimbing = false;
+    private Ladder activeLadder = null;
+    
+    private float ladderCooldown = 0.5f;
+    private float ladderCooldownTimer = 0.0f;
 
     void Update() {
-        if (isClimbing) {
-            ExecuteClimb();
+        if (isClimbing && activeLadder != null && ladderCooldownTimer <= 0.0f) {
+            ExecuteLadderMove();
         } else {
             RotateTowardsViewDirection();
             ExecuteMove();
+            
+            if (ladderCooldownTimer > 0.0f) {
+                ladderCooldownTimer -= Time.deltaTime;
+            }
         }
     }
 
     private void ExecuteMove() {
         Vector3 moveDirection = InputMovement + SlideMovement + VerticalMovement;
         controller.Move(moveDirection * Time.deltaTime);
-    }
-    
-    private void ExecuteClimb() {
-        if (Input.GetButtonDown("Jump")) {
-            isClimbing = false;
-            return;
-        }
-        
-        float vertical = Input.GetAxisRaw("Vertical");
-        
-        if (vertical > 0.0f && Vector3.Distance(transform.position, activeLadder.GetTopPosition()) > 0.1f) {
-            transform.position = Vector3.MoveTowards(transform.position, activeLadder.GetTopPosition(), activeLadder.climbSpeed);
-        } else if (vertical < 0.0f && Vector3.Distance(transform.position, activeLadder.GetBottomPosition()) > 0.1f) {
-            transform.position = Vector3.MoveTowards(transform.position, activeLadder.GetBottomPosition(), activeLadder.climbSpeed);
-        } else if (vertical > 0.0f && Vector3.Distance(transform.position, activeLadder.GetTopPosition()) <= 0.1f) {
-            isClimbing = false;
-        }
     }
 
     private void RotateTowardsViewDirection() {
@@ -125,16 +106,49 @@ public class PlayerController : MonoBehaviour {
         }
     }
     
-    private bool Climb() {
-        if (interactableManager.GetClosestInteractable(out Ladder ladder)) {
-            isClimbing = true;
-            activeLadder = ladder;
-            
-            gameObject.transform.position = activeLadder.GetBottomPosition();
-            
-            return true;
+    private void ExecuteLadderMove() {
+        if (Input.GetButtonDown("Jump")) {
+            DisengageLadder();
+            verticalSpeed = Vector3.up * jumpHeight;
+            controller.Move(verticalSpeed * Time.deltaTime);
+            return;
         }
         
-        return false;
+        float verticalClimb = 0.0f;
+        
+        if (activeLadder.verticalClimbDirection == Ladder.VerticalClimbDirection.Up) {
+            verticalClimb = Input.GetAxisRaw("Vertical");
+        } else if (activeLadder.verticalClimbDirection == Ladder.VerticalClimbDirection.Down) {
+            verticalClimb = -Input.GetAxisRaw("Vertical");
+        }
+        
+        float horizontalClimb = 0.0f;
+        
+        if (activeLadder.horizontalClimbDirection == Ladder.HorizontalClimbDirection.Right) {
+            horizontalClimb = Input.GetAxisRaw("Horizontal");
+        } else if (activeLadder.horizontalClimbDirection == Ladder.HorizontalClimbDirection.Left) {
+            horizontalClimb = -Input.GetAxisRaw("Horizontal");
+        }
+        
+        float climbDirection = Mathf.Clamp(verticalClimb + horizontalClimb, -1.0f, 1.0f);
+        
+        if (climbDirection < 0.0f && controller.isGrounded) {
+            DisengageLadder();
+            return;
+        }
+        
+        controller.Move(Vector3.up * Time.deltaTime * climbDirection * activeLadder.climbSpeed);
+    }
+    
+    public void EngageLadder(Ladder ladder) {
+        isClimbing = true;
+        activeLadder = ladder;
+        transform.rotation = Quaternion.Euler(0f, ladder.playerFaceDirection, 0f);
+    }
+    
+    public void DisengageLadder() {
+        isClimbing = false;
+        activeLadder = null;
+        ladderCooldownTimer = ladderCooldown;
     }
 }

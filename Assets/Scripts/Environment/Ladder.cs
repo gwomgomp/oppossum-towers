@@ -4,16 +4,34 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
-    public GameObject ladderTop;
-    public GameObject ladderBottom;
-    
-    public float climbSpeed = 0.03f;
-    
-    public Vector3 GetBottomPosition() {
-        return ladderBottom.transform.position;
+    public enum VerticalClimbDirection {
+        None,
+        Up,
+        Down
     }
     
-    public Vector3 GetTopPosition() {
-        return ladderTop.transform.position;
+    public enum HorizontalClimbDirection {
+        None,
+        Right,
+        Left
+    }
+    
+    public float climbSpeed = 10.0f;
+    
+    public VerticalClimbDirection verticalClimbDirection;
+    public HorizontalClimbDirection horizontalClimbDirection;
+    
+    public float playerFaceDirection;
+    
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.TryGetComponent(out PlayerController playerController)) {
+            playerController.EngageLadder(this);
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.TryGetComponent(out PlayerController playerController)) {
+            playerController.DisengageLadder();
+        }
     }
 }
