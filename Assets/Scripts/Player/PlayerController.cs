@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour {
     [Header("Turn Settings")]
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
+    
+    private InteractableManager interactableManager;
+    
+    private bool isClimbing = false;
+    
+    private Ladder activeLadder = null;
 
     private bool IsSliding {
         get {
@@ -74,14 +80,41 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void Start() {
+        var inputManager = ManagerProvider.Instance.GetManager<InputManager>();
+        inputManager.RegisterInput(InputManager.InputType.Interact, Climb, 60);
+        interactableManager = ManagerProvider.Instance.GetManager<InteractableManager>();
+    }
+
     void Update() {
-        RotateTowardsViewDirection();
-        ExecuteMove();
+        if (isClimbing) {
+            ExecuteClimb();
+        } else {
+            RotateTowardsViewDirection();
+            ExecuteMove();
+        }
     }
 
     private void ExecuteMove() {
         Vector3 moveDirection = InputMovement + SlideMovement + VerticalMovement;
         controller.Move(moveDirection * Time.deltaTime);
+    }
+    
+    private void ExecuteClimb() {
+        if (Input.GetButtonDown("Jump")) {
+            isClimbing = false;
+            return;
+        }
+        
+        float vertical = Input.GetAxisRaw("Vertical");
+        
+        if (vertical > 0.0f && Vector3.Distance(transform.position, activeLadder.GetTopPosition()) > 0.1f) {
+            transform.position = Vector3.MoveTowards(transform.position, activeLadder.GetTopPosition(), activeLadder.climbSpeed);
+        } else if (vertical < 0.0f && Vector3.Distance(transform.position, activeLadder.GetBottomPosition()) > 0.1f) {
+            transform.position = Vector3.MoveTowards(transform.position, activeLadder.GetBottomPosition(), activeLadder.climbSpeed);
+        } else if (vertical > 0.0f && Vector3.Distance(transform.position, activeLadder.GetTopPosition()) <= 0.1f) {
+            isClimbing = false;
+        }
     }
 
     private void RotateTowardsViewDirection() {
@@ -90,5 +123,18 @@ public class PlayerController : MonoBehaviour {
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
+    }
+    
+    private bool Climb() {
+        if (interactableManager.GetClosestInteractable(out Ladder ladder)) {
+            isClimbing = true;
+            activeLadder = ladder;
+            
+            gameObject.transform.position = activeLadder.GetBottomPosition();
+            
+            return true;
+        }
+        
+        return false;
     }
 }
