@@ -98,12 +98,6 @@ public class BuildingManager : MonoBehaviour {
         CloseMenu();
     }
 
-    public void Upgrade() {
-        // Does nothing for now
-        Debug.Log($"Upgrading {openBuildingSpot.Name}");
-        CloseMenu();
-    }
-
     public void Delete() {
         openBuildingSpot.Clear();
         CloseMenu();
@@ -115,6 +109,8 @@ public class BuildingManager : MonoBehaviour {
             openMenu.SetActive(false);
             if (openMenu.Equals(buildingMenu)) {
                 DepopulateBuildingMenu();
+            } else if (openMenu.Equals(adjustMenu)) {
+                DepopulateAdjustMenu();
             }
             openMenu = null;
         }
@@ -128,13 +124,14 @@ public class BuildingManager : MonoBehaviour {
         PopulateMenu(buildingSpot.Tower.towerType.upgrades, 1);
     }
 
-    private void PopulateMenu<T>(List<T> towerTypes, int finishedRows) where T : TowerType {
+    private void PopulateMenu<T>(List<T> towerTypes, int rowsToSkip) where T : TowerType {
         var buttonSize = towerButtonPrefab.GetComponent<RectTransform>().rect.size;
         var buttonWidth = buttonSize.x;
         var buttonHeight = buttonSize.y;
 
         var leftStart = CalculateLeftEndOfButtons(buttonWidth);
 
+        var finishedRows = rowsToSkip;
         var createdButtons = 0;
         foreach (TowerType towerType in towerTypes) {
             var button = Instantiate(towerButtonPrefab, openMenu.transform, false);
@@ -169,6 +166,14 @@ public class BuildingManager : MonoBehaviour {
     private void DepopulateBuildingMenu() {
         foreach (Transform button in buildingMenu.transform) {
             Destroy(button.gameObject);
+        }
+    }
+
+    private void DepopulateAdjustMenu() {
+        foreach (Transform button in adjustMenu.transform) {
+            if (button.name.StartsWith("Build Tower Button")) {
+                Destroy(button.gameObject);
+            }
         }
     }
 }

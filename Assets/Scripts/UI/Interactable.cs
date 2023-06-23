@@ -9,7 +9,7 @@ public class Interactable : MonoBehaviour {
     void Start() {
         interactableManager = ManagerProvider.Instance.GetManager<InteractableManager>();
         TryGetComponent(out SphereCollider collider);
-        collider.radius = ManagerProvider.Instance.GetManager<InteractableManager>().MaxDistanceToInteract * distanceModifier;
+        collider.radius = interactableManager.MaxDistanceToInteract * distanceModifier;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -22,9 +22,5 @@ public class Interactable : MonoBehaviour {
         if (interactableManager.IsRelevantEntry(other.gameObject)) {
             interactableManager.StepOutOffRange(this);
         }
-    }
-
-    void OnDestroy() {
-        interactableManager.StepOutOffRange(this);
     }
 }
