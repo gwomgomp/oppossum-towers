@@ -10,7 +10,10 @@ public class TimedStatusEffect {
 
     public float SlowPercentage { get => slowPercentage; }
     public void ApplyStack() {
-        if (appliedStacks < statusEffect.maxStacks) appliedStacks += 1f;
+        if (appliedStacks < statusEffect.maxStacks) {
+            appliedStacks += 1f;
+        }
+
         slowPercentage = statusEffect.slowPercentage * appliedStacks;
     }
 

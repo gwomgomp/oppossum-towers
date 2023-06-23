@@ -45,7 +45,9 @@ public class Enemy : MonoBehaviour {
 
     public void Update() {
         UpdateTimedStatusEffects();
-        if (damagePerSecondReceiving > 0) Damage(damagePerSecondReceiving * Time.deltaTime);
+        if (damagePerSecondReceiving > 0) {
+            Damage(damagePerSecondReceiving * Time.deltaTime);
+        }
 
         if (initialized && currentTarget != null) {
             Move();
@@ -81,7 +83,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
-        Hoard hoard = checkpoint as Hoard;
+        var hoard = checkpoint as Hoard;
         if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
             var lootPrefab = Resources.Load<GameObject>("Prefabs/Loot");
             var lootGameObject = Instantiate(lootPrefab);

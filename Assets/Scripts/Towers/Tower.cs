@@ -15,7 +15,7 @@ public class Tower : MonoBehaviour {
     private float currentShotCooldown = 0.0f;
 
     private HashSet<Enemy> enemiesInRange;
-    private HashSet<Target> currentTargets = new();
+    private readonly HashSet<Target> currentTargets = new();
 
     private GameObject launchOrigin;
 
@@ -46,8 +46,11 @@ public class Tower : MonoBehaviour {
 
             if (currentTargets.Count > 0) {
 
-                if (towerType.attackAllInRange) AreaAroundSelf();
-                else ShootAtCurrentTargets();
+                if (towerType.attackAllInRange) {
+                    AreaAroundSelf();
+                } else {
+                    ShootAtCurrentTargets();
+                }
 
                 currentShotCooldown = towerType.shotCooldown;
             }
@@ -71,10 +74,10 @@ public class Tower : MonoBehaviour {
                 currentTarget.ConsecutiveHits += 1f;
                 projectile.ConescutiveHits = currentTarget.ConsecutiveHits;
 
-                EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
+                var enemyHitEvent = new EnemyHitEvent();
                 enemyHitEvent.AddListener(OnEnemyHit);
 
-                PositionHitEvent positionHitEvent = new PositionHitEvent();
+                var positionHitEvent = new PositionHitEvent();
                 positionHitEvent.AddListener(OnPositionHit);
 
                 projectile.SetEnemyHitEvent(enemyHitEvent);
@@ -91,10 +94,10 @@ public class Tower : MonoBehaviour {
             projectile.SetTargetPosition(launchOrigin.transform.position);
             projectile.SetSpeed(towerType.projectileSpeed);
 
-            EnemyHitEvent enemyHitEvent = new EnemyHitEvent();
+            var enemyHitEvent = new EnemyHitEvent();
             enemyHitEvent.AddListener(OnEnemyHit);
 
-            PositionHitEvent positionHitEvent = new PositionHitEvent();
+            var positionHitEvent = new PositionHitEvent();
             positionHitEvent.AddListener(OnPositionHit);
 
             projectile.SetEnemyHitEvent(enemyHitEvent);
@@ -265,8 +268,9 @@ public class Tower : MonoBehaviour {
     /// <param name="consecutiveHits"></param>
     /// <returns></returns>
     private float GetConsecutiveMultiplier(float consecutiveHits) {
-        if (towerType.rampUpShotsNeeded == 0)
+        if (towerType.rampUpShotsNeeded == 0) {
             return 1;
+        }
 
         var rampUpCount = towerType.rampUpShotsNeeded <= consecutiveHits ? towerType.rampUpShotsNeeded : consecutiveHits;
 

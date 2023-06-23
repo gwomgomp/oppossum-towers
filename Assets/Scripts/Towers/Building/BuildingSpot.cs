@@ -8,14 +8,16 @@ public class BuildingSpot : MonoBehaviour, Placeable, Storage {
 
     public Tower Tower { get; private set; }
 
-    private List<Resource> depositedResources = new();
+    private readonly List<Resource> depositedResources = new();
 
     private void Start() {
         PlayerIgnoreCollisionHelper.IgnorePlayerCollision(gameObject);
     }
 
     public void Build(TowerType type) {
-        if (Tower != null) Clear();
+        if (Tower != null) {
+            Clear();
+        }
 
         var towerPrefab = Resources.Load<GameObject>("Prefabs/Tower");
         var towerGameObject = Instantiate(towerPrefab, transform.position, transform.rotation);
