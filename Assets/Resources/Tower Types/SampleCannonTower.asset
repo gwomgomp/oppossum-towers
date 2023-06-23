@@ -15,10 +15,19 @@ MonoBehaviour:
   displayName: Cannon
   targetingMethod: 2
   damagePerShot: 0
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
   shotCooldown: 1
   range: 6
+  targetCount: 1
+  targetSelf: 1
   projectileTracksEnemy: 0
   projectileSpeed: 8
   projectilePrefab: {fileID: 4654570622842903390, guid: 33693a547137b394dbd56359b7b863b6, type: 3}
   statusEffect: {fileID: 0}
   areaEffectPrefab: {fileID: 3758010132418631429, guid: 8f2a23ea477d284439cc37964a722509, type: 3}
+  buildCosts: []
+  upgrades:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tower Type", menuName = "Towers/Tower Type", order = 1)]
 public class TowerType : ScriptableObject {
     public string displayName;
 
@@ -13,9 +13,14 @@ public class TowerType : ScriptableObject {
 
     public TargetingMethod targetingMethod;
 
+    public DamageType damageType;
     public float damagePerShot;
+    public float rampUpMultiplier;
+    public float rampUpShotsNeeded;
     public float shotCooldown;
     public float range;
+    public float targetCount;
+    public bool attackAllInRange;
 
     public bool projectileTracksEnemy;
     public float projectileSpeed;
@@ -25,6 +30,7 @@ public class TowerType : ScriptableObject {
     public GameObject areaEffectPrefab;
 
     public ResourceCost[] buildCosts;
+    public List<TowerUpgradeType> upgrades;
 
     [Serializable]
     public struct ResourceCost {

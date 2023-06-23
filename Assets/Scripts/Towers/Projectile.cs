@@ -4,6 +4,7 @@ public class Projectile : MonoBehaviour {
     private bool trackObject = true;
     private Vector3 targetPosition = Vector3.zero;
     private GameObject targetObject = null;
+    public float ConescutiveHits { get; set; } = 0f;
 
     private float speed = 10.0f;
 
@@ -25,7 +26,7 @@ public class Projectile : MonoBehaviour {
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.5f) {
             if (trackObject && enemyHitEvent != null) {
-                enemyHitEvent.Invoke(targetObject);
+                enemyHitEvent.Invoke(targetObject, ConescutiveHits);
             } else if (positionHitEvent != null) {
                 positionHitEvent.Invoke(targetPosition);
             }

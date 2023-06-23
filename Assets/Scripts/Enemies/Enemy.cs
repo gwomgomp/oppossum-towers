@@ -1,13 +1,13 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-
+using UnityEngine;
 public class Enemy : MonoBehaviour {
     public float health;
     private float baseSpeed;
     private float modifiedSpeed;
 
     private float damagePerSecondReceiving;
+    private float weakenPercentage;
 
     private const float rotationSpeed = 5f;
     private const float moveDampening = 5f;
@@ -45,7 +45,9 @@ public class Enemy : MonoBehaviour {
 
     public void Update() {
         UpdateTimedStatusEffects();
-        Damage(damagePerSecondReceiving * Time.deltaTime);
+        if (damagePerSecondReceiving > 0) {
+            Damage(damagePerSecondReceiving * Time.deltaTime);
+        }
 
         if (initialized && currentTarget != null) {
             Move();
@@ -81,7 +83,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
-        Hoard hoard = checkpoint as Hoard;
+        var hoard = checkpoint as Hoard;
         if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
             var lootPrefab = Resources.Load<GameObject>("Prefabs/Loot");
             var lootGameObject = Instantiate(lootPrefab);
@@ -129,7 +131,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public bool Damage(float damage) {
-        health -= damage;
+        health -= damage + damage * weakenPercentage / 100;
 
         if (health <= 0.0f) {
             if (carryingLoot) {
@@ -142,9 +144,18 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void CheckForTriggerEffects(DamageType damageType) {
+        timedStatusEffects.ForEach(effect => {
+            effect.statusEffect.triggeringEffects.FindAll(trigger => trigger.damageType == damageType)
+                .ForEach(trigger => {
+                    trigger.IsTriggered = true;
+                });
+        });
+    }
+
     public void ApplyStatusEffect(StatusEffect statusEffect) {
         activeStatusEffects.Add(statusEffect);
-
+        CheckForTriggerEffects(statusEffect.damageType);
         RefreshStatusEffects();
     }
 
@@ -157,10 +168,13 @@ public class Enemy : MonoBehaviour {
     public void ApplyTimedStatusEffect(StatusEffect statusEffect, Tower originTower) {
         TimedStatusEffect newEffect = new(statusEffect, originTower);
 
-        var effectToUpdate = timedStatusEffects.Where(effect => effect.Equals(newEffect)).FirstOrDefault(null);
+        var effectToUpdate = timedStatusEffects.FirstOrDefault(effect => effect.Equals(newEffect));
+        CheckForTriggerEffects(statusEffect.damageType);
         if (effectToUpdate == null) {
+            newEffect.ApplyStack();
             timedStatusEffects.Add(newEffect);
         } else {
+            effectToUpdate.ApplyStack();
             effectToUpdate.RefreshTimer();
         }
 
@@ -169,7 +183,14 @@ public class Enemy : MonoBehaviour {
 
     private void UpdateTimedStatusEffects() {
         int removedEffects = timedStatusEffects.RemoveAll(effect => effect.HasEnded());
-        timedStatusEffects.ForEach(effect => effect.UpdateTimer(Time.deltaTime));
+
+        timedStatusEffects.ForEach(effect => {
+            effect.UpdateTimer(Time.deltaTime);
+        });
+
+        var triggeredEffects = timedStatusEffects.FindAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.IsTriggered));
+        removedEffects += timedStatusEffects.RemoveAll(effect => effect.statusEffect.triggeringEffects.Any(effect => effect.IsTriggered));
+        triggeredEffects.ForEach(triggeredEffect => triggeredEffect.statusEffect.triggeringEffects.ForEach(triggered => ApplyTimedStatusEffect(triggered.effect, triggeredEffect.originTower)));
 
         if (removedEffects > 0) {
             RefreshStatusEffects();
@@ -184,15 +205,22 @@ public class Enemy : MonoBehaviour {
             if (statusEffect.slowPercentage > maxSlowPercentage) {
                 maxSlowPercentage = statusEffect.slowPercentage;
             }
+            if (statusEffect.weakenPercentage > weakenPercentage) {
+                weakenPercentage = statusEffect.weakenPercentage;
+            }
 
             totalDamagePerSecond += statusEffect.damagePerSecond;
         }
 
         foreach (TimedStatusEffect timedStatusEffect in timedStatusEffects) {
-            if (timedStatusEffect.statusEffect.slowPercentage > maxSlowPercentage) {
-                maxSlowPercentage = timedStatusEffect.statusEffect.slowPercentage;
+            if (timedStatusEffect.SlowPercentage > maxSlowPercentage) {
+                maxSlowPercentage = timedStatusEffect.SlowPercentage;
+            }
+            if (timedStatusEffect.statusEffect.weakenPercentage > weakenPercentage) {
+                weakenPercentage = timedStatusEffect.statusEffect.weakenPercentage;
             }
 
+            CheckForTriggerEffects(timedStatusEffect.statusEffect.damageType);
             totalDamagePerSecond += timedStatusEffect.statusEffect.damagePerSecond;
         }
 

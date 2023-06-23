@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e196fb37cf44b704191783e0c8b308ea, type: 3}
+  m_Name: RapidFireTower
+  m_EditorClassIdentifier: 
+  displayName: Rapid Fire
+  targetingMethod: 1
+  damageType: 0
+  damagePerShot: 2
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
+  shotCooldown: 0.1
+  range: 8
+  targetCount: 1
+  attackAllInRange: 0
+  projectileTracksEnemy: 1
+  projectileSpeed: 28
+  projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
+  statusEffect: {fileID: 0}
+  areaEffectPrefab: {fileID: 0}
+  buildCosts: []
+  upgrades:
+  - {fileID: 11400000, guid: 62e5fd6a8b43e744cb33323d5a9637d5, type: 2}
+  - {fileID: 11400000, guid: 5b4c1694f1ff2f64f9dc684e3c27ef6b, type: 2}
+  - {fileID: 11400000, guid: 7285a635aa444044db6ba01ea819adbb, type: 2}

@@ -9,19 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: SamplePoisonTower
+  m_Script: {fileID: 11500000, guid: e196fb37cf44b704191783e0c8b308ea, type: 3}
+  m_Name: FireLayer
   m_EditorClassIdentifier: 
-  displayName: Poison
-  targetingMethod: 2
+  displayName: Fire Layer
+  targetingMethod: 0
+  damageType: 1
   damagePerShot: 0
-  shotCooldown: 0.5
-  range: 8
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
+  shotCooldown: 2
+  range: 4
   targetCount: 1
-  projectileTracksEnemy: 1
-  projectileSpeed: 12
+  attackAllInRange: 1
+  projectileTracksEnemy: 0
+  projectileSpeed: 28
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
-  statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
-  areaEffectPrefab: {fileID: 0}
+  statusEffect: {fileID: 0}
+  areaEffectPrefab: {fileID: 3758010132418631429, guid: 69491a53fa4d515438ea56ca2a98cce7, type: 3}
   buildCosts: []
   upgrades: []

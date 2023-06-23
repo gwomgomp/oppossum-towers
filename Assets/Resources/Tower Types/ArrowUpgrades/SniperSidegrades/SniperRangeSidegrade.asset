@@ -9,19 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347a3bc78cd8a2a458b87ebe8ecce393, type: 3}
-  m_Name: SamplePoisonTower
+  m_Script: {fileID: 11500000, guid: e196fb37cf44b704191783e0c8b308ea, type: 3}
+  m_Name: SniperRangeSidegrade
   m_EditorClassIdentifier: 
-  displayName: Poison
-  targetingMethod: 2
-  damagePerShot: 0
+  displayName: GoLong
+  targetingMethod: 0
+  damagePerShot: 5
+  rampUpMultiplier: 0
+  rampUpShotsNeeded: 0
   shotCooldown: 0.5
-  range: 8
+  range: 32
   targetCount: 1
+  attackAllInRange: 0
   projectileTracksEnemy: 1
-  projectileSpeed: 12
+  projectileSpeed: 32
   projectilePrefab: {fileID: 5503383406254292774, guid: aadb3b8e86713944c92a907e042205a4, type: 3}
-  statusEffect: {fileID: 11400000, guid: e9503ac6af3b5124f8a4b7070074fe02, type: 2}
+  statusEffect: {fileID: 0}
   areaEffectPrefab: {fileID: 0}
   buildCosts: []
   upgrades: []
