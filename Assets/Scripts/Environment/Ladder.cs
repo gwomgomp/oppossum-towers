@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
-    public enum VerticalClimbDirection {
-        None,
-        Up,
-        Down
+    public enum VerticalClimbDirection : short {
+        None = 0,
+        Up = 1,
+        Down = -1
     }
     
-    public enum HorizontalClimbDirection {
-        None,
-        Right,
-        Left
+    public enum HorizontalClimbDirection : short {
+        None = 0,
+        Right = 1,
+        Left = -1
     }
     
     public float climbSpeed = 10.0f;

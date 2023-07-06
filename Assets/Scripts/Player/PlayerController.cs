@@ -74,14 +74,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
     
-    private bool isClimbing = false;
+    private bool isClimbing {
+        get {
+            return activeLadder != null && ladderCooldownTimer <= 0.0f;
+        }
+    }
+    
     private Ladder activeLadder = null;
     
     private float ladderCooldown = 0.5f;
     private float ladderCooldownTimer = 0.0f;
 
     void Update() {
-        if (isClimbing && activeLadder != null && ladderCooldownTimer <= 0.0f) {
+        if (isClimbing) {
             ExecuteLadderMove();
         } else {
             RotateTowardsViewDirection();
@@ -110,25 +115,11 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Jump")) {
             DisengageLadder();
             verticalSpeed = Vector3.up * jumpHeight;
-            controller.Move(verticalSpeed * Time.deltaTime);
             return;
         }
         
-        float verticalClimb = 0.0f;
-        
-        if (activeLadder.verticalClimbDirection == Ladder.VerticalClimbDirection.Up) {
-            verticalClimb = Input.GetAxisRaw("Vertical");
-        } else if (activeLadder.verticalClimbDirection == Ladder.VerticalClimbDirection.Down) {
-            verticalClimb = -Input.GetAxisRaw("Vertical");
-        }
-        
-        float horizontalClimb = 0.0f;
-        
-        if (activeLadder.horizontalClimbDirection == Ladder.HorizontalClimbDirection.Right) {
-            horizontalClimb = Input.GetAxisRaw("Horizontal");
-        } else if (activeLadder.horizontalClimbDirection == Ladder.HorizontalClimbDirection.Left) {
-            horizontalClimb = -Input.GetAxisRaw("Horizontal");
-        }
+        float verticalClimb = Input.GetAxisRaw("Vertical") * (short) activeLadder.verticalClimbDirection;
+        float horizontalClimb = Input.GetAxisRaw("Horizontal") * (short) activeLadder.horizontalClimbDirection;
         
         float climbDirection = Mathf.Clamp(verticalClimb + horizontalClimb, -1.0f, 1.0f);
         
@@ -141,13 +132,11 @@ public class PlayerController : MonoBehaviour {
     }
     
     public void EngageLadder(Ladder ladder) {
-        isClimbing = true;
         activeLadder = ladder;
         transform.rotation = Quaternion.Euler(0f, ladder.playerFaceDirection, 0f);
     }
     
     public void DisengageLadder() {
-        isClimbing = false;
         activeLadder = null;
         ladderCooldownTimer = ladderCooldown;
     }
