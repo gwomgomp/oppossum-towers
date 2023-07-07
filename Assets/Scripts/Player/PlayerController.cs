@@ -73,10 +73,29 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+    
+    private bool isClimbing {
+        get {
+            return activeLadder != null && ladderCooldownTimer <= 0.0f;
+        }
+    }
+    
+    private Ladder activeLadder = null;
+    
+    private float ladderCooldown = 0.5f;
+    private float ladderCooldownTimer = 0.0f;
 
     void Update() {
-        RotateTowardsViewDirection();
-        ExecuteMove();
+        if (isClimbing) {
+            ExecuteLadderMove();
+        } else {
+            RotateTowardsViewDirection();
+            ExecuteMove();
+            
+            if (ladderCooldownTimer > 0.0f) {
+                ladderCooldownTimer -= Time.deltaTime;
+            }
+        }
     }
 
     private void ExecuteMove() {
@@ -90,5 +109,35 @@ public class PlayerController : MonoBehaviour {
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
+    }
+    
+    private void ExecuteLadderMove() {
+        if (Input.GetButtonDown("Jump")) {
+            DisengageLadder();
+            verticalSpeed = Vector3.up * jumpHeight;
+            return;
+        }
+        
+        float verticalClimb = Input.GetAxisRaw("Vertical") * (short) activeLadder.verticalClimbDirection;
+        float horizontalClimb = Input.GetAxisRaw("Horizontal") * (short) activeLadder.horizontalClimbDirection;
+        
+        float climbDirection = Mathf.Clamp(verticalClimb + horizontalClimb, -1.0f, 1.0f);
+        
+        if (climbDirection < 0.0f && controller.isGrounded) {
+            DisengageLadder();
+            return;
+        }
+        
+        controller.Move(Vector3.up * Time.deltaTime * climbDirection * activeLadder.climbSpeed);
+    }
+    
+    public void EngageLadder(Ladder ladder) {
+        activeLadder = ladder;
+        transform.rotation = Quaternion.Euler(0f, ladder.playerFaceDirection, 0f);
+    }
+    
+    public void DisengageLadder() {
+        activeLadder = null;
+        ladderCooldownTimer = ladderCooldown;
     }
 }
