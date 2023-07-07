@@ -16,7 +16,7 @@ Shader "Custom/Terrain"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags { "RenderType"="Opaque" }
         LOD 200
 
         CGPROGRAM
@@ -26,10 +26,8 @@ Shader "Custom/Terrain"
 
         struct Input
         {
-            float4 screenPos;
             float3 worldPos;
             float3 worldNormal;
-            float eyeDepth;
         };
 
         uniform fixed4 _GroundColor;
@@ -47,15 +45,15 @@ Shader "Custom/Terrain"
         uniform float _HeightInfluence;
 
         // Yoinked (and adapted) from Shaderlabs Simple Noise Node
-        inline float random (float2 pos) {
+        inline float random(float2 pos) {
             return frac(sin(dot(pos, float2(12.9898, 78.233))) * 43758.5453);
         }
 
-        inline float interpolate (float a, float b, float t) {
+        inline float interpolate(float a, float b, float t) {
             return (1.0-t)*a + (t*b);
         }
 
-        inline float noiseIteration (float2 pos) {
+        inline float noiseIteration(float2 pos) {
             float2 i = floor(pos);
             float2 f = frac(pos);
             f = f * f * (3.0 - 2.0 * f);
@@ -108,7 +106,7 @@ Shader "Custom/Terrain"
             } else {
                 float noiseValue = noise(IN.worldPos.xz * IN.worldPos.y, _Scale, _Freq, _Amp);
                 float bandedValue = 1 / (floor(noiseValue * (_ColorBands)) + 1) - 0.5;
-                o.Albedo = _GroundColor * (1 + bandedValue * _VariationStrength) + (sin(IN.worldPos.y) * _HeightInfluence);
+                o.Albedo = _GroundColor * (1 + bandedValue * _VariationStrength) + ((sin(IN.worldPos.y) + 1) / 2 * _HeightInfluence);
             }
 
             o.Smoothness = 0.1;

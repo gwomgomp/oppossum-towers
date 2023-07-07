@@ -70,7 +70,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightInfluence: 0.1
+    - _HeightInfluence: -0.1
     - _HillThreshold: 0.2
     - _InvFade: 0.01
     - _Metallic: 0
