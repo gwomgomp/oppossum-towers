@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 446403020670220335}
   - component: {fileID: 8058208458699264791}
   - component: {fileID: 7784667485452177064}
+  - component: {fileID: 8257314667389572618}
   m_Layer: 0
   m_Name: Model
   m_TagString: Loot
@@ -98,6 +99,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: {x: 0, y: 25, z: 0}
   randomizationFactors: {x: 0, y: 0.5, z: 0}
+--- !u!135 &8257314667389572618
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702332461464293949}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.010933427
+  m_Center: {x: -8.467723e-13, y: 0.00019081116, z: -0.0000044226617}
 --- !u!1 &8943349573175606327
 GameObject:
   m_ObjectHideFlags: 0
