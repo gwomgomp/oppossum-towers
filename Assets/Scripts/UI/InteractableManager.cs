@@ -16,6 +16,7 @@ public class InteractableManager : MonoBehaviour {
 
     private void Update() {
         GameObject newClosestInteractable = interactablesInRange
+            .Where(i => i != null)
             .OrderBy(i => CalculateDistance(i))
             .Select(i => i.gameObject)
             .FirstOrDefault();
