@@ -300,7 +300,6 @@ GameObject:
   - component: {fileID: 8637642239329121649}
   - component: {fileID: 8637642239329121650}
   - component: {fileID: 8637642239329121651}
-  - component: {fileID: 8436332135917845158}
   m_Layer: 0
   m_Name: Third Person Player
   m_TagString: Untagged
@@ -364,26 +363,7 @@ MonoBehaviour:
   gravityMultiplier: 1.5
   slideSpeed: 15
   turnSmoothTime: 0.1
---- !u!95 &8436332135917845158
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8637642239329121652}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0b57717e2e062842a7ca84fa0d840cf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  opossumAnimator: {fileID: 785770900647648088}
 --- !u!1 &8637642239807592192
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,8 +391,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8637642239807592192}
-  m_LocalRotation: {x: 0.3649717, y: -0.2778159, z: 0.115075134, w: 0.88111955}
-  m_LocalPosition: {x: 6.083696, y: 10.606601, z: -8.688419}
+  m_LocalRotation: {x: 0.32139382, y: -0.32139382, z: 0.11697777, w: 0.88302225}
+  m_LocalPosition: {x: 4.9240384, y: 6.4278755, z: -5.868241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -5804,7 +5804,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23278
+  m_Name: pb_Mesh21842
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12926,7 +12926,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23484
+  m_Name: pb_Mesh22048
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14634,7 +14634,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23254
+  m_Name: pb_Mesh21818
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15850,7 +15850,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23172
+  m_Name: pb_Mesh21736
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16306,7 +16306,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23200
+  m_Name: pb_Mesh21764
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16480,7 +16480,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23644
+  m_Name: pb_Mesh22208
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16712,7 +16712,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23606
+  m_Name: pb_Mesh22168
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -17055,6 +17055,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1c8ea6d49f863647a84401991cc878e, type: 3}
+--- !u!95 &887138710 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 785770900647648088, guid: 34006755d693102469b878d0e47edea9, type: 3}
+  m_PrefabInstance: {fileID: 1615468655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &914293641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17272,7 +17277,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23454
+  m_Name: pb_Mesh22018
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -22978,7 +22983,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23308
+  m_Name: pb_Mesh21872
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23268,7 +23273,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23700
+  m_Name: pb_Mesh22264
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23436,6 +23441,327 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1950318791889728703, guid: 1fb062ab422fe604988bf32fce17f8cb, type: 3}
   m_PrefabInstance: {fileID: 1589163398}
   m_PrefabAsset: {fileID: 0}
+--- !u!90 &1119716017
+Avatar:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Automatic Avatar
+  m_AvatarSize: 2956
+  m_Avatar:
+    serializedVersion: 3
+    m_AvatarSkeleton:
+      data:
+        m_Node:
+        - m_ParentId: -1
+          m_AxesId: -1
+        - m_ParentId: 0
+          m_AxesId: -1
+        - m_ParentId: 1
+          m_AxesId: -1
+        - m_ParentId: 2
+          m_AxesId: -1
+        - m_ParentId: 3
+          m_AxesId: -1
+        - m_ParentId: 4
+          m_AxesId: -1
+        - m_ParentId: 5
+          m_AxesId: -1
+        - m_ParentId: 4
+          m_AxesId: -1
+        - m_ParentId: 7
+          m_AxesId: -1
+        - m_ParentId: 8
+          m_AxesId: -1
+        - m_ParentId: 4
+          m_AxesId: -1
+        - m_ParentId: 10
+          m_AxesId: -1
+        - m_ParentId: 11
+          m_AxesId: -1
+        - m_ParentId: 3
+          m_AxesId: -1
+        - m_ParentId: 13
+          m_AxesId: -1
+        - m_ParentId: 14
+          m_AxesId: -1
+        - m_ParentId: 3
+          m_AxesId: -1
+        - m_ParentId: 16
+          m_AxesId: -1
+        - m_ParentId: 17
+          m_AxesId: -1
+        - m_ParentId: 3
+          m_AxesId: -1
+        - m_ParentId: 19
+          m_AxesId: -1
+        - m_ParentId: 1
+          m_AxesId: -1
+        - m_ParentId: 0
+          m_AxesId: -1
+        m_ID: 000000000247a4be0d6d853d60bbfdfc7f0fae1c098346b504edb5478995a445cd527dddabd3f94aeaa8abbf3d8893106e74dc3f998ebb7036b888db8f0057fafab3b48ac66266164aa7728f537ba62e5fa03efb74a7f24778c23264
+        m_AxesArray: []
+    m_AvatarSkeletonPose:
+      data:
+        m_X:
+        - t: {x: 0, y: 0, z: 0}
+          q: {x: 0, y: 0, z: 0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: 0, y: -1, z: 0}
+          q: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+          s: {x: 0.3, y: 0.3, z: 0.3}
+        - t: {x: -0, y: 1.928104, z: 0}
+          q: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+          s: {x: 100, y: 100, z: 100}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.01, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.013554584, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.006369023, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.013554584, z: 0}
+          q: {x: -0.8579689, y: -3.8221363e-17, z: -3.8221353e-17, w: 0.5137016}
+          s: {x: 1, y: 0.99999994, z: 0.9999999}
+        - t: {x: -1.6543611e-25, y: 0.010374894, z: 0.0000000020861626}
+          q: {x: -0.33628058, y: -0.00000011226676, z: 0.00000004008777, w: 0.94176185}
+          s: {x: 1, y: 1, z: 1.0000001}
+        - t: {x: -0, y: 0.014496767, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.013554584, z: 0}
+          q: {x: 0.8579689, y: 1.5228602e-16, z: 1.5228604e-16, w: 0.5137016}
+          s: {x: 1, y: 0.99999994, z: 0.9999999}
+        - t: {x: -2.646978e-25, y: 0.010374894, z: -0.0000000020861626}
+          q: {x: 0.33628058, y: -0.00000011226679, z: -0.000000040087777, w: 0.94176185}
+          s: {x: 1, y: 1, z: 1.0000001}
+        - t: {x: -0, y: 0.014496767, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: -0.7496782, y: 0.00000007889298, z: -0.0000000893686, w: 0.6618026}
+          s: {x: 1, y: 0.99999994, z: 0.99999994}
+        - t: {x: -0, y: 0.0039498988, z: 0}
+          q: {x: -0.6651727, y: 1.7268893e-14, z: -0.00000015858954, w: 0.74668956}
+          s: {x: 1, y: 1.0000001, z: 1.0000001}
+        - t: {x: -0, y: 0.018127948, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: 0.7496782, y: 0.00000007889294, z: 0.00000008936855, w: 0.6618026}
+          s: {x: 1, y: 0.99999994, z: 0.99999994}
+        - t: {x: -0, y: 0.0039498988, z: 0}
+          q: {x: 0.6651727, y: 4.8841624e-14, z: 0.00000015858949, w: 0.74668956}
+          s: {x: 1, y: 1.0000001, z: 1.0000001}
+        - t: {x: -0, y: 0.018127948, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.01, z: 0}
+          q: {x: 0.000000034356706, y: 0.000000049499118, z: -0.8014617, w: 0.5980461}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.028108949, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+          s: {x: 100, y: 100, z: 100}
+        - t: {x: 0, y: 0, z: 0}
+          q: {x: 0, y: 0, z: 0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+    m_DefaultPose:
+      data:
+        m_X:
+        - t: {x: 0, y: 0, z: 0}
+          q: {x: 0, y: 0, z: 0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: 0, y: -1, z: 0}
+          q: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+          s: {x: 0.3, y: 0.3, z: 0.3}
+        - t: {x: -0, y: 1.928104, z: 0}
+          q: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+          s: {x: 100, y: 100, z: 100}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.01, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.013554584, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.006369023, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.013554584, z: 0}
+          q: {x: -0.8579689, y: -3.8221363e-17, z: -3.8221353e-17, w: 0.5137016}
+          s: {x: 1, y: 0.99999994, z: 0.9999999}
+        - t: {x: -1.6543611e-25, y: 0.010374894, z: 0.0000000020861626}
+          q: {x: -0.33628058, y: -0.00000011226676, z: 0.00000004008777, w: 0.94176185}
+          s: {x: 1, y: 1, z: 1.0000001}
+        - t: {x: -0, y: 0.014496767, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.013554584, z: 0}
+          q: {x: 0.8579689, y: 1.5228602e-16, z: 1.5228604e-16, w: 0.5137016}
+          s: {x: 1, y: 0.99999994, z: 0.9999999}
+        - t: {x: -2.646978e-25, y: 0.010374894, z: -0.0000000020861626}
+          q: {x: 0.33628058, y: -0.00000011226679, z: -0.000000040087777, w: 0.94176185}
+          s: {x: 1, y: 1, z: 1.0000001}
+        - t: {x: -0, y: 0.014496767, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: -0.7496782, y: 0.00000007889298, z: -0.0000000893686, w: 0.6618026}
+          s: {x: 1, y: 0.99999994, z: 0.99999994}
+        - t: {x: -0, y: 0.0039498988, z: 0}
+          q: {x: -0.6651727, y: 1.7268893e-14, z: -0.00000015858954, w: 0.74668956}
+          s: {x: 1, y: 1.0000001, z: 1.0000001}
+        - t: {x: -0, y: 0.018127948, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: 0.7496782, y: 0.00000007889294, z: 0.00000008936855, w: 0.6618026}
+          s: {x: 1, y: 0.99999994, z: 0.99999994}
+        - t: {x: -0, y: 0.0039498988, z: 0}
+          q: {x: 0.6651727, y: 4.8841624e-14, z: 0.00000015858949, w: 0.74668956}
+          s: {x: 1, y: 1.0000001, z: 1.0000001}
+        - t: {x: -0, y: 0.018127948, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.01, z: 0}
+          q: {x: 0.000000034356706, y: 0.000000049499118, z: -0.8014617, w: 0.5980461}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0.028108949, z: 0}
+          q: {x: 0, y: -0, z: -0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        - t: {x: -0, y: 0, z: 0}
+          q: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+          s: {x: 100, y: 100, z: 100}
+        - t: {x: 0, y: 0, z: 0}
+          q: {x: 0, y: 0, z: 0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+    m_SkeletonNameIDArray: 000000000247a4beb28d6c7d12ee5c47b39c853aa259c107569d1d85a0b76e43999f66c80bfd88ddc38a61b9faa26932e8d45802551d9056d8b1aff0207dc9fe36209facbb8ca00ac3541921631b05dc8d5465869e7e197178c23264
+    m_Human:
+      data:
+        serializedVersion: 2
+        m_RootX:
+          t: {x: 0, y: 0, z: 0}
+          q: {x: 0, y: 0, z: 0, w: 1}
+          s: {x: 1, y: 1, z: 1}
+        m_Skeleton:
+          data:
+            m_Node: []
+            m_ID: 
+            m_AxesArray: []
+        m_SkeletonPose:
+          data:
+            m_X: []
+        m_LeftHand:
+          data:
+            m_HandBoneIndex: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        m_RightHand:
+          data:
+            m_HandBoneIndex: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        m_HumanBoneIndex: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        m_HumanBoneMass:
+        - 0.14545456
+        - 0.12121213
+        - 0.12121213
+        - 0.048484854
+        - 0.048484854
+        - 0.009696971
+        - 0.009696971
+        - 0.030303033
+        - 0.14545456
+        - 0.14545456
+        - 0.012121214
+        - 0.048484854
+        - 0.006060607
+        - 0.006060607
+        - 0.024242427
+        - 0.024242427
+        - 0.01818182
+        - 0.01818182
+        - 0.006060607
+        - 0.006060607
+        - 0.0024242427
+        - 0.0024242427
+        - 0
+        - 0
+        - 0
+        m_Scale: 1
+        m_ArmTwist: 0.5
+        m_ForeArmTwist: 0.5
+        m_UpperLegTwist: 0.5
+        m_LegTwist: 0.5
+        m_ArmStretch: 0.05
+        m_LegStretch: 0.05
+        m_FeetSpacing: 0
+        m_HasLeftHand: 0
+        m_HasRightHand: 0
+        m_HasTDoF: 0
+    m_HumanSkeletonIndexArray: 
+    m_HumanSkeletonReverseIndexArray: 
+    m_RootMotionBoneIndex: -1
+    m_RootMotionBoneX:
+      t: {x: 0, y: 0, z: 0}
+      q: {x: 0, y: 0, z: 0, w: 1}
+      s: {x: 1, y: 1, z: 1}
+    m_RootMotionSkeleton:
+      data:
+        m_Node: []
+        m_ID: 
+        m_AxesArray: []
+    m_RootMotionSkeletonPose:
+      data:
+        m_X: []
+    m_RootMotionSkeletonIndexArray: 
+  m_TOS:
+    481169279: opossum/Armature/Center/Chest
+    3198437122: opossum
+    1203105028: opossum/Armature/Center/Chest/Head/Head_end
+    4200005775: opossum/Armature/Center/Hip L/Leg L/Leg L_end
+    1681048184: RotationHelper
+    4244487008: opossum/Armature/Center
+    3041297161: opossum/Armature/Center/Chest/Head
+    1207084916: opossum/Opossum
+    278104125: opossum/Armature/Center/Chest/Shoulder R/Arm R
+    1257886635: opossum/Armature/Center/Chest/Shoulder L/Arm L/Arm L_end
+    1168414089: opossum/Armature/Center/Chest/Shoulder L
+    0: 
+    3715977933: opossum/Armature/Center/Chest/Shoulder L/Arm L
+    375808710: opossum/Armature/Center/Hip R/Leg R
+    2327098362: opossum/Armature/Center/Hip R
+    3215698154: opossum/Armature/Center/Chest/Shoulder R
+    4215185503: opossum/Armature/Center/Tail/Tail_end
+    1032154381: opossum/Armature
+    1071412334: opossum/Armature/Center/Chest/Shoulder R/Arm R/Arm R_end
+    3683170358: opossum/Armature/Center/Hip L/Leg L
+    1891339929: opossum/Armature/Center/Hip L
+    782662483: opossum/Armature/Center/Tail
+    2406655818: opossum/Armature/Center/Hip R/Leg R/Leg R_end
+  m_HumanDescription:
+    serializedVersion: 3
+    m_Human: []
+    m_Skeleton: []
+    m_ArmTwist: 0.5
+    m_ForeArmTwist: 0.5
+    m_UpperLegTwist: 0.5
+    m_LegTwist: 0.5
+    m_ArmStretch: 0.05
+    m_LegStretch: 0.05
+    m_FeetSpacing: 0
+    m_GlobalScale: 1
+    m_RootMotionBoneName: 
+    m_HasTranslationDoF: 0
+    m_HasExtraRoot: 0
+    m_SkeletonHasParents: 1
 --- !u!114 &1126243633 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5471466126326896136, guid: 0367cda039a941545b61c2362a0db07f, type: 3}
@@ -29058,7 +29384,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23564
+  m_Name: pb_Mesh22126
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -29869,7 +30195,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23394
+  m_Name: pb_Mesh21958
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -30452,7 +30778,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23514
+  m_Name: pb_Mesh22076
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31151,7 +31477,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23324
+  m_Name: pb_Mesh21888
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31377,7 +31703,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23434
+  m_Name: pb_Mesh21998
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -42836,6 +43162,10 @@ PrefabInstance:
       propertyPath: defaultFov
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 8436332135917845158, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 1119716017}
     - target: {fileID: 8637642238541093150, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -42928,6 +43258,10 @@ PrefabInstance:
       propertyPath: jumpHeight
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8637642239329121651, guid: 34006755d693102469b878d0e47edea9, type: 3}
+      propertyPath: opossumAnimator
+      value: 
+      objectReference: {fileID: 887138710}
     - target: {fileID: 8637642239329121651, guid: 34006755d693102469b878d0e47edea9, type: 3}
       propertyPath: gravityMultiplier
       value: 3
@@ -43789,7 +44123,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23536
+  m_Name: pb_Mesh22098
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44015,7 +44349,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23294
+  m_Name: pb_Mesh21858
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44179,7 +44513,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23232
+  m_Name: pb_Mesh21796
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44405,7 +44739,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23662
+  m_Name: pb_Mesh22226
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

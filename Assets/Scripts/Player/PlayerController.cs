@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour {
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
+    [Header("Animation")]
+    public Animator opossumAnimator;
+    private Vector3 lastPosition;
+
     private bool IsSliding {
         get {
             if (controller.isGrounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeCheckHit, 2f)) {
@@ -96,6 +100,8 @@ public class PlayerController : MonoBehaviour {
                 ladderCooldownTimer -= Time.deltaTime;
             }
         }
+
+        SetAnimatorParams();
     }
 
     private void ExecuteMove() {
@@ -139,5 +145,18 @@ public class PlayerController : MonoBehaviour {
     public void DisengageLadder() {
         activeLadder = null;
         ladderCooldownTimer = ladderCooldown;
+    }
+
+    private void SetAnimatorParams() {
+        opossumAnimator.SetBool("isGrounded", controller.isGrounded);
+
+        if (IsSliding) {
+            opossumAnimator.SetFloat("moveSpeed", 0.0f);
+        } else {
+            float playerVelocity = ((transform.position - lastPosition) / Time.deltaTime).magnitude;
+            opossumAnimator.SetFloat("moveSpeed", playerVelocity / moveSpeed);
+        }
+
+        lastPosition = transform.position;
     }
 }
