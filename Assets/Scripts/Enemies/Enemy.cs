@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 public class Enemy : MonoBehaviour {
     public float health;
     private float baseSpeed;
@@ -24,9 +25,12 @@ public class Enemy : MonoBehaviour {
     private List<StatusEffect> activeStatusEffects;
     private List<TimedStatusEffect> timedStatusEffects;
 
+    private GameObject[] lootPrefabs;
+
     void Start() {
         activeStatusEffects = new List<StatusEffect>();
         timedStatusEffects = new List<TimedStatusEffect>();
+        lootPrefabs = Resources.LoadAll<GameObject>("Prefabs/Loot");
     }
 
     public void Initialize(EnemyType type, LaneCheckpoint startingCheckpoint) {
@@ -85,7 +89,7 @@ public class Enemy : MonoBehaviour {
     private void HandleHoardCheckpoint(LaneCheckpoint checkpoint) {
         var hoard = checkpoint as Hoard;
         if (!carryingLoot && hoard != null && hoard.TakeLoot()) {
-            var lootPrefab = Resources.Load<GameObject>("Prefabs/Loot");
+            var lootPrefab = lootPrefabs[Random.Range(0, lootPrefabs.Length)];
             var lootGameObject = Instantiate(lootPrefab);
             var loot = lootGameObject.RequireComponent<Loot>();
             AttachLootToTransform(loot);
