@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour {
             return activeLadder != null && ladderCooldownTimer <= 0.0f;
         }
     }
+
+    private float climbSpeed = 0.0f;
     
     private Ladder activeLadder = null;
     
@@ -128,6 +130,8 @@ public class PlayerController : MonoBehaviour {
         float horizontalClimb = Input.GetAxisRaw("Horizontal") * (short) activeLadder.horizontalClimbDirection;
         
         float climbDirection = Mathf.Clamp(verticalClimb + horizontalClimb, -1.0f, 1.0f);
+
+        climbSpeed = climbDirection;
         
         if (climbDirection < 0.0f && controller.isGrounded) {
             DisengageLadder();
@@ -156,6 +160,9 @@ public class PlayerController : MonoBehaviour {
             float playerVelocity = ((transform.position - lastPosition) / Time.deltaTime).magnitude;
             opossumAnimator.SetFloat("moveSpeed", playerVelocity / moveSpeed);
         }
+
+        opossumAnimator.SetBool("isClimbing", isClimbing);
+        opossumAnimator.SetFloat("climbSpeed", climbSpeed);
 
         lastPosition = transform.position;
     }
