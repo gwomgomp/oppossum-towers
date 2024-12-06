@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301535651772776834}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.719, z: 1.064}
+  m_LocalPosition: {x: 0, y: 1.659, z: 1.083}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 2145993215406542538}
   - component: {fileID: 7662677674335646346}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: Dart Thrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ Transform:
   m_Children:
   - {fileID: 515631195779463318}
   - {fileID: 4182098742727822916}
+  - {fileID: 144659039076858625}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -212,6 +213,92 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: {fileID: 11400000, guid: 55affbd2fea90034aae2ef055b3e09ba, type: 2}
   animationObject: {fileID: 3549430287967851774}
+--- !u!1001 &399509595749670122
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2145993215406542542}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7395763266438350376, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 917cfaa6f940dd8439b197bd9f3e5c3d, type: 2}
+    - target: {fileID: 919132149155446097, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_Name
+      value: dart_thrower_base
+      objectReference: {fileID: 0}
+    - target: {fileID: 2105919420388626208, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 917cfaa6f940dd8439b197bd9f3e5c3d, type: 2}
+    - target: {fileID: 2807733703390307338, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 917cfaa6f940dd8439b197bd9f3e5c3d, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+--- !u!4 &144659039076858625 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3d5653b4abd098242a3bef37bc24f66c, type: 3}
+  m_PrefabInstance: {fileID: 399509595749670122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4432516043488569775
 PrefabInstance:
   m_ObjectHideFlags: 0
