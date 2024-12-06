@@ -17,6 +17,12 @@ public class Tower : MonoBehaviour {
 
     private GameObject launchOrigin;
 
+    public GameObject animationObject;
+
+    private Animator animator;
+
+    private bool useLaunchEvent = false;
+
     void Start() {
         enemiesInRange = new HashSet<Enemy>();
         currentShotCooldown = towerType.shotCooldown;
@@ -34,23 +40,62 @@ public class Tower : MonoBehaviour {
                 break;
             }
         }
+
+        if (animationObject != null && animationObject.TryGetComponent<LaunchEventHandler>(out LaunchEventHandler launchEventHandler)) {
+            launchEventHandler.launchEvent = LaunchAttack;
+
+            if (animationObject.TryGetComponent<Animator>(out animator)) {
+                animator.SetFloat("attack_speed", 1f / towerType.shotCooldown);
+
+                useLaunchEvent = true;
+
+                Debug.Log("Using launch event");
+            }
+        }
     }
 
     void Update() {
-        if (currentShotCooldown > 0.0f) {
-            currentShotCooldown -= Time.deltaTime;
-        } else {
-            UpdateTarget();
+        UpdateTarget();
 
-            if (currentTargets.Count > 0) {
+        if (!useLaunchEvent) {
+            if (currentShotCooldown > 0.0f) {
+                currentShotCooldown -= Time.deltaTime;
+            } else {
+                if (currentTargets.Count > 0) {
 
-                if (towerType.attackAllInRange) {
-                    AreaAroundSelf();
-                } else {
-                    ShootAtCurrentTargets();
+                    if (towerType.attackAllInRange) {
+                        AreaAroundSelf();
+                    } else {
+                        ShootAtCurrentTargets();
+                    }
+
+                    currentShotCooldown = towerType.shotCooldown;
                 }
+            }
+        } else {
+            animator.SetBool("firing", currentTargets.Count > 0);
+        }
 
-                currentShotCooldown = towerType.shotCooldown;
+        if (towerType.turnTowardsTarget && currentTargets.Count > 0) {
+            Vector3 targetPosition = new Vector3(
+                currentTargets.First().Enemy.transform.position.x,
+                this.transform.position.y,
+                currentTargets.First().Enemy.transform.position.z
+                );
+            
+            this.transform.LookAt(targetPosition);
+        }
+    }
+
+    private void LaunchAttack() {
+        UpdateTarget();
+
+        if (currentTargets.Count > 0) {
+
+            if (towerType.attackAllInRange) {
+                AreaAroundSelf();
+            } else {
+                ShootAtCurrentTargets();
             }
         }
     }
