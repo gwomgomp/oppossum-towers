@@ -12,11 +12,7 @@ public static class ComponentExtensions {
 
     public static bool TryGetComponentInParentForTag<T>(this Component component, string tag, out T result) {
         if (component.CompareTag(tag)) {
-            bool success = component.TryGetComponentInParent(out result);
-            if (!success) {
-                Debug.Log($"Game object tagged as ${tag}, but no ${result.GetType().Name} script found.");
-            }
-            return success;
+            return component.TryGetComponentInParent(out result);
         } else {
             result = default;
             return false;
