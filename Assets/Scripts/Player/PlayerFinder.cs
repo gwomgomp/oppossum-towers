@@ -22,7 +22,7 @@ public class PlayerFinder : MonoBehaviour {
 
     private GameObject FindPlayer() {
         if (playerGameObject == null) {
-            MonoBehaviour playerScript = FindObjectOfType<PlayerController>();
+            MonoBehaviour playerScript = FindAnyObjectByType<PlayerController>();
             if (playerScript != null) {
                 playerGameObject = playerScript.gameObject;
             }

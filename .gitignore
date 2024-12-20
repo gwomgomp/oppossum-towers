@@ -560,3 +560,6 @@ Assets/YamlDotNet/YamlDotNet.license.txt
 Assets/YamlDotNet/YamlDotNet.license.txt.meta
 Assets/Resources/DOTweenSettings.asset
 ProjectSettings/Packages/com.unity.probuilder/Settings.json
+
+
+.idea/

@@ -44,7 +44,7 @@ public class Resource : MonoBehaviour, Cargo {
 
     private bool IsHoardInRange() {
         var hoardSafetyDistance = ManagerProvider.Instance.GetManager<ConfigurationManager>().GetConfig<float>("Resource", "HoardingDistance");
-        Hoard[] hoards = FindObjectsOfType<Hoard>();
+        Hoard[] hoards = FindObjectsByType<Hoard>(FindObjectsSortMode.None);
         foreach (var hoard in hoards) {
             if (Vector3.Distance(transform.position, hoard.transform.position) < hoardSafetyDistance) {
                 return true;
