@@ -23,14 +23,14 @@ public class RoundManager : MonoBehaviour {
     }
 
     private void Start() {
-        EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
+        EnemySpawner[] spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
         spawnerCount = spawners.Length;
         foreach (var spawner in spawners) {
             OnNextRound += spawner.PrepareNewRound;
             spawner.OnSpawningFinished += HandleFinishedSpawner;
         }
 
-        ResourceSpawner[] resourceSpawners = FindObjectsOfType<ResourceSpawner>();
+        ResourceSpawner[] resourceSpawners = FindObjectsByType<ResourceSpawner>(FindObjectsSortMode.None);
         foreach (var resourceSpawner in resourceSpawners) {
             OnNextRound += resourceSpawner.PrepareNewRound;
             OnFinishedRound += resourceSpawner.StopSpawning;
