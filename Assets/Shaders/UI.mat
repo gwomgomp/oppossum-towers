@@ -56,7 +56,7 @@ Material:
     - _ColorRangeFuzziness: 0.05
     - _Current: 10
     - _Height: 1
-    - _LootPercentage: 0
+    - _LootPercentage: 1
     - _MaskRange: 0.96
     - _Max: 10
     - _Stencil: 0
